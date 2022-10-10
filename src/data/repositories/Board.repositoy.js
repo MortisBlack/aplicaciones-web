@@ -6,9 +6,8 @@ class BoardRepository {
     async create(board) {
         const boardBO = board.toPersistenceObject();
         const result = await Board.create(boardBO);
-        await result.reload();
 
-        return result;
+        return new BoardBO(result.id, result.title, result.description, result.workspace);
     }
 
     async update(board) {

@@ -5,28 +5,25 @@ export default class WorkspaceRepository {
 
 
     async create(workspace) {
-        
-        const result = await Workspace.create({
-            title: workspace.title,
-            description: workspace.description
-        });
+        const workspaceBO = workspace.toPersistenceObject()
+        const result = await Workspace.create(workspaceBO);
 
-        return new WorkspaceBO(result.id, result.title, result.description, result.workspace);
+        return new WorkspaceBO(result.id, result.title, result.description);
     }
 
     async update(workspace) {
 
-        if(board.id === undefined){
+        if(workspace.id === undefined){
             throw new Error('id is undefined');
         }
 
-        
-        const result = await Workspace.update(board, {
+        const workspaceBO = workspace.toPersistenceObject()
+        const result = await Workspace.update(workspaceBO, {
             where: {
-                id: board.id
+                id: workspace.id
             }
         });
-        return new WorkspaceBO(result.id, result.title, result.description, result.workspace);
+        return new WorkspaceBO(result.id, result.title, result.description);
     }
 
     async delete(id) {
@@ -47,13 +44,13 @@ export default class WorkspaceRepository {
             }
         });
 
-        return new WorkspaceBO(result.id, result.title, result.description, result.workspace);
+        return new WorkspaceBO(result.id, result.title, result.description);
     }
 
     async findAll() {        
         const result = await Workspace.findAll();
         return result.map((element, index)=> {
-            new WorkspaceBO(element.id, element.title, element.description, element.workspace)
+            return new WorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description)
         });
     }
 }
