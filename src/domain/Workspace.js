@@ -18,6 +18,7 @@ export default class Workspace {
     set title(title){
         if(title.length > 0 && title.length < 255 && typeof title === 'string'){
             this._title = title;
+            return;
         }
         throw new Error('Title is not valid');
     }
@@ -31,8 +32,17 @@ export default class Workspace {
         }
         if(description.length < 255 && typeof description === 'string'){
             this._description = description;
+            return;
         }
         throw new Error('Description is not valid');
+    }
+
+    toPersistenceObject(){
+        return {
+            id: this.id,
+            title: this.title,
+            description: this.description
+        }
     }
 
 }
