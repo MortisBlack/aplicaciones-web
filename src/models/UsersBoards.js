@@ -1,12 +1,24 @@
 import {connection } from "../data/connection.js";
-import {STRING,BIGINT} from "sequelize";
-import {User} from "User.js";
-import{Board} from "Board.js";
+import {BIGINT} from "sequelize";
+import User from "./User.js";
+import Board from "./Board.js";
 
-export const usersBoards = connection.define('usersBoards',{
-    id:{type:BIGINT,primaryKey: true, allowNull: false, unique: true},
-    user_id:{type: User,allowNull: false,foreignKey: true,unique: true},
-    board_id:{type:Board,allowNull:false,foreignKey: true,unique: true},
-},{
-    tableName:'users_boards'
-});
+const UsersBoards = connection.define(
+    'UsersBoards', {
+        id:{
+        type: BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    }
+    },{
+        tableName:'users_boards'
+    });
+
+User.belongsToMany(Board, {through: UsersBoards });
+Board.belongsToMany(User,{through: UsersBoards});
+
+UsersBoards.sync()
+    .then(()=> console.log('Create relation table between Users and Boards'))
+    .catch((err)=> console.log(err))
+
+export default UsersBoards;
