@@ -2,11 +2,33 @@ import {connection } from "../data/connection.js";
 import {DATE,STRING,BIGINT} from "sequelize";
 
 
-export const card = connection.define('card',{
-    id:{type:BIGINT,primaryKey: true, allowNull: false, unique: true},
-    tite:{type: STRING, max:255, allowNull:false},
-    description:{type:STRING,MAX:255,allowNull:false},
-    deadline_date:{TYPE:DATE,allowNull:false},
+const Card = connection.define('Card',{
+    id:{
+        type: BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    title:{
+        type: STRING, 
+        max:255, 
+        allowNull:false
+    },
+    description:{
+        type:STRING,
+        MAX:255,
+        allowNull:false
+    },
+    deadlineDate:{
+        field:'deadline_date',
+        type:DATE,
+        allowNull:false
+    }
 },{
     tableName:'card'
 });
+
+Card.sync()
+.then(()=> console.log('Create Card table'))
+.catch((err)=> console.log(err))
+
+export default Card

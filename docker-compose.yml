@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  db:
+    image: "postgres:alpine"
+    container_name: "trello_postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: trello_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ludens123
+    volumes:
+      - "./dockerfiles/postgres:/var/lib/postgresql/data"
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: s3cret-k3y

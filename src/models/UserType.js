@@ -1,9 +1,23 @@
 import { connection } from "../data/connection.js";
-import {Sequelize,STRING,BIGINT} from "sequelize";
+import {STRING,BIGINT} from "sequelize";
 
-export const userType = connection.define('userType',{
-    id:{type: BIGINT,primaryKey: true,allowNull: false, unique: true},
-    user_type: {type: STRING, max:500, allowNull: false},
+const UserType = connection.define('UserType',{
+    id:{
+        type: BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    user_type: {
+        type: STRING, 
+        max:500, 
+        allowNull: false
+    }
 },{
     tableName:'user_type'
 });
+
+UserType.sync()
+.then(()=> console.log('Create UserType table'))
+.catch((err)=> console.log(err))
+
+export default UserType

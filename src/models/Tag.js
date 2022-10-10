@@ -1,10 +1,28 @@
 import {connection } from "../data/connection.js";
-import {Sequelize,STRING,BIGINT} from "sequelize";
+import {STRING,BIGINT} from "sequelize";
 
-export const tag = connection.define('tag',{
-    id:{type:BIGINT,primaryKey: true, allowNull: false, unique: true},
-    name: {type: STRING, max:255, allowNull: false},
-    color_tag: {type: STRING, max:255, allowNull: false},
+const Tag = connection.define('Tag',{
+    id:{
+        type: BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: STRING,
+        max:255,
+        allowNull: false
+    },
+    color: {
+        type: STRING,
+        max:6,
+        allowNull: false
+    }
 },{
     tableName:'tag'
 });
+
+Tag.sync()
+.then(()=> console.log('Create Tag table'))
+.catch((err)=> console.log(err))
+
+export default Tag
