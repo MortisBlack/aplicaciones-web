@@ -1,5 +1,6 @@
 import { Board } from '../models/Board.js';
 import BoardBO from '../../domain/Board.js';
+import Workspace from '../../models/Workspace.js';
 
 class BoardRepository {
 
@@ -16,13 +17,14 @@ class BoardRepository {
             throw new Error('id is undefined');
         }
 
-        
-        const result = await Board.update(board, {
+        const boardBO = board.toPersistenceObject()
+        const result = await Board.update(boardBO, {
             where: {
                 id: board.id
-            }
+            },
+            include:Workspace
         });
-        return result;
+        return this.findOne(board.id);
     }
 
     async delete(id) {
@@ -32,7 +34,7 @@ class BoardRepository {
                 id: id
             }
         });
-        return result;
+        return "Board successfully deleted";
     }
 
     async findOne(id) {
@@ -40,15 +42,18 @@ class BoardRepository {
         const result = await Board.findOne({
             where: {
                 id: id
-            }
+            },
+            include:Workspace
         });
-        return result;
+        return new BoardBO(result.id, result.title, result.description, result.workspace);
     }
 
     async findAll() {  
-        const result = await Board.findAll();
+        const result = await Board.findAll({
+            include:Workspace
+        });
         return result.map(()=> {
-            new BoardBO(result.id, result.title, result.description, result.workspace)
+            new BoardBO(result.dataValues.id, result.dataValues.title, result.dataValues.description, result.dataValues.workspace)
         });
     }
 }
