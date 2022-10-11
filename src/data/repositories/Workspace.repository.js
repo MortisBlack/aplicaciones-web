@@ -23,7 +23,7 @@ export default class WorkspaceRepository {
                 id: workspace.id
             }
         });
-        return new WorkspaceBO(result.id, result.title, result.description);
+        return this.findOne(workspace.id);
     }
 
     async delete(id) {
@@ -33,7 +33,7 @@ export default class WorkspaceRepository {
                 id: id
             }
         });
-        return result;
+        return "Workspace successfully deleted";
     }
 
     async findOne(id) {
@@ -44,7 +44,7 @@ export default class WorkspaceRepository {
             }
         });
 
-        return new WorkspaceBO(result.id, result.title, result.description);
+        return new WorkspaceBO(result.dataValues.id, result.dataValues.title, result.dataValues.description)
     }
 
     async findAll() {        
