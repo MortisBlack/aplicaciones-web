@@ -15,8 +15,8 @@ export default class BoardRepository {
     async create(board) {
         const boardBO = board.toPersistenceObject();
         const result = await Board.create(boardBO);
-
-        return new BoardBO(result.id, result.title, result.description, result.workspace);
+        const workspace = await workspaceRepository.findOne(result.WorkspaceId);
+        return new BoardBO(result.id, result.title, result.description, workspace);
     }
 
     async update(board) {

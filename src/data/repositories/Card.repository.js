@@ -28,7 +28,8 @@ export default class CardRepository {
         await Card.update(cardBO, {
             where: {
                 id: card.id
-            }
+            },
+            include:Column
         });
         return this.findOne(card.id);
         
@@ -50,16 +51,32 @@ export default class CardRepository {
         const result = await Card.findOne({
             where: {
                 id: id
-            }
+            },
+            include:[{
+                model: Column, attributes:
+                    ['id'],
+                as: 'Column'
+            }]
         });
-        return new CardBO(result.id, result.title, result.description, result.deadlineDate, result.column);
+
+        let column = await columnRepository.findOne(result.ColumnId);
+
+        return new CardBO(result.id, result.title, result.description, result.deadlineDate, column);
         
     }
 
     async findAll() {
         
-        const result = await Card.findAll();
-        return result;
+        const result = await Card.findAll({
+            include:[{
+                model: Column, 
+                as: 'Column'
+            }]
+        });
+        return await result.map(async (element, index) => {
+            let column = await columnRepository.findOne(element.dataValues.ColumnId);
+            return new CardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, element.dataValues.deadlineDate, column);
+        });
         
     }
 }

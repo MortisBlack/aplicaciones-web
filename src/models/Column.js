@@ -2,7 +2,7 @@ import { connection } from "../data/connection.js";
 import { STRING, BIGINT } from "sequelize";
 import Board from "./Board.js";
 
-export const Column = connection.define("Column",
+const Column = connection.define("Column",
     {
         id:{
             type: BIGINT,
@@ -20,7 +20,13 @@ export const Column = connection.define("Column",
     });
 
 Board.hasMany(Column, { as: "columns" });
-Column.hasOne(Board, { as: "board" });
+Column.belongsTo(Board, { 
+    as: "Board",
+    foreignKey: {
+        name: "BoardId",
+        allowNull: false
+    }
+});
 
 Column.sync()
     .then(() => console.log("Create Column table"))
