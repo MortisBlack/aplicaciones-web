@@ -58,7 +58,6 @@ export default class BoardRepository {
             }]
         
         });
-
         let workspace = await workspaceRepository.findOne(result.WorkspaceId);
 
 

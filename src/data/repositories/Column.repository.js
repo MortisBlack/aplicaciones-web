@@ -16,7 +16,7 @@ export default class ColumnRepository {
     async create(column) {
         
         const columnBO = column.toPersistenceObject();
-        const result = await column.create(columnBO);
+        const result = await Column.create(columnBO);
 
         const board = await boardRepository.findOne(result.BoardId);
         return new ColumnBO(result.id, result.title, board);
@@ -59,6 +59,9 @@ export default class ColumnRepository {
             },
             include:[{
                 model: Board,
+                attributes:[
+                    'id', 
+                ],
                 as: 'Board'
             }]
         });
@@ -76,8 +79,8 @@ export default class ColumnRepository {
                 as: 'Board'
             }]
         });
-        return await resul.map(async (element) => {
-            let column = await boardRepository.findOne(element.BoardId);
+        return await result.map(async (element) => {
+            let column = await boardRepository.findOne(element.dataValues.BoardId);
             return new ColumnBO(element.dataValues.id, element.dataValues.title, column);
         });
     }

@@ -14,6 +14,10 @@ const Column = connection.define("Column",
             max: 255,
             allowNull: false,
         },
+        BoardId: {
+            type: BIGINT,
+            allowNull: false
+        }
     },
     {
         tableName: "column"
@@ -22,10 +26,6 @@ const Column = connection.define("Column",
 Board.hasMany(Column, { as: "columns" });
 Column.belongsTo(Board, { 
     as: "Board",
-    foreignKey: {
-        name: "BoardId",
-        allowNull: false
-    }
 });
 
 Column.sync()

@@ -1,4 +1,4 @@
-import Board from "./Board";
+import Board from "./Board.js";
 
 export default class Column {
     constructor(id, title, board){
@@ -41,7 +41,7 @@ export default class Column {
         return {
             id: this.id,
             title: this.title,
-            BoarId: this.board.id
+            BoardId: this.board.id
         }
     }
 }
