@@ -1,6 +1,6 @@
-import Workspace from "./Workspace";
-import UserType from "./UserType";
-import User from "./User";
+import Workspace from "./Workspace.js";
+import UserType from "./UserType.js";
+import User from "./User.js";
 
 export default class UserWorkspaces{
     constructor(id, user, user_type, workspace ){
@@ -23,7 +23,7 @@ export default class UserWorkspaces{
     }
     set user(user){
         // Validate user is not empty and is a user object
-        if (user !== undefined && user instanceof user){
+        if (user !== undefined && user instanceof User){
             this._user = user;
             return;
         }
@@ -32,7 +32,7 @@ export default class UserWorkspaces{
     }
     set userType(user_type){
         // Validate user is not empty and is a user object
-        if (user_type !== undefined && user_type instanceof user_type){
+        if (user_type !== undefined && user_type instanceof UserType){
             this._user_type = user_type;
             return;
         }
@@ -41,7 +41,7 @@ export default class UserWorkspaces{
     }
     set workspace(workspace){
         // Validate workspace is not empty and is a workspace object
-        if (workspace !== undefined && workspace instanceof workspace){
+        if (workspace !== undefined && workspace instanceof Workspace){
             this._workspace = workspace;
             return;
         }
