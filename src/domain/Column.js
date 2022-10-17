@@ -36,5 +36,13 @@ export default class Column {
 
         throw new Error("Invalid board");
     }
+
+    toPersistenceObject(){
+        return {
+            id: this.id,
+            title: this.title,
+            BoarId: this.board.id
+        }
+    }
 }
 

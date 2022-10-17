@@ -1,5 +1,6 @@
 import {connection } from "../data/connection.js";
 import {DATE,STRING,BIGINT} from "sequelize";
+import Column from "./Column.js";
 
 
 const Card = connection.define('Card',{
@@ -25,6 +26,18 @@ const Card = connection.define('Card',{
     }
 },{
     tableName:'card'
+});
+
+Column.hasMany(Card, {
+    as: 'cards'
+});
+
+Card.belongsTo(Column, {
+    as: 'Column',
+    foreignKey: {
+        name: 'ColumnId',
+        allowNull: false
+    }
 });
 
 Card.sync()

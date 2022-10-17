@@ -72,4 +72,14 @@ export default class Card {
         throw new Error('Column must be a column');
     }
 
+    toPersistenceObject(){
+        return {
+            id: this._id,
+            title: this._title,
+            description: this._description,
+            deadlineDate: this._deadlineDate,
+            ColumnId: this._column
+        }
+    }
+
 }
