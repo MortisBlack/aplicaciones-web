@@ -19,6 +19,7 @@ export default class UsersCards {
         // Validate user is not empty and is a user object
         if (user !== undefined && user instanceof user){
             this._user = user;
+            return;
         }
         throw new Error("Invalid user");
         
@@ -28,6 +29,7 @@ export default class UsersCards {
         // Validate card is not empty and is a card object
         if (card !== undefined && card instanceof card){
             this._card = card;
+            return;
         }
         throw new Error("Invalid card");
         

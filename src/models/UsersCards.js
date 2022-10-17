@@ -7,7 +7,7 @@ const UsersCards = connection.define('UsersCards', {
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     }
     },{
         tableName:'users_cards'

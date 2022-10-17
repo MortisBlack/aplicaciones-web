@@ -6,7 +6,7 @@ const Board = connection.define('Board',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     title: {
         type: STRING, 
@@ -17,15 +17,25 @@ const Board = connection.define('Board',{
         type:STRING,
         allowNull:false,
         max:500
+    },
+    WorkspaceId: {
+        type: BIGINT,
+        allowNull: false
     }
 },{
     tableName:'board'
 });
 
-Workspace.hasMany(Board, {as: 'boards'});
-Board.hasOne(Workspace, {as: 'workspace'});
+Workspace.hasMany(Board, {
+    as: 'boards'
+});
+Board.belongsTo(Workspace, {
+    as: 'Workspace'
+});
 
-Board.sync()
+Board.sync({
+    alter:true
+})
 .then(()=> console.log('Create Board table'))
 .catch((err)=> console.log(err))
 

@@ -25,6 +25,7 @@ export default class UserWorkspaces{
         // Validate user is not empty and is a user object
         if (user !== undefined && user instanceof user){
             this._user = user;
+            return;
         }
         
         throw new Error("Invalid user");
@@ -33,6 +34,7 @@ export default class UserWorkspaces{
         // Validate user is not empty and is a user object
         if (user_type !== undefined && user_type instanceof user_type){
             this._user_type = user_type;
+            return;
         }
         
         throw new Error("Invalid user type");
@@ -41,6 +43,7 @@ export default class UserWorkspaces{
         // Validate workspace is not empty and is a workspace object
         if (workspace !== undefined && workspace instanceof workspace){
             this._workspace = workspace;
+            return;
         }
 
         throw new Error("Invalid workspace");

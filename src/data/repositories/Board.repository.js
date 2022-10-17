@@ -1,8 +1,16 @@
-import { Board } from '../models/Board.js';
-import BoardBO from '../../domain/Board.js';
+import Board from '../../models/Board.js';
 import Workspace from '../../models/Workspace.js';
 
-class BoardRepository {
+
+import BoardBO from '../../domain/Board.js';
+
+
+import WorkspaceRepository from './Workspace.repository.js';
+
+const workspaceRepository = new WorkspaceRepository();
+
+
+export default class BoardRepository {
 
     async create(board) {
         const boardBO = board.toPersistenceObject();
@@ -18,7 +26,7 @@ class BoardRepository {
         }
 
         const boardBO = board.toPersistenceObject()
-        const result = await Board.update(boardBO, {
+        await Board.update(boardBO, {
             where: {
                 id: board.id
             },
@@ -43,19 +51,30 @@ class BoardRepository {
             where: {
                 id: id
             },
-            include:Workspace
+            include:[{
+                model: Workspace, attributes:
+                    ['id', 'title', 'description'],
+                as: 'Workspace'
+            }]
+        
         });
-        return new BoardBO(result.id, result.title, result.description, result.workspace);
+
+        let workspace = await workspaceRepository.findOne(result.WorkspaceId);
+
+
+        return new BoardBO(result.id, result.title, result.description, workspace);
     }
 
     async findAll() {  
         const result = await Board.findAll({
-            include:Workspace
+            include:[{
+                model: Workspace,
+                as: 'Workspace'
+            }]
         });
-        return result.map(()=> {
-            new BoardBO(result.dataValues.id, result.dataValues.title, result.dataValues.description, result.dataValues.workspace)
+        return await result.map(async (element, index)=> {
+            let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId);
+            new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace)
         });
     }
 }
-
-export { BoardRepository };

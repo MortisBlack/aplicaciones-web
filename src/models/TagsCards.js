@@ -8,7 +8,7 @@ const TagsCards = connection.define(
         id:{
             type: BIGINT,
             autoIncrement: true,
-            primaryKey: true,
+            primaryKey: true
         }
         },{
             tableName:'tags_cards'

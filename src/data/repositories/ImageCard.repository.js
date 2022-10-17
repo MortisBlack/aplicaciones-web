@@ -1,6 +1,6 @@
-import {ImageCard} from '../models/ImageCard.js';
+import {ImageCard} from '../../models/ImageCard.js';
 
-class imageCardRepository {
+export default class imageCardRepository {
 
 
     async create(imageCard) {
@@ -57,4 +57,3 @@ class imageCardRepository {
     }
 }
 
-export { imageCardRepository };

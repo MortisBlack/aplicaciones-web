@@ -6,7 +6,7 @@ export const ImageCard = connection.define('ImageCard',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     image:{type: STRING,
         max:55,

@@ -5,7 +5,7 @@ const User = connection.define('User',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     username: {
         type: STRING, 

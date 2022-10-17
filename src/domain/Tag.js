@@ -22,6 +22,7 @@ export default class Tag {
         // Validate string name is not empty and max length is 255
         if (typeof name === "string" && name.length > 0 && name.length <= 255){
             this._name = name; 
+            return;
         }
         throw new Error("Invalid name");
     }
@@ -29,6 +30,7 @@ export default class Tag {
         // Validate string color_tag is not empty and max length is 255
         if (typeof color === "string" && color.length > 0 && color.length <= 6){
             this._color = color;
+            return;
         }
 
         throw new Error("Invalid color");
@@ -41,6 +43,7 @@ export default class Tag {
     set board(board){
         if (board instanceof Board && board !== undefined){
             this._board = board;
+            return;
         }
         throw new Error("Invalid board");
     }

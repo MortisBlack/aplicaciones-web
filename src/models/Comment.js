@@ -5,7 +5,7 @@ export const Comment = connection.define('Comment',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     comment: {
         type: STRING, 

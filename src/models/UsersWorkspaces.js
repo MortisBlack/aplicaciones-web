@@ -9,7 +9,7 @@ const UsersWorkspaces = connection.define(
         id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     }
     },{
         tableName:'users_workspaces'

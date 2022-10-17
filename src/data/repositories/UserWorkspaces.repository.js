@@ -1,6 +1,6 @@
-import {UserWorkspaces} from '../models/UserWorkspaces.js';
+import {UserWorkspaces} from '../../models/UserWorkspaces.js';
 
-class UserWorkspacesRepository {
+export default class UserWorkspacesRepository {
 
 
     async create(userWorkspace) {
@@ -52,4 +52,3 @@ class UserWorkspacesRepository {
     }
 }
 
-export { UserWorkspacesRepository };

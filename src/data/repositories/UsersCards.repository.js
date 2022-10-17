@@ -1,6 +1,6 @@
-import {UsersCards} from '../models/UsersCards.js';
+import {UsersCards} from '../../models/UsersCards.js';
 
-class UsersCardsRepository {
+export default class UsersCardsRepository {
 
 
     async create(userCard) {
@@ -52,4 +52,3 @@ class UsersCardsRepository {
     }
 }
 
-export { UsersCardsRepository };

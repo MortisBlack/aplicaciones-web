@@ -1,4 +1,4 @@
-import Workspace from "./Workspace";
+import Workspace from "./Workspace.js";
 
 export default class Board {
     constructor(id, title, description, workspace){
@@ -28,6 +28,7 @@ export default class Board {
         // Validate string title is not empty and max length is 255
         if (typeof title === "string" && title.length > 0 && title.length <= 255){
             this._title = title;
+            return;
         }
 
         throw new Error("Title must be a string and not empty");
@@ -39,6 +40,7 @@ export default class Board {
         // Validate string description is not empty and max length is 255
         if (typeof description === "string" && description.length <= 255){
             this._description = description;
+            return;
         }
 
         throw new Error("Description must be a string");
@@ -48,6 +50,7 @@ export default class Board {
         // Validate workspace is not empty and is a Workspace object
         if (workspace !== undefined && workspace instanceof Workspace){
             this._workspace = workspace;
+            return;
         }
 
         throw new Error("Workspace must be a Workspace object");
@@ -56,7 +59,8 @@ export default class Board {
     toPersistenceObject(){
         return {
             title: this._title,
-            description: this._description
+            description: this._description,
+            WorkspaceId: this._workspace.id
         }
     }
 

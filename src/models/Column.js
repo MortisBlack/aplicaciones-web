@@ -7,7 +7,7 @@ export const Column = connection.define("Column",
         id:{
             type: BIGINT,
             autoIncrement: true,
-            primaryKey: true,
+            primaryKey: true
         },
         title: {
             type: STRING,

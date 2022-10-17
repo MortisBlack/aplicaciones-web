@@ -18,6 +18,7 @@ export default class UserType {
     set userType(user_type){
         if(user_type.length > 0 && user_type.length < 255 && user_type !== undefined){
             this._user_type = user_type;
+            return;
         }
         throw new Error("Invalid user type");
     }

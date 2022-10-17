@@ -1,6 +1,6 @@
-import {Comment} from '../models/Comment.js';
+import {Comment} from '../../models/Comment.js';
 
-class CommentRepository {
+export default class CommentRepository {
 
 
     async create(comment) {
@@ -57,4 +57,3 @@ class CommentRepository {
     }
 }
 
-export { CommentRepository };

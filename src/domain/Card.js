@@ -33,6 +33,7 @@ export default class Card {
         // Validate string max length 500 and not empty
         if(typeof title === 'string' && title.length <= 500 && title.length > 0){
             this._title = title;
+            return;
         }
         throw new Error('Title must be a string and not empty');
     }
@@ -41,6 +42,7 @@ export default class Card {
         // Validate string max length 500
         if(typeof description === 'string' && description.length <= 1000){
             this._description = description;
+            return;
         }
 
         throw new Error('Description must be a string');
@@ -54,6 +56,7 @@ export default class Card {
         // Validate date instance
         if(deadlineDate instanceof Date){
             this._deadlineDate = deadlineDate;
+            return;
         }
 
         throw new Error('Deadline date must be a date');
@@ -63,6 +66,7 @@ export default class Card {
         // Validate column instance
         if(column instanceof Column){
             this._column = column;
+            return;
         }
 
         throw new Error('Column must be a column');
