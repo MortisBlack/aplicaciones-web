@@ -21,6 +21,7 @@ export default class Column {
     set title(title){
         if (typeof title === "string" && title.length > 0 && title.length <= 255){
             this._title = title;
+            return;
         }
 
         throw new Error("Invalid title");
@@ -30,6 +31,7 @@ export default class Column {
         // Validate board is not empty and is a board object
         if (board !== undefined && board instanceof Board){
             this._board = board;
+            return;
         }
 
         throw new Error("Invalid board");

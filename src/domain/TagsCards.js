@@ -22,6 +22,7 @@ export default class TagsCards {
         // Validate card is not empty and is a card object
         if (card !== undefined && card instanceof Card){
             this._card = card;
+            return;
         }
         throw new Error("Invalid card");
     }
@@ -30,6 +31,7 @@ export default class TagsCards {
         // Validate tag is not empty and is a tag object
         if (tag !== undefined && tag instanceof Tag){
             this._tag = tag;
+            return;
         }
         throw new Error("Invalid tag");
     }

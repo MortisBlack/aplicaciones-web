@@ -5,7 +5,7 @@ const Tag = connection.define('Tag',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     name: {
         type: STRING,

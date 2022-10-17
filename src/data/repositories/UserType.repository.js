@@ -1,6 +1,6 @@
-import {UserType} from '../models/UserType.js';
+import {UserType} from '../../models/UserType.js';
 
-class UserTypeRepository {
+export default class UserTypeRepository {
 
 
     async create(userType) {
@@ -52,4 +52,3 @@ class UserTypeRepository {
     }
 }
 
-export { UserTypeRepository };

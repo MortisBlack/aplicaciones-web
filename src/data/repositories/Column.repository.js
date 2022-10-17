@@ -1,6 +1,6 @@
-import { Column } from '../models/Column.js';
+import { Column } from '../../models/Column.js';
 
-class ColumnRepository {
+export default class ColumnRepository {
 
 
     async create(column) {
@@ -57,4 +57,3 @@ class ColumnRepository {
     }
 }
 
-export { ColumnRepository };

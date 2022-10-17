@@ -1,13 +1,20 @@
-import { Card } from '../models/Card.js';
+import Card  from '../../models/Card.js';
+import Column from '../../models/Column.js';
 
-class CardRepository {
+import CardBO from '../../domain/Card.js';
+
+import ColumnRepository from './Column.repository.js';
+
+const columnRepository = new ColumnRepository();
+
+export default class CardRepository {
 
 
     async create(card) {
         
-        const result = await Card.create(card);
-        await result.reload();
-        return result;
+        const cardBO = card.toPersistenceObject();
+        const result = await Card.create(cardBO);
+        return new CardBO(result.id, result.title, result.description, result.board);
         
     }
 
@@ -17,13 +24,13 @@ class CardRepository {
             throw new Error('id is undefined');
         }
 
-        
-        const result = await Card.update(card, {
+        const cardBO = card.toPersistenceObject()
+        await Card.update(cardBO, {
             where: {
                 id: card.id
             }
         });
-        return result;
+        return this.findOne(card.id);
         
     }
 
@@ -34,7 +41,7 @@ class CardRepository {
                 id: id
             }
         });
-        return result;
+        return "Card successfully deleted";
         
     }
 
@@ -45,7 +52,7 @@ class CardRepository {
                 id: id
             }
         });
-        return result;
+        return new CardBO(result.id, result.title, result.description, result.deadlineDate, result.column);
         
     }
 
@@ -57,4 +64,3 @@ class CardRepository {
     }
 }
 
-export { CardRepository };

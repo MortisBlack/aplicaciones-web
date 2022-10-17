@@ -1,6 +1,6 @@
-import {UsersBoards} from '../models/UsersBoards.js';
+import {UsersBoards} from '../../models/UsersBoards.js';
 
-class UsersBoardsRepository {
+export default class UsersBoardsRepository {
 
 
     async create(userBoard) {
@@ -52,4 +52,3 @@ class UsersBoardsRepository {
     }
 }
 
-export { UsersBoardsRepository };

@@ -5,7 +5,7 @@ const Workspace = connection.define('Workspace',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     title: {
         type: STRING, 

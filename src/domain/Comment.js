@@ -32,6 +32,7 @@ export default class Comment {
     set comment(comment){
         if (typeof comment === "string" && comment.length > 0 && comment.length <= 1000){
             this._comment = comment;
+            return;
         }
         throw new Error("Comment must be a string between 1 and 1000 characters");
     }
@@ -41,6 +42,7 @@ export default class Comment {
         }
         if (typeof image === "string" && image.length > 0 && image.length <= 55){
             this._image = image;
+            return;
         }
         throw new Error("Image must be a string between 1 and 55 characters");
     }
@@ -48,6 +50,7 @@ export default class Comment {
     set user(user){
         if (typeof user === User){
             this._user = user;
+            return;
         }
         throw new Error("User an instance of User");
     }
@@ -55,6 +58,7 @@ export default class Comment {
     set card(card){
         if (typeof card === Card){
             this._card = card;
+            return;
         }
         throw new Error("Card an instance of Card");
     }

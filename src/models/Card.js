@@ -6,7 +6,7 @@ const Card = connection.define('Card',{
     id:{
         type: BIGINT,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
     title:{
         type: STRING, 

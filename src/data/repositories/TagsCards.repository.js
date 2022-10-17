@@ -1,6 +1,6 @@
-import {TagsCards} from '../models/TagsCards.js';
+import {TagsCards} from '../../models/TagsCards.js';
 
-class TagsCardsRepository {
+export default class TagsCardsRepository {
 
 
     async create(tagCard) {
@@ -52,4 +52,3 @@ class TagsCardsRepository {
     }
 }
 
-export { TagsCardsRepository };

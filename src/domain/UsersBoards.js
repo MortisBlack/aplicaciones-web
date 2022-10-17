@@ -22,6 +22,7 @@ export default class UsersBoards {
         // Validate user is not empty and is a user object
         if (user !== undefined && user instanceof user){
             this._user = user;
+            return;
         }
 
         throw new Error("Invalid user");
@@ -31,6 +32,7 @@ export default class UsersBoards {
         // Validate board is not empty and is a board object
         if (board !== undefined && board instanceof board){
             this._board = board;
+            return;
         }
 
         throw new Error("Invalid board");

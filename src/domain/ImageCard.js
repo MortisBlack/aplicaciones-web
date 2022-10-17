@@ -19,12 +19,14 @@ export default class ImageCard {
     set image(image){
         if (typeof image === "string" && image.length > 0 && image.length <= 55){
             this._image = image;
+            return;
         }
         throw new Error("Invalid image");
     }
     set card(card){
         if (card !== undefined && card instanceof Card){
             this._card = card;
+            return;
         }
         throw new Error("Invalid card");
     }
