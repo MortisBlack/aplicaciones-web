@@ -23,6 +23,10 @@ const Card = connection.define('Card',{
         field:'deadline_date',
         type:DATE,
         allowNull:false
+    },
+    ColumnId:{
+        type:BIGINT,
+        allowNull:false
     }
 },{
     tableName:'card'
@@ -34,10 +38,6 @@ Column.hasMany(Card, {
 
 Card.belongsTo(Column, {
     as: 'Column',
-    foreignKey: {
-        name: 'ColumnId',
-        allowNull: false
-    }
 });
 
 Card.sync()

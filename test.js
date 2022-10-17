@@ -1,22 +1,28 @@
 import WorkspaceRepository from "./src/data/repositories/Workspace.repository.js";
 import BoardRepository from "./src/data/repositories/Board.repository.js";
+import ColumnRepository from "./src/data/repositories/Column.repository.js";
+
 import Workspace from "./src/domain/Workspace.js";
 import Board from "./src/domain/Board.js";
+import Column from "./src/domain/Column.js";
+
 
 const workspaceRepository = new WorkspaceRepository();
 const boardRepository = new BoardRepository();
+const columnRepository = new ColumnRepository();
 
 
 
 async function test(){
     let workspace = await testingWorkspaces();
-    
-    // console.table(workspace);
-    await testingBoards(workspace);
+    let board = await testingBoards(workspace);
+    let column = await testingColumns(board);
 }
 
 await test();
 
+
+// Start test for workspaces
 async function testingWorkspaces(){
     try{
         let result = await createWorkspace();
@@ -30,7 +36,6 @@ async function testingWorkspaces(){
     }
 
 }
-
 
 async function createWorkspace(){
     let workspace = new Workspace(undefined, "Test Workspace", "Test Workspace Description");
@@ -66,9 +71,9 @@ async function updateWorkspace(id){
 async function deleteWorkspace(id){
     await workspaceRepository.delete(id);
 }
+// End test for boards
 
-
-/* Test for Boards */
+// Start test for board
 
 async function testingBoards(workspace){
     try{
@@ -76,13 +81,13 @@ async function testingBoards(workspace){
         await getBoard(result.id);
         await getAllBoards();
         await updateBoard(result.id);
-        await deleteBoard(result.id);
+        // await deleteBoard(result.id);
+        return result;
     }catch(err){
         console.warn(err)
     }
 
 }
-
 
 async function createBoard(workspace){
     let board = new Board(undefined, "Test Board", "Test Board Description", workspace);
@@ -118,3 +123,56 @@ async function updateBoard(id){
 async function deleteBoard(id){
     await boardRepository.delete(id);
 }
+
+// End test for Boards
+
+// Start test for columns
+async function testingColumns(board){
+    try{
+        let result = await createColumn(board);
+        await getColumn(result.id);
+        await getAllColumns();
+        await updateColumn(result.id);
+        // await deleteColumn(result.id);
+        return result;
+    }catch(err){
+        console.warn(err)
+    }
+
+}
+
+async function createColumn(board){
+    let column = new Column(undefined, "Test Column", board);
+
+    column = await columnRepository.create(column);
+
+    return column;
+}
+
+async function getColumn(id){
+    let column = await columnRepository.findOne(id);
+
+    // console.log(column);
+}
+
+async function getAllColumns(){
+    let columns = await columnRepository.findAll();
+
+    // console.log(columns);
+}
+
+async function updateColumn(id){
+    let column = await columnRepository.findOne(id);
+
+    column.name = "Updated Column";
+
+    column = await columnRepository.update(column);
+
+    // console.log(column);
+}
+
+async function deleteColumn(id){
+    await columnRepository.delete(id);
+}
+
+// End test for columns
