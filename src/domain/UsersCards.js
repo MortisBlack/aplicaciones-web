@@ -1,3 +1,6 @@
+import Card from "./Card.js";
+import User from "./User.js";
+
 export default class UsersCards {
     constructor(id, user, card){
         this._id = id;
@@ -17,7 +20,7 @@ export default class UsersCards {
 
     set user(user){
         // Validate user is not empty and is a user object
-        if (user !== undefined && user instanceof user){
+        if (user !== undefined && user instanceof User){
             this._user = user;
             return;
         }
@@ -27,7 +30,7 @@ export default class UsersCards {
 
     set card(card){
         // Validate card is not empty and is a card object
-        if (card !== undefined && card instanceof card){
+        if (card !== undefined && card instanceof Card){
             this._card = card;
             return;
         }

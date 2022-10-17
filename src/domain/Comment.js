@@ -1,5 +1,5 @@
-import User from "./User";
-import Card from "./Card";
+import User from "./User.js";
+import Card from "./Card.js";
 
 export default class Comment {
     constructor(id, comment, image, user, card){

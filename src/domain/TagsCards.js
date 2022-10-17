@@ -1,5 +1,5 @@
-import Card from "./Card";
-import Tag from "./Tag";
+import Card from "./Card.js";
+import Tag from "./Tag.js";
 
 export default class TagsCards {
     constructor(id, card, tag){

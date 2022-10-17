@@ -1,4 +1,4 @@
-import Column from "./Column";
+import Column from "./Column.js";
 
 export default class Card {
     constructor(id, title, description, deadlineDate, column){
@@ -78,7 +78,7 @@ export default class Card {
             title: this._title,
             description: this._description,
             deadlineDate: this._deadlineDate,
-            ColumnId: this._column
+            ColumnId: this._column.id
         }
     }
 

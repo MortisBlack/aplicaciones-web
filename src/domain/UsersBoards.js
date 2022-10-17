@@ -1,5 +1,5 @@
-import User from "./User";
-import Board from "./Board";
+import User from "./User.js";
+import Board from "./Board.js";
 
 export default class UsersBoards {
     constructor(id, user, board){
@@ -20,7 +20,7 @@ export default class UsersBoards {
 
     set user(user){
         // Validate user is not empty and is a user object
-        if (user !== undefined && user instanceof user){
+        if (user !== undefined && user instanceof User){
             this._user = user;
             return;
         }
@@ -30,7 +30,7 @@ export default class UsersBoards {
 
     set board(board){
         // Validate board is not empty and is a board object
-        if (board !== undefined && board instanceof board){
+        if (board !== undefined && board instanceof Board){
             this._board = board;
             return;
         }
