@@ -145,3 +145,6 @@ dist
 
 # Docker files
 /dockerfiles/
+
+# otros folder
+/otros/
