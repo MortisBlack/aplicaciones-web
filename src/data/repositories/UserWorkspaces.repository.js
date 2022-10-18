@@ -1,4 +1,4 @@
-import {UserWorkspaces} from '../../models/UserWorkspaces.js';
+import UserWorkspaces from '../../models/UserWorkspaces.js';
 
 export default class UserWorkspacesRepository {
 

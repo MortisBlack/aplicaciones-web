@@ -1,8 +1,6 @@
 import Card  from '../../models/Card.js';
 import Column from '../../models/Column.js';
-
 import CardBO from '../../domain/Card.js';
-
 import ColumnRepository from './Column.repository.js';
 
 const columnRepository = new ColumnRepository();

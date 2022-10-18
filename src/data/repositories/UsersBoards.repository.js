@@ -1,4 +1,4 @@
-import {UsersBoards} from '../../models/UsersBoards.js';
+import UsersBoards from '../../models/UsersBoards.js';
 
 export default class UsersBoardsRepository {
 

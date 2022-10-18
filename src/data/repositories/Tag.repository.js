@@ -1,4 +1,4 @@
-import {imageCard} from '../../models/imageCard.js';
+import ImageCard from '../../models/imageCard.js';
 
 export default class imageCardRepository {
 
