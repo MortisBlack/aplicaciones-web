@@ -1,5 +1,5 @@
 import { connection } from "../data/connection.js";
-import {BIGINT} from "sequelize";
+import { BIGINT } from "sequelize";
 import User from "./User.js";
 import UserType from "./UserType.js";
 import Workspace from "./Workspace.js";

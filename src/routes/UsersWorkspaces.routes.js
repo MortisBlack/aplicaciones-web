@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { UsersWorkspacesController } from "../controllers/UsersWorkspaces.controller.js"
+import UsersWorkspacesController from "../controllers/UsersWorkspaces.controller.js"
+
 const usersWorkspacesController = new UsersWorkspacesController();
 const router = Router();
 

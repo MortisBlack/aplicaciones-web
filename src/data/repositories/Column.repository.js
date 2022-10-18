@@ -1,10 +1,6 @@
 import Column  from '../../models/Column.js';
 import Board from '../../models/Board.js';
-
-
 import ColumnBO from '../../domain/Column.js';
-
-
 import BoardRepository from './Board.repository.js';
 
 const boardRepository = new BoardRepository();

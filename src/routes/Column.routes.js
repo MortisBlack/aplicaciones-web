@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { ColumnController } from "../controllers/Column.controller.js"
+import ColumnController from "../controllers/Column.controller.js"
+
 const columnController = new ColumnController();
 const router = Router();
 

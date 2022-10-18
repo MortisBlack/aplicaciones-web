@@ -1,4 +1,4 @@
-import {TagsCards} from '../../models/TagsCards.js';
+import TagsCards from '../../models/TagsCards.js';
 
 export default class TagsCardsRepository {
 

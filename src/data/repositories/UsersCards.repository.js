@@ -1,4 +1,4 @@
-import {UsersCards} from '../../models/UsersCards.js';
+import UsersCards from '../../models/UsersCards.js';
 
 export default class UsersCardsRepository {
 

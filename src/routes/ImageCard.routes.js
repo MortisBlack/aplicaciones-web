@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { ImageCardController } from "../controllers/ImageCard.controller.js"
+import ImageCardController from "../controllers/ImageCard.controller.js"
+
 const imageCardController = new ImageCardController();
 const router = Router();
 

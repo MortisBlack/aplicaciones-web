@@ -1,4 +1,4 @@
-import {UserType} from '../../models/UserType.js';
+import UserType from '../../models/UserType.js';
 
 export default class UserTypeRepository {
 
