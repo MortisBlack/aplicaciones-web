@@ -1,7 +1,9 @@
-POSTGRES_DB=itson-web
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=itson123
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+# Changue everything here to your settings for make connection with the databe
+# remenber to create a copy of this file and remove " example" from the file name
+# (the file name needs to be only ".env" to work propely)
 
-#Hola
+POSTGRES_DB=database_name
+POSTGRES_USER=database_user
+POSTGRES_PASSWORD=database_password
+POSTGRES_HOST=database_host
+POSTGRES_PORT=database_port
