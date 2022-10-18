@@ -1,16 +1,16 @@
 import { Router } from "express";
-import WorkspaceController from "../controllers/Worckspace.Controller.js"
+import WorkspaceController from "../controllers/Workspace.controller.js"
 const workspaceController = new WorkspaceController();
 const router = Router();
 
-router.post('/workspace', workspaceController.createWorkspace);
+router.post('', workspaceController.createWorkspace);
 
-router.patch('/workspace/:id',workspaceController.updateWorkspace);
+router.patch('/:id',workspaceController.updateWorkspace);
 
-router.delete('/workspace/:id', workspaceController.deleteWorkspace);
+router.delete('/:id', workspaceController.deleteWorkspace);
 
-router.get('/workspace', workspaceController.getAllWorkspaces);
+router.get('', workspaceController.getAllWorkspaces);
 
-router.get('/workspace/:id', workspaceController.findOneWorkspace);
+router.get('/:id', workspaceController.findOneWorkspace);
 
 export default router;
