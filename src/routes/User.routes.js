@@ -5,7 +5,7 @@ const userController = new UserController();
 const router = Router();
 
 router.get('/user', userController.createUser);
-router.get('/pato', userController.noCreate);
+router.post('/user', userController.postStudent);
 
 // router.patch('/user/:id',userController.updateUser);
 

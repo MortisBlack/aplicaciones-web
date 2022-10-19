@@ -6,7 +6,7 @@ APP.use(express.json());
 
 import router from './src/routes/User.routes.js'
 
-APP.use('/cola', router)
+APP.use(router)
 
 APP.listen(PORT, ()=>{
     console.log(`Server running in http://${HOSTNAME}:${PORT}/`);

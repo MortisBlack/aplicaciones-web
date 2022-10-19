@@ -38,7 +38,6 @@ export default class User {
     }
 
     get email(){
-
         return this._email;
     }
 
@@ -143,6 +142,20 @@ export default class User {
         }
 
         throw new Error("Birthdate must be a Date");
+    }
+
+    toPersistenceObject(){
+        return {
+            username: this._username,
+            password: this._password,
+            name: this._name,
+            first_surname: this._first_surname,
+            second_surname: this._second_surname,
+            email: this._email,
+            phone: this._phone,
+            img_profile: this._img_profile,
+            birthdate: this._birthdate
+        }
     }
 
 }
