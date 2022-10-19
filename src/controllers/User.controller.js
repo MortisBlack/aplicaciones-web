@@ -5,15 +5,7 @@ import UserBO from '../domain/User.js';
 const userRepository = new UserRepository();
 
 export default class UserController { 
-    createUser(req, res, next) {
-        res.send("Hello world");
-    }
-
-    noCreate(req, res, next) {
-        res.send("I hate world");
-    };
-
-    postStudent(req, res, next){
+    async createUser(req, res, next) {
         try {
             const {
                 username,
@@ -26,32 +18,73 @@ export default class UserController {
                 img_profile,
                 birthdate
             } = req.body;
-
+    
             const user = new UserBO(
                 undefined,
-                req.body.username, 
-                req.body.password,
-                req.body.name, 
-                req.body.first_surname,
-                req.body.second_surname,
-                req.body.email,
-                req.body.phone,
-                req.body.img_profile,
-                req.body.birthdate
+                username, 
+                password,
+                name, 
+                first_surname,
+                second_surname,
+                email,
+                phone,
+                img_profile,
+                birthdate
                 );
-            userRepository.create(user)
-
-            res.status(200).send({
-                message: "User created successfully"
-            });
-
-            // console.log(user);
-            // userRepository.create(user);
+            
+            let result = await userRepository.create(user);
     
-            // console.log(user)
-        } catch (error) {
-            console.warn(error);
-        }    
+            res.status(200).send({
+                message: "User created successfully",
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error creating user'
+            next(err)
+        }
+        
+    };
+
+    async updateUser(req, res, next){
+        try {
+            const {
+                username,
+                password,
+                name,
+                first_surname,
+                second_surname,
+                email,
+                phone,
+                img_profile,
+                birthdate
+            } = req.body;
+    
+            const {id} = req.params;
+    
+            const user = new UserBO(
+                    id,
+                    username, 
+                    password,
+                    name, 
+                    first_surname,
+                    second_surname,
+                    email,
+                    phone,
+                    img_profile,
+                    birthdate
+                    );
+
+            let result = await userRepository.update(user);
+    
+            res.status(200).send({
+                message: "User updated successfully", 
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error updating user'
+            next(err)
+        }
+             
     };
 }
 

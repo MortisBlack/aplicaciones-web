@@ -7,9 +7,7 @@ const workspaceRepository = new WorkspaceRepository();
 
 export default class WorkspaceController{
 
-
     async createWorkspace(req, res, next){
-
         const {title, description} = req.body;
 
         const workspace = new WorkspaceBo(undefined,title, description);
@@ -18,32 +16,23 @@ export default class WorkspaceController{
         res.status(201).send({
             message: "Workspace created successfully", 
             result: result
-        });
+        });     
     }
 
     async updateWorkspace(req, res, next){
-            try{
-                const {title, description} = req.body;
-                const {id} = req.params;
-        
-                const workspace = new WorkspaceBo(id, title, description);
-                let result = await workspaceRepository.update(workspace);
-        
-                res.status(200).send({
-                    message: "Workspace updated successfully", 
-                    result: result
-                });
-            }catch(err){
-                res.status(500).send({
-                    message: "Error updating workspace",
-                    error: err
-                });
-            }
-            
+            const {title, description} = req.body;
+            const {id} = req.params;
+    
+            const workspace = new WorkspaceBo(id, title, description);
+            let result = await workspaceRepository.update(workspace);
+    
+            res.status(200).send({
+                message: "Workspace updated successfully", 
+                result: result
+            });
         }
 
     async deleteWorkspace(req, res, next){
-
         const {id} = req.params;
 
         let result = await workspaceRepository.delete(id);
@@ -72,6 +61,4 @@ export default class WorkspaceController{
             result: result
         });
     }
-
-
 }

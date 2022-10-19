@@ -26,14 +26,14 @@ export default class UserRepository {
             throw new Error('id is undefined');
         }
 
-        
-        const result = await User.update(user, {
+        const userBO = user.toPersistenceObject();
+        const result = await User.update(userBO, {
             where: {
                 id: user.id
             }
         });
-        return result;
-    }
+        return this.findOne(user.id);
+    };
 
     async delete(id) {
         
@@ -52,8 +52,21 @@ export default class UserRepository {
                 id: id
             }
         });
-        return result;
-    }
+        return new UserBO(
+            result.dataValues.id, 
+            result.dataValues.username, 
+            result.dataValues.password, 
+            result.dataValues.name, 
+            result.dataValues.first_surname, 
+            result.dataValues.second_surname, 
+            result.dataValues.email, 
+            result.dataValues.phone, 
+            result.dataValues.email, 
+            result.dataValues.img_profile, 
+            result.dataValues.birthdate
+            );
+    };
+                
 
     async findAll() {
         
