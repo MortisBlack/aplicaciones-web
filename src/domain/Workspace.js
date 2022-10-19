@@ -37,6 +37,14 @@ export default class Workspace {
         throw new Error('Description is not valid');
     }
 
+    toString(){
+        return {
+            id: this._id,
+            title: this._title,
+            description: this._description
+        }
+    }
+
     toPersistenceObject(){
         return {
             id: this.id,
