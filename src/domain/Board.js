@@ -63,5 +63,4 @@ export default class Board {
             WorkspaceId: this._workspace.id
         }
     }
-
 }

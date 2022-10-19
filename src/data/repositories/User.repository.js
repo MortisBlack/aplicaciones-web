@@ -1,13 +1,23 @@
 import User from '../../models/User.js';
+import UserBO from '../../domain/User.js';
 
 export default class UserRepository {
 
-
     async create(user) {
-        
-        const result = await User.create(user);
-        await result.reload();
-        return result;
+        const userBO = user.toPersistenceObject();
+        const result = await User.create(userBO);
+        return new UserBO(
+            result.id,
+            result.username,
+            result.password, 
+            result.name, 
+            result.first_surname,
+            result.second_surname,
+            result.email,
+            result.phone,
+            result.img_profile,
+            result.birthdate
+            );
     }
 
     async update(user) {
