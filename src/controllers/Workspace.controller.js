@@ -8,18 +8,24 @@ const workspaceRepository = new WorkspaceRepository();
 export default class WorkspaceController{
 
     async createWorkspace(req, res, next){
-        const {title, description} = req.body;
+        try {
+            const {title, description} = req.body;
 
-        const workspace = new WorkspaceBo(undefined,title, description);
-        let result = await workspaceRepository.create(workspace);
+            const workspace = new WorkspaceBo(undefined,title, description);
+            let result = await workspaceRepository.create(workspace);
 
-        res.status(201).send({
-            message: "Workspace created successfully", 
-            result: result
-        });     
+            res.status(201).send({
+                message: "Workspace created successfully", 
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error creating workspace'
+            next(err)
+        }
     }
 
     async updateWorkspace(req, res, next){
+        try {
             const {title, description} = req.body;
             const {id} = req.params;
     
@@ -30,35 +36,54 @@ export default class WorkspaceController{
                 message: "Workspace updated successfully", 
                 result: result
             });
+        } catch (err) {
+            err.message = 'Error updating workspace'
+            next(err)
         }
+    }
 
     async deleteWorkspace(req, res, next){
-        const {id} = req.params;
+        try {
+            const {id} = req.params;
 
-        let result = await workspaceRepository.delete(id);
+            let result = await workspaceRepository.delete(id);
 
-        res.status(200).send({
-            message: result
-        });
+            res.status(200).send({
+                message: result
+            });
+        } catch (err) {
+            err.message = 'Error deleting workspace'
+            next(err)
+        }
     }
 
     async getAllWorkspaces(req, res, next){
-        let result = await workspaceRepository.findAll();
+        try {
+            let result = await workspaceRepository.findAll();
 
-        res.status(200).send({
-            message: "Workspaces fetched successfully", 
-            result: result
-        });
+            res.status(200).send({
+                message: "Workspaces fetched successfully", 
+                result: result
+            });
+        } catch (error) {
+            err.message = 'Error getting all workspaces'
+            next(err)
+        }
     }
 
     async findOneWorkspace(req, res, next){
-        const {id} = req.params;
+        try {
+            const {id} = req.params;
 
-        let result = await workspaceRepository.findOne(id);
+            let result = await workspaceRepository.findOne(id);
 
-        res.status(200).send({
-            message: "Workspace fetched successfully", 
-            result: result
-        });
+            res.status(200).send({
+                message: "Workspace fetched successfully", 
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error getting workspace'
+            next(err)
+        }
     }
 }
