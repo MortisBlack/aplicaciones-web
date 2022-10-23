@@ -7,10 +7,10 @@ router.post('', userController.createUser);
 
 router.patch('/:id',userController.updateUser);
 
-// router.delete('/:id', userController.deleteUser);
+router.delete('/:id', userController.deleteUser);
 
-// router.get('', userController.getAllUsers);
+router.get('', userController.getAllUsers);
 
-// router.get('/:id', userController.findOneUser);
+router.get('/:id', userController.findOneUser);
 
 export default router;
