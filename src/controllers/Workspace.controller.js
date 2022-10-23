@@ -49,7 +49,8 @@ export default class WorkspaceController{
             let result = await workspaceRepository.delete(id);
 
             res.status(200).send({
-                message: result
+                message: "Workspace deleted successfully", 
+                result: result
             });
         } catch (err) {
             err.message = 'Error deleting workspace'

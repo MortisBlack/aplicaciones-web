@@ -42,7 +42,6 @@ export default class UserController {
             err.message = 'Error creating user'
             next(err)
         }
-        
     };
 
     async updateUser(req, res, next){
@@ -83,8 +82,53 @@ export default class UserController {
         } catch (err) {
             err.message = 'Error updating user'
             next(err)
-        }
-             
+        }   
     };
+
+    async deleteUser(req, res, next){
+        try {
+            const {id} = req.params;
+
+            let result = await userRepository.delete(id);
+
+            res.status(200).send({
+                message: "User deleted successfully", 
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error deleting user'
+            next(err)
+        }
+    }
+
+    async getAllUsers(req, res, next){
+        try {
+            let result = await userRepository.findAll();
+
+            res.status(200).send({
+                message: "Users fetched successfully", 
+                result: result
+            });
+        } catch (error) {
+            err.message = 'Error getting all users'
+            next(err)
+        }
+    }
+
+    async findOneUser(req, res, next){
+        try {
+            const {id} = req.params;
+
+            let result = await userRepository.findOne(id);
+
+            res.status(200).send({
+                message: "User fetched successfully", 
+                result: result
+            });
+        } catch (err) {
+            err.message = 'Error getting user'
+            next(err)
+        }
+    }
 }
 
