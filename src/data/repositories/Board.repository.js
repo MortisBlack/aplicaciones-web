@@ -42,7 +42,7 @@ export default class BoardRepository {
     }
 
     async findOne(id) {
-        
+
         const result = await Board.findOne({
             where: {
                 id: id
@@ -54,8 +54,12 @@ export default class BoardRepository {
             }]
         
         });
-        let workspace = await workspaceRepository.findOne(result.WorkspaceId);
 
+        if(result === null) {
+            throw new Error(`The board ${id} doesn't exist`);
+        };
+
+        let workspace = await workspaceRepository.findOne(result.WorkspaceId);
 
         return new BoardBO(result.id, result.title, result.description, workspace);
     }
@@ -67,6 +71,11 @@ export default class BoardRepository {
                 as: 'Workspace'
             }]
         });
+
+        if(result === null) {
+            throw new Error('There are no boards registered yet')
+        }
+
         return await result.map(async (element, index)=> {
             let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId);
             new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace)

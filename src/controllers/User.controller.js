@@ -1,6 +1,6 @@
 import UserRepository from "../data/repositories/User.repository.js";
-import User from "../models/User.js";
 import UserBO from '../domain/User.js';
+
 
 const userRepository = new UserRepository();
 
@@ -18,7 +18,7 @@ export default class UserController {
                 img_profile,
                 birthdate
             } = req.body;
-    
+            
             const user = new UserBO(
                 undefined,
                 username, 
@@ -39,12 +39,14 @@ export default class UserController {
                 result: result
             });
         } catch (err) {
-            err.message = 'Error creating user'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     };
 
-    async updateUser(req, res, next){
+    async updateUser(req, res, next){    
         try {
             const {
                 username,
@@ -57,9 +59,9 @@ export default class UserController {
                 img_profile,
                 birthdate
             } = req.body;
-    
+
             const {id} = req.params;
-    
+
             const user = new UserBO(
                     id,
                     username, 
@@ -74,13 +76,23 @@ export default class UserController {
                     );
 
             let result = await userRepository.update(user);
-    
-            res.status(200).send({
-                message: "User updated successfully", 
-                result: result
-            });
+            
+            if(result) {
+                res.status(200).send({
+                    message: "User updated successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The user ${id} doesn't exist`, 
+                    result: result
+                });
+            }
+
         } catch (err) {
-            err.message = 'Error updating user'
+            res.send({
+                message: err.message
+            })
             next(err)
         }   
     };
@@ -91,12 +103,21 @@ export default class UserController {
 
             let result = await userRepository.delete(id);
 
-            res.status(200).send({
-                message: "User deleted successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "User deleted successfully"
+                });
+            } else {
+                res.status(404).send({
+                    message: `The user ${id} doesn't exist`, 
+                    result: result
+                });
+            }
+
         } catch (err) {
-            err.message = 'Error deleting user'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -105,12 +126,22 @@ export default class UserController {
         try {
             let result = await userRepository.findAll();
 
-            res.status(200).send({
-                message: "Users fetched successfully", 
-                result: result
-            });
-        } catch (error) {
-            err.message = 'Error getting all users'
+            if(result) {
+                res.status(200).send({
+                    message: "Users fetched successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `There are not users registered yet`, 
+                    result: result
+                });
+            }
+            
+        } catch (err) {
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -121,12 +152,21 @@ export default class UserController {
 
             let result = await userRepository.findOne(id);
 
-            res.status(200).send({
-                message: "User fetched successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "User fetched successfully"
+                });
+            } else {
+                res.status(404).send({
+                    message: `The user ${id} doesn't exist`, 
+                    result: result
+                });
+            }
+            
         } catch (err) {
-            err.message = 'Error getting user'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }

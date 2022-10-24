@@ -14,7 +14,7 @@ const errorHandler = (error, request, response, next) => {
     });
   
     // send back an easily understandable error message to the caller
-    response.status(status).sendStatus(error.message)
+    // response.status(status).sendStatus(error.message)
   }
 
   export default errorHandler;

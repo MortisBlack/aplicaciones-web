@@ -17,6 +17,12 @@ export default class WorkspaceRepository {
             throw new Error('id is undefined');
         }
 
+        const workspaceCheck = await this.findOne(user.id);
+
+        if(workspaceCheck == undefined) {
+            return undefined;
+        }
+
         const workspaceBO = workspace.toPersistenceObject()
         const result = await Workspace.update(workspaceBO, {
             where: {
@@ -27,12 +33,18 @@ export default class WorkspaceRepository {
     }
 
     async delete(id) {
-        
+        const workspaceCheck = await this.findOne(user.id);
+
+        if(workspaceCheck == undefined) {
+            return undefined;
+        }
+
         const result = await Workspace.destroy({
             where: {
                 id: id
             }
         });
+
         return "Workspace successfully deleted";
     }
 
@@ -44,11 +56,20 @@ export default class WorkspaceRepository {
             }
         });
 
+        if(result == null) {
+            return undefined;
+        };
+
         return new WorkspaceBO(result.dataValues.id, result.dataValues.title, result.dataValues.description)
     }
 
     async findAll() {        
         const result = await Workspace.findAll();
+
+        if(result == null) {
+            return undefined;
+        };
+
         return result.map((element, index)=> {
             return new WorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description)
         });

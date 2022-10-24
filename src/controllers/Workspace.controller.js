@@ -1,7 +1,5 @@
-import WorkspaceBo from "../domain/Workspace.js";
-
-
 import WorkspaceRepository from "../data/repositories/Workspace.repository.js";
+import WorkspaceBo from "../domain/Workspace.js";
 
 const workspaceRepository = new WorkspaceRepository();
 
