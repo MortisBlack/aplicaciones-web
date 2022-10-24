@@ -71,7 +71,7 @@ export default class CardRepository {
     }
 
     async findOne(id) {
-
+        
         const result = await Card.findOne({
             where: {
                 id: id
@@ -83,17 +83,13 @@ export default class CardRepository {
             }]
         
         });
-        
+
         if(result == null) {
             return undefined;
         };
-
+        
         let column = await columnRepository.findOne(result.ColumnId);
-        result.id, 
-        result.title, 
-        result.description, 
-        result.deadline_date, 
-        column
+        
         return new CardBO(
             result.id, 
             result.title, 

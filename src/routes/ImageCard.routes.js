@@ -4,14 +4,14 @@ import ImageCardController from "../controllers/ImageCard.controller.js"
 const imageCardController = new ImageCardController();
 const router = Router();
 
-router.post('/imageCard', imageCardController.createImageCard);
+router.post('', imageCardController.createImageCard);
 
-router.patch('/imageCard/:id',imageCardController.updateImageCard);
+router.patch('/:id',imageCardController.updateImageCard);
 
-router.delete('/imageCard/:id', imageCardController.deleteImageCard);
+router.delete('/:id', imageCardController.deleteImageCard);
 
-router.get('/imageCard', imageCardController.getAllImageCards);
+router.get('', imageCardController.getAllImagesCards);
 
-router.get('/imageCard/:id', imageCardController.findOneImageCard);
+router.get('/:id', imageCardController.findOneImageCard);
 
 export default router;
