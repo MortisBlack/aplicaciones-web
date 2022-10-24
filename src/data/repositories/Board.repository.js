@@ -68,8 +68,6 @@ export default class BoardRepository {
 
     async findOne(id) {
 
-
-        
         const result = await Board.findOne({
             where: {
                 id: id
@@ -106,7 +104,6 @@ export default class BoardRepository {
 
 
         return await Promise.all( result.map(async (element, index)=> {
-            console.log(element.dataValues.id);
             let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId)
             return new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace);
         }));
