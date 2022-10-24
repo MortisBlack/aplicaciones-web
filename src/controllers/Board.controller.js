@@ -26,12 +26,20 @@ export default class BoardController {
             
             let result = await boardRepository.create(board);
     
-            res.status(200).send({
-                message: "Board created successfully",
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "Board creataed successfully",
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The workspace ${workspace} doesn't exist`
+                });
+            }
         } catch (err) {
-            err.message = 'Error creating board'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     };
@@ -47,6 +55,7 @@ export default class BoardController {
             const {id} = req.params;
     
             const board = new BoardBO(
+                    id,
                     title,
                     description,
                     new WorkspaceBO (
@@ -58,12 +67,24 @@ export default class BoardController {
 
             let result = await boardRepository.update(board);
     
-            res.status(200).send({
-                message: "Board updated successfully", 
-                result: result
-            });
+            if(result == "workspace") {
+                res.status(404).send({
+                    message: `The workspace ${workspace} doesn't exist`
+                });
+            } else if (result == "board") {
+                res.status(404).send({
+                    message: `The board ${id} doesn't exist`
+                });
+            } else {
+                res.status(200).send({
+                    message: "Board updated successfully",
+                    result: result
+                });
+            }
         } catch (err) {
-            err.message = 'Error updating board'
+            res.send({
+                message: err.message
+            })
             next(err)
         }   
     };
@@ -74,12 +95,19 @@ export default class BoardController {
 
             let result = await boardRepository.delete(id);
 
-            res.status(200).send({
-                message: "Board deleted successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "Board deleted successfully"
+                });
+            } else {
+                res.status(404).send({
+                    message: `The board ${id} doesn't exist`
+                });
+            }
         } catch (err) {
-            err.message = 'Error deleting board'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -88,19 +116,21 @@ export default class BoardController {
         try {
             let result = await boardRepository.findAll();
 
-            res.status(200).send({
-                message: "Boards fetched successfully", 
-                result: result
-            });
-        } catch (err) {
-            if(res.status(404)) {
-                res.status(404).send({
-                    message: err.message
+            if(result) {
+                res.status(200).send({
+                    message: "Boards fetched successfully", 
+                    result: result
                 });
             } else {
-                err.message = 'Error getting all boards'
-                next(err)
+                res.status(404).send({
+                    message: `There are not boards registered yet`
+                });
             }
+        } catch (err) {
+            res.send({
+                message: err.message
+            })
+            next(err)
         }
     }
 
@@ -110,21 +140,23 @@ export default class BoardController {
 
             let result = await boardRepository.findOne(id);
 
-            console.log(res.status);
 
-            res.status(200).send({
-                message: "Board fetched successfully", 
-                result: result
-            });
-        } catch (err) {
-            if(res.status(404)) {
-                res.status(404).send({
-                    message: err.message
+            if(result) {
+                res.status(200).send({
+                    message: "Board fetched successfully",
+                    result: result
                 });
             } else {
-                err.message = 'Error getting board'
-                next(err)
+                res.status(404).send({
+                    message: `The board ${id} doesn't exist`
+                });
             }
+
+        } catch (err) {
+            res.send({
+                message: err.message
+            })
+            next(err)
         }
     }
 }

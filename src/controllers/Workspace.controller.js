@@ -43,8 +43,7 @@ export default class WorkspaceController{
                 });
             } else {
                 res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`, 
-                    result: result
+                    message: `The workspace ${id} doesn't exist`
                 });
             }
 
@@ -68,8 +67,7 @@ export default class WorkspaceController{
                 });
             } else {
                 res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`, 
-                    result: result
+                    message: `The workspace ${id} doesn't exist`
                 });
             }
         } catch (err) {
@@ -91,8 +89,7 @@ export default class WorkspaceController{
                 });
             } else {
                 res.status(404).send({
-                    message: `There are not workspaces registered yet`, 
-                    result: result
+                    message: `There are not workspaces registered yet`
                 });
             }
 
@@ -117,8 +114,7 @@ export default class WorkspaceController{
                 });
             } else {
                 res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`, 
-                    result: result
+                    message: `The workspace ${id} doesn't exist`
                 });
             }
         } catch (err) {

@@ -84,8 +84,7 @@ export default class UserController {
                 });
             } else {
                 res.status(404).send({
-                    message: `The user ${id} doesn't exist`, 
-                    result: result
+                    message: `The user ${id} doesn't exist`
                 });
             }
 
@@ -109,8 +108,7 @@ export default class UserController {
                 });
             } else {
                 res.status(404).send({
-                    message: `The user ${id} doesn't exist`, 
-                    result: result
+                    message: `The user ${id} doesn't exist`
                 });
             }
 
@@ -133,8 +131,7 @@ export default class UserController {
                 });
             } else {
                 res.status(404).send({
-                    message: `There are not users registered yet`, 
-                    result: result
+                    message: `There are not users registered yet`
                 });
             }
             
@@ -154,12 +151,12 @@ export default class UserController {
 
             if(result) {
                 res.status(200).send({
-                    message: "User fetched successfully"
+                    message: "User fetched successfully",
+                    result: result
                 });
             } else {
                 res.status(404).send({
-                    message: `The user ${id} doesn't exist`, 
-                    result: result
+                    message: `The user ${id} doesn't exist`
                 });
             }
             

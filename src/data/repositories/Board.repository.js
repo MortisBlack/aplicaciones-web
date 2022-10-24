@@ -9,30 +9,55 @@ const workspaceRepository = new WorkspaceRepository();
 export default class BoardRepository {
 
     async create(board) {
+        const workspace = await workspaceRepository.findOne(board.workspace.id);
+
+        if(workspace == undefined) {
+            return undefined;
+        }
+
         const boardBO = board.toPersistenceObject();
         const result = await Board.create(boardBO);
-        const workspace = await workspaceRepository.findOne(result.WorkspaceId);
         return new BoardBO(result.id, result.title, result.description, workspace);
     }
 
     async update(board) {
-
-        if(board.id === undefined){
+        
+        if(board.id == undefined){
             throw new Error('id is undefined');
-        }
+        };
 
+        const boardCheck = await this.findOne(board.id);
+        
+        if(boardCheck == undefined) {
+            return "board";
+        };
+
+        const workspaceCheck = await workspaceRepository.findOne(board.workspace.id)
+        
+        if(workspaceCheck == undefined ) {
+            return "workspace";
+        };
+        
         const boardBO = board.toPersistenceObject()
+
         await Board.update(boardBO, {
             where: {
                 id: board.id
             },
             include:Workspace
         });
+        
+        console.log(board.id);
         return this.findOne(board.id);
     }
 
     async delete(id) {
-        
+        const boardCheck = await this.findOne(id);
+
+        if(boardCheck == undefined) {
+            return undefined;
+        }
+
         const result = await Board.destroy({
             where: {
                 id: id
@@ -43,6 +68,8 @@ export default class BoardRepository {
 
     async findOne(id) {
 
+
+        
         const result = await Board.findOne({
             where: {
                 id: id
@@ -55,8 +82,8 @@ export default class BoardRepository {
         
         });
 
-        if(result === null) {
-            throw new Error(`The board ${id} doesn't exist`);
+        if(result == null) {
+            return undefined;
         };
 
         let workspace = await workspaceRepository.findOne(result.WorkspaceId);
@@ -72,13 +99,16 @@ export default class BoardRepository {
             }]
         });
 
-        if(result === null) {
-            throw new Error('There are no boards registered yet')
-        }
 
-        return await result.map(async (element, index)=> {
-            let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId);
-            new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace)
-        });
+        if(result == null || result.length == 0) {
+            return undefined;
+        };
+
+
+        return await Promise.all( result.map(async (element, index)=> {
+            console.log(element.dataValues.id);
+            let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId)
+            return new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace);
+        }));
     }
 }
