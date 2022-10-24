@@ -1,13 +1,15 @@
 import UserType from '../../models/UserType.js';
+import UserTypeBO from '../../domain/UserType.js';
 
 export default class UserTypeRepository {
 
-
     async create(userType) {
-        
-        const result = await UserType.create(userType);
-        await result.reload();
-        return result;
+        const userTypeBO = userType.toPersistenceObject();
+        const result = await UserType.create(userTypeBO);
+        return new UserTypeBO(
+            result.id,
+            result.user_type
+            );
     }
 
     async update(userType) {
@@ -16,22 +18,36 @@ export default class UserTypeRepository {
             throw new Error('id is undefined');
         }
 
-        
-        const result = await UserType.update(userType, {
+        const userTypeCheck = await this.findOne(userType.id);
+
+        if(userTypeCheck == undefined) {
+            return undefined;
+        }
+
+        const userTypeBO = userType.toPersistenceObject();
+
+        const result = await UserType.update(userTypeBO, {
             where: {
                 id: userType.id
             }
         });
-        return result;
-    }
+
+        return this.findOne(userType.id);
+    };
 
     async delete(id) {
-        
+        const userTypeCheck = await this.findOne(id);
+
+        if(userTypeCheck == undefined) {
+            return undefined;
+        }
+
         const result = await UserType.destroy({
             where: {
                 id: id
             }
         });
+
         return result;
     }
 
@@ -42,13 +58,30 @@ export default class UserTypeRepository {
                 id: id
             }
         });
-        return result;
-    }
+
+        if(result == null) {
+            return undefined;
+        };
+
+        return new UserTypeBO(
+            result.dataValues.id, 
+            result.dataValues.user_type
+        );
+    };
+                
 
     async findAll() {
-        
         const result = await UserType.findAll();
-        return result;
+
+        if(result == null || result.length == 0) {
+            return undefined;
+        };
+
+        return result.map((element, index)=> {
+            return new UserTypeBO(
+                element.dataValues.id, 
+                element.dataValues.user_type
+            )
+        });
     }
 }
-

@@ -10,7 +10,7 @@ export default class CardController {
             const {
                 title,
                 description,
-                deadlineDate,
+                deadline_date,
                 column
             } = req.body;
 
@@ -18,7 +18,7 @@ export default class CardController {
                 undefined,
                 title,
                 description,
-                deadlineDate,
+                deadline_date,
                 new ColumnBO (
                     column,
                     undefined,
@@ -51,7 +51,7 @@ export default class CardController {
             const {
                 title,
                 description,
-                deadlineDate,
+                deadline_date,
                 column
             } = req.body;
     
@@ -61,7 +61,7 @@ export default class CardController {
                     id,
                     title,
                     description,
-                    deadlineDate,
+                    deadline_date,
                     new ColumnBO (
                         column,
                         undefined,
