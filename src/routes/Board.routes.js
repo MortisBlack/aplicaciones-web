@@ -4,14 +4,14 @@ import BoardController from "../controllers/Board.controller.js"
 const boardController = new BoardController();
 const router = Router();
 
-router.post('/board', boardController.createBoard);
+router.post('', boardController.createBoard);
 
-router.patch('/board/:id',boardController.updateBoard);
+router.patch('/:id',boardController.updateBoard);
 
-router.delete('/board/:id', boardController.deleteBoard);
+router.delete('/:id', boardController.deleteBoard);
 
-router.get('/board', boardController.getAllBoards);
+router.get('', boardController.getAllBoards);
 
-router.get('/board/:id', boardController.findOneBoard);
+router.get('/:id', boardController.findOneBoard);
 
 export default router;
