@@ -8,6 +8,7 @@ import userRoter from './src/routes/User.routes.js';
 import workspaceRouter from './src/routes/Workspace.routes.js';
 import boardRouter from './src/routes/Board.routes.js';
 import columnRouter from './src/routes/Column.routes.js';
+import cardRouter from './src/routes/Card.routes.js';
 
 import errorHandler from './src/middlewares/error_handler.js'
 
@@ -15,6 +16,7 @@ APP.use('/users', userRoter);
 APP.use('/workspaces', workspaceRouter);
 APP.use('/boards', boardRouter);
 APP.use('/columns', columnRouter);
+APP.use('/cards', cardRouter);
 
 
 APP.use(errorHandler);

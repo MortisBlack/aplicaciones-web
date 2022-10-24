@@ -4,14 +4,14 @@ import CardController from "../controllers/Card.controller.js"
 const cardController = new CardController();
 const router = Router();
 
-router.post('/card', cardController.createCard);
+router.post('', cardController.createCard);
 
-router.patch('/card/:id',cardController.updateCard);
+router.patch('/:id',cardController.updateCard);
 
-router.delete('/card/:id', cardController.deleteCard);
+router.delete('/:id', cardController.deleteCard);
 
-router.get('/card', cardController.getAllCards);
+router.get('', cardController.getAllCards);
 
-router.get('/card/:id', cardController.findOneCard);
+router.get('/:id', cardController.findOneCard);
 
 export default router;
