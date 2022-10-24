@@ -30,7 +30,7 @@ const User = connection.define('User',{
     second_surname: {
         type: STRING, 
         max:255, 
-        allowNull: false
+        allowNull: true
     },
     email: {
         type: STRING, 
@@ -40,17 +40,17 @@ const User = connection.define('User',{
     phone: {
         type: STRING, 
         max:255, 
-        allowNull: false
+        allowNull: true
     },
     img_profile: {
         type: STRING, 
         max:255, 
-        allowNull: false
+        allowNull: true
     },
     birthdate: {
         type: DATE, 
         max:255, 
-        allowNull: false
+        allowNull: true
     }
 },{
     tableName:'user'

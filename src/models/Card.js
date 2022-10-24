@@ -17,12 +17,12 @@ const Card = connection.define('Card',{
     description:{
         type:STRING,
         MAX:255,
-        allowNull:false
+        allowNull:true
     },
     deadlineDate:{
         field:'deadline_date',
         type:DATE,
-        allowNull:false
+        allowNull:true
     },
     ColumnId:{
         type:BIGINT,

@@ -9,15 +9,21 @@ export default class WorkspaceController{
         try {
             const {title, description} = req.body;
 
-            const workspace = new WorkspaceBo(undefined,title, description);
+            const workspace = new WorkspaceBo(
+                undefined,
+                title, 
+                description);
+
             let result = await workspaceRepository.create(workspace);
 
-            res.status(201).send({
+            res.status(200).send({
                 message: "Workspace created successfully", 
                 result: result
             });
         } catch (err) {
-            err.message = 'Error creating workspace'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -29,13 +35,23 @@ export default class WorkspaceController{
     
             const workspace = new WorkspaceBo(id, title, description);
             let result = await workspaceRepository.update(workspace);
-    
-            res.status(200).send({
-                message: "Workspace updated successfully", 
-                result: result
-            });
+            
+            if(result) {
+                res.status(200).send({
+                    message: "Workspace updated successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The workspace ${id} doesn't exist`, 
+                    result: result
+                });
+            }
+
         } catch (err) {
-            err.message = 'Error updating workspace'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -46,12 +62,20 @@ export default class WorkspaceController{
 
             let result = await workspaceRepository.delete(id);
 
-            res.status(200).send({
-                message: "Workspace deleted successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "Workspace deleted successfully"
+                });
+            } else {
+                res.status(404).send({
+                    message: `The workspace ${id} doesn't exist`, 
+                    result: result
+                });
+            }
         } catch (err) {
-            err.message = 'Error deleting workspace'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -60,12 +84,22 @@ export default class WorkspaceController{
         try {
             let result = await workspaceRepository.findAll();
 
-            res.status(200).send({
-                message: "Workspaces fetched successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "Workspaces fetched successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `There are not workspaces registered yet`, 
+                    result: result
+                });
+            }
+
         } catch (error) {
-            err.message = 'Error getting all workspaces'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }
@@ -76,12 +110,21 @@ export default class WorkspaceController{
 
             let result = await workspaceRepository.findOne(id);
 
-            res.status(200).send({
-                message: "Workspace fetched successfully", 
-                result: result
-            });
+            if(result) {
+                res.status(200).send({
+                    message: "Workspace fetched successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The workspace ${id} doesn't exist`, 
+                    result: result
+                });
+            }
         } catch (err) {
-            err.message = 'Error getting workspace'
+            res.send({
+                message: err.message
+            })
             next(err)
         }
     }

@@ -14,7 +14,7 @@ const Workspace = connection.define('Workspace',{
     },
     description: {
         type: STRING, max:500, 
-        allowNull: false
+        allowNull: true
     }
 },{
     tableName:'workspace'
