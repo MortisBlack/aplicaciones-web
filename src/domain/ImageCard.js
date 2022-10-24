@@ -30,4 +30,12 @@ export default class ImageCard {
         }
         throw new Error("Invalid card");
     }
+
+    toPersistenceObject(){
+        return {
+            id: this._id,
+            image: this._image,
+            CardId: this._card.id
+        }
+    }
 }
