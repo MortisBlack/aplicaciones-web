@@ -31,9 +31,9 @@ export default class ColumnRepository {
             return "column";
         };
 
-        const workspaceCheck = await boardRepository.findOne(column.board.id)
+        const boardCheck = await boardRepository.findOne(column.board.id)
         
-        if(workspaceCheck == undefined ) {
+        if(boardCheck == undefined ) {
             return "board";
         };
         
