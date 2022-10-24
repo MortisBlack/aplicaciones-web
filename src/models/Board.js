@@ -15,7 +15,7 @@ const Board = connection.define('Board',{
     },
     description: {
         type:STRING,
-        allowNull:false,
+        allowNull:true,
         max:500
     },
     WorkspaceId: {

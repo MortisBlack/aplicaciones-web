@@ -94,7 +94,20 @@ export default class UserRepository {
             return undefined;
         };
 
-        return result;
+        return result.map((element, index)=> {
+            return new UserBO(
+                element.dataValues.id, 
+                element.dataValues.username, 
+                element.dataValues.password,
+                element.dataValues.name,
+                element.dataValues.first_surname,
+                element.dataValues.second_surname,
+                element.dataValues.email,
+                element.dataValues.phone,
+                element.dataValues.img_profile,
+                element.dataValues.birthdate
+            )
+        });
     }
 }
 

@@ -17,7 +17,7 @@ export default class WorkspaceRepository {
             throw new Error('id is undefined');
         }
 
-        const workspaceCheck = await this.findOne(user.id);
+        const workspaceCheck = await this.findOne(workspace.id);
 
         if(workspaceCheck == undefined) {
             return undefined;
@@ -33,7 +33,7 @@ export default class WorkspaceRepository {
     }
 
     async delete(id) {
-        const workspaceCheck = await this.findOne(user.id);
+        const workspaceCheck = await this.findOne(id);
 
         if(workspaceCheck == undefined) {
             return undefined;
@@ -66,7 +66,7 @@ export default class WorkspaceRepository {
     async findAll() {        
         const result = await Workspace.findAll();
 
-        if(result == null) {
+        if(result == null || result.length == 0) {
             return undefined;
         };
 
