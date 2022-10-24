@@ -1,11 +1,11 @@
 import Column from "./Column.js";
 
 export default class Card {
-    constructor(id, title, description, deadlineDate, column){
+    constructor(id, title, description, deadline_date, column){
         this._id = id;
         this._title = title;
         this._description = description;
-        this._deadlineDate = deadlineDate;
+        this._deadline_date = deadline_date;
         this._column = column;
     }
 
@@ -21,8 +21,8 @@ export default class Card {
         return this._description;
     }
 
-    get deadlineDate(){
-        return this._deadlineDate;
+    get deadline_date(){
+        return this._deadline_date;
     }
 
     get column(){
@@ -48,14 +48,14 @@ export default class Card {
         throw new Error('Description must be a string');
     }
 
-    set deadlineDate(deadlineDate){
-        if (deadlineDate === undefined){
+    set deadline_date(deadline_date){
+        if (deadline_date === undefined){
             return
         }
         
         // Validate date instance
-        if(deadlineDate instanceof Date){
-            this._deadlineDate = deadlineDate;
+        if(deadline_date instanceof Date){
+            this._deadline_date = deadline_date;
             return;
         }
 
@@ -77,7 +77,7 @@ export default class Card {
             id: this._id,
             title: this._title,
             description: this._description,
-            deadlineDate: this._deadlineDate,
+            deadline_date: this._deadline_date,
             ColumnId: this._column.id
         }
     }

@@ -20,7 +20,7 @@ export default class CardRepository {
             result.id, 
             result.title, 
             result.description, 
-            result.deadlineDate, 
+            result.deadline_date, 
             column
         );
     }
@@ -92,13 +92,13 @@ export default class CardRepository {
         result.id, 
         result.title, 
         result.description, 
-        result.deadlineDate, 
+        result.deadline_date, 
         column
         return new CardBO(
             result.id, 
             result.title, 
             result.description, 
-            result.deadlineDate, 
+            result.deadline_date, 
             column
         );
     }
@@ -123,7 +123,7 @@ export default class CardRepository {
                 element.dataValues.id,
                 element.dataValues.title,
                 element.dataValues.description,
-                element.dataValues.deadlineDate,
+                element.dataValues.deadline_date,
                 column
             );
         }));

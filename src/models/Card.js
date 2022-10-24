@@ -19,7 +19,7 @@ const Card = connection.define('Card',{
         MAX:255,
         allowNull:true
     },
-    deadlineDate:{
+    deadline_date:{
         field:'deadline_date',
         type:DATE,
         allowNull:true

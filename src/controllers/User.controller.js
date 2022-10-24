@@ -1,7 +1,6 @@
 import UserRepository from "../data/repositories/User.repository.js";
 import UserBO from '../domain/User.js';
 
-
 const userRepository = new UserRepository();
 
 export default class UserController { 
