@@ -11,6 +11,7 @@ import columnRouter from './src/routes/Column.routes.js';
 import cardRouter from './src/routes/Card.routes.js';
 import userTypeRouter from './src/routes/UserType.routes.js';
 import imageCardRouter from './src/routes/ImageCard.routes.js';
+import commentRouter from './src/routes/Comment.routes.js';
 
 import errorHandler from './src/middlewares/error_handler.js'
 
@@ -21,6 +22,7 @@ APP.use('/columns', columnRouter);
 APP.use('/cards', cardRouter);
 APP.use('/users_types', userTypeRouter);
 APP.use('/images_cards', imageCardRouter);
+APP.use('/comments', commentRouter);
 
 
 APP.use(errorHandler);
