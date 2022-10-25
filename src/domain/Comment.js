@@ -63,6 +63,15 @@ export default class Comment {
         throw new Error("Card an instance of Card");
     }
     
+    toPersistenceObject(){
+        return {
+            id: this.id,
+            comment: this.comment,
+            image: this.image,
+            UserId: this.user.id,
+            CardId: this.card.id
+        }
+    }
 }
 
 
