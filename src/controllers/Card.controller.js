@@ -14,8 +14,10 @@ export default class CardController {
                 column
             } = req.body;
 
+            const { id } = req.params;
+
             const card = new CardBO(
-                undefined,
+                id,
                 title,
                 description,
                 deadline_date,
@@ -55,7 +57,7 @@ export default class CardController {
                 column
             } = req.body;
     
-            const {id} = req.params;
+            const { id } = req.params;
     
             const card = new CardBO(
                     id,
