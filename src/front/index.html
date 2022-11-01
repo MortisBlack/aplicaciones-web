@@ -19,6 +19,8 @@
             <div class="board-text">Pomodoro</div>
 
             <div>
+
+                <input type="text" name="title"/>
                 <button id="add_card" class="boton" type="button">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -33,7 +35,7 @@
                 </div>
 
                 <!-- testing -->
-                <input id='card5' class="card" draggable="true" ondragstart="dragStart(event)" value="TRABAJO 6" />
+                <!-- <input id='card5' class="card" draggable="true" ondragstart="dragStart(event)" value="TRABAJO 6" /> -->
 
             </div>
             <div id='list2' class="board-list" ondrop="dropIt(event)" ondragover="allowDrop(event)">
@@ -51,6 +53,7 @@
             </div>
         </div>
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src='./assets/js/api_calls.js'></script>
     <script src='./assets/js/dragdropswap.js'></script>
     <script src='./assets/js/all.min.js'></script>

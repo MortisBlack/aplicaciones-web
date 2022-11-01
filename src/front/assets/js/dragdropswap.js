@@ -1,19 +1,14 @@
-const startCard = document.getElementById('list1');
-let cardNum = 6;
-const addCardBtn = document.getElementById('add_card');
-
-
-
-
 function allowDrop(ev) {
 	ev.preventDefault();  // default is not to allow drop
 }
+
 function dragStart(ev) {
 	// The 'text/plain' is referring the Data Type (DOMString) 
 	// of the Object being dragged.
 	// ev.target.id is the id of the Object being dragged
 	ev.dataTransfer.setData("text/plain", ev.target.id);
 }
+
 function dropIt(ev) {
 	ev.preventDefault();  // default is not to allow drop
 	let sourceId = ev.dataTransfer.getData("text/plain");
@@ -39,7 +34,7 @@ function dropIt(ev) {
 		} else {
 			// Append to the list
 			targetEl.appendChild(sourceIdEl);
-
+			
 		}
 
 	} else {
@@ -58,25 +53,4 @@ function dropIt(ev) {
 		holderText = '';
 	}
 
-}
-addCardBtn.addEventListener('click', async (e) => {
-	await createCard('');
-});
-
-async function createCard(text) {
-	let card = document.createElement('input');
-	card.className = 'card';
-	card.setAttribute('draggable', 'true');
-	card.setAttribute('ondragstart', 'dragStart(event)');
-	card.setAttribute('ondrop', 'dropIt(event)');
-	card.setAttribute('ondragover', 'allowDrop(event)');
-	card.value = text;
-	cardNum++;
-	card.id = 'card' + cardNum;
-	card.placeholder = '...';
-	startCard.appendChild(card);
-
-	// Make api call to create card in database
-	await createCardAPICard();
-	
 }
