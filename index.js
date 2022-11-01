@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from 'morgan';
 
 import corsOptionsDelegate from './src/config/cors.config.js';
 const APP = express();
@@ -19,6 +20,7 @@ import commentRouter from './src/routes/Comment.routes.js';
 import errorHandler from './src/middlewares/error_handler.js'
 
 // APP.use(cors(corsOptionsDelegate));
+APP.use(morgan('dev'))
 APP.use(cors());
 
 
@@ -31,7 +33,7 @@ APP.use('/users_types', userTypeRouter);
 APP.use('/images_cards', imageCardRouter);
 APP.use('/comments', commentRouter);
 
-
+// Middlewares
 APP.use(errorHandler);
 
 APP.listen(PORT, () => {

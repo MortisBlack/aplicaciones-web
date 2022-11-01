@@ -14,6 +14,9 @@ addCardBtn.addEventListener('click', async (e) => {
 	await createCard('');
 });
 
+input.addEventListener('change', changeCardTittle);
+
+
 function createCardElement(id, text) {
 	// Create a new card
 	let card = document.createElement('input');
@@ -34,7 +37,7 @@ function createCardElement(id, text) {
 
 async function createCard(text) {
 	// Make api call to create card in database
-	let response = await createCardAPICard();
+	let response = await createCardAPICall();
 
 	if(response !== undefined){
         console.log(response)
@@ -52,9 +55,31 @@ async function createCard(text) {
 	
 }
 
+
+async function changeCardTittle(e){
+
+    const id = e.target.id;
+    const title = e.target.value;
+    const column = e.target.parentElement.id;
+    
+    
+    // Make api call to create card in database
+	let response = await changeCardAPICall(id, title, column);
+
+	if(response === undefined){
+		// Fire sweet alert
+		Swal.fire({
+			icon: 'error',
+			title: 'Error!',
+			text: 'No se pudó crear la tarea',
+		})
+	}
+}
+
+
 async function fillCards(columnId){
     const result = await fetch(`${BASE_URL}/columns/${columnId}/cards`)
-    const columnInput = document.getElementById(`list${columnId}`)
+    const columnInput = document.getElementById(`list-${columnId}`)
     const cards = await result.json()
     cards.result.map((value, index) => {
         const card = createCardElement(value._id, value._title)
@@ -63,7 +88,7 @@ async function fillCards(columnId){
 }
 
 
-const createCardAPICard = async () => {
+const createCardAPICall = async () => {
     // Al crear una tarjeta se asigna a la columna 1 por defecto
     const title = document.getElementsByName('title')[0].value;
     if(title === ''){
@@ -99,8 +124,55 @@ const createCardAPICard = async () => {
     }
 };
 
+const changeCardAPICall = async (id, title, column) => {
+    if(id !== undefined){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'La tarea no existe',
+        });
+        return
+    }
+    const description = '';
+
+    let response = await fetch(`${BASE_URL}/cards/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: title,
+            description: description,
+            column: column,
+            deadline_date: undefined,
+        })
+    });
+
+    let result = await response.json();
+
+    if (response.status == 200) {
+        return result;
+    }else{
+        return undefined;
+    }
+};
+
 // TODO: move function to other file
 async function putCard(cardId, columnId){
-	const result = await fetch(`${BASE_URL}/cards/${cardId}`)
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+        "column": `${columnId}`
+    })
+
+    const requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: raw
+    }
+    
+	const result = await fetch(`${BASE_URL}/cards/${cardId}`, requestOptions)
 	const response = await result.json()
+    console.log(response)
 }

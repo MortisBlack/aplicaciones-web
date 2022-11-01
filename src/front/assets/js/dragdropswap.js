@@ -34,7 +34,8 @@ function dropIt(ev) {
 		} else {
 			// Append to the list
 			targetEl.appendChild(sourceIdEl);
-			
+			const columnId = targetEl.id.split('-')[1]
+			putCard(sourceIdEl.id, columnId).then(()=> console.log('miau'))
 		}
 
 	} else {
