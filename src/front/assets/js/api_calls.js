@@ -37,7 +37,8 @@ async function createCard(text) {
 	let response = await createCardAPICard();
 
 	if(response !== undefined){
-		let card = createCardElement(response.id, response.title);
+        console.log(response)
+		let card = createCardElement(response.result._id, response.result._title);
         startCard.appendChild(card);
 	}
 	else{
@@ -65,6 +66,14 @@ async function fillCards(columnId){
 const createCardAPICard = async () => {
     // Al crear una tarjeta se asigna a la columna 1 por defecto
     const title = document.getElementsByName('title')[0].value;
+    if(title === ''){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'No se pudó crear la tarea',
+        })
+        return
+    }
     const description = '';
     const column = 1;
 
@@ -89,3 +98,9 @@ const createCardAPICard = async () => {
         return undefined;
     }
 };
+
+// TODO: move function to other file
+async function putCard(cardId, columnId){
+	const result = await fetch(`${BASE_URL}/cards/${cardId}`)
+	const response = await result.json()
+}

@@ -18,7 +18,8 @@ import commentRouter from './src/routes/Comment.routes.js';
 
 import errorHandler from './src/middlewares/error_handler.js'
 
-APP.use(cors(corsOptionsDelegate))
+// APP.use(cors(corsOptionsDelegate));
+APP.use(cors());
 
 
 APP.use('/users', userRoter);
