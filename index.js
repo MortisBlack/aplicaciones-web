@@ -1,4 +1,7 @@
 import express from "express";
+import cors from "cors";
+
+import corsOptionsDelegate from './src/config/cors.config.js';
 const APP = express();
 const HOSTNAME = "127.0.0.1";
 const PORT = 3000;
@@ -15,6 +18,9 @@ import commentRouter from './src/routes/Comment.routes.js';
 
 import errorHandler from './src/middlewares/error_handler.js'
 
+APP.use(cors(corsOptionsDelegate))
+
+
 APP.use('/users', userRoter);
 APP.use('/workspaces', workspaceRouter);
 APP.use('/boards', boardRouter);
@@ -27,6 +33,6 @@ APP.use('/comments', commentRouter);
 
 APP.use(errorHandler);
 
-APP.listen(PORT, ()=>{
+APP.listen(PORT, () => {
     console.log(`Server running in http://${HOSTNAME}:${PORT}/`);
 });

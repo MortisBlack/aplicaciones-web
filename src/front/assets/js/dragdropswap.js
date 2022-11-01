@@ -59,11 +59,11 @@ function dropIt(ev) {
 	}
 
 }
-addCardBtn.addEventListener('click', (e) => {
-	createCard('');
+addCardBtn.addEventListener('click', async (e) => {
+	await createCard('');
 });
 
-function createCard(text) {
+async function createCard(text) {
 	let card = document.createElement('input');
 	card.className = 'card';
 	card.setAttribute('draggable', 'true');
@@ -75,4 +75,8 @@ function createCard(text) {
 	card.id = 'card' + cardNum;
 	card.placeholder = '...';
 	startCard.appendChild(card);
+
+	// Make api call to create card in database
+	await createCardAPICard();
+	
 }

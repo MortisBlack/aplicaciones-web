@@ -1,7 +1,7 @@
 import BoardRepository from '../data/repositories/Board.repository.js';
+
 import BoardBO from '../domain/Board.js';
 import WorkspaceBO from '../domain/Workspace.js';
-
 const boardRepository = new BoardRepository();
 
 export default class BoardController {
