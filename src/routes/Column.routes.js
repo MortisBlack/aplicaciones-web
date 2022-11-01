@@ -14,4 +14,6 @@ router.get('', columnController.getAllColumns);
 
 router.get('/:id', columnController.findOneColumn);
 
+router.get('/:id/cards', columnController.findAllCards);
+
 export default router;

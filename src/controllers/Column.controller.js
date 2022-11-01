@@ -156,4 +156,28 @@ export default class ColumnController {
             next(err)
         }
     }
+
+    async findAllCards(req, res, next){
+        try {
+            const {id} = req.params;
+
+            let result = await columnRepository.findAllCards(id);
+
+            if(result) {
+                res.status(200).send({
+                    message: "Cards fetched successfully",
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The column ${id} doesn't exist`
+                });
+            }
+        } catch (err) {
+            res.send({
+                message: err.message
+            })
+            next(err)
+        }
+    }
 }

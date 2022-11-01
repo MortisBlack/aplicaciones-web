@@ -1,6 +1,8 @@
 import Column from '../../models/Column.js';
 import Board from '../../models/Board.js';
+import Card from '../../models/Card.js';
 import ColumnBO from '../../domain/Column.js';
+import CardBO from '../../domain/Card.js';
 import BoardRepository from './Board.repository.js';
 
 const boardRepository = new BoardRepository();
@@ -105,5 +107,31 @@ export default class ColumnRepository {
             let board = await boardRepository.findOne(element.dataValues.BoardId)
             return new ColumnBO(element.dataValues.id, element.dataValues.title, board);
         }));
+    }
+
+    async findAllCards(id) {
+        const columnCheck = await this.findOne(id);
+
+        if(columnCheck == undefined) {
+            return Error('Column not found');
+        }
+
+        // find board with all cards
+        const result = await Column.findOne({
+            where: {
+                id: id
+            },
+            include:[{
+                model: Card,
+                as: 'cards'
+            }]
+        });
+
+        const cards = result.cards;
+
+        // convert cards to CardBO
+        return cards.map((card) => {
+            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck);
+        });
     }
 }
