@@ -48,7 +48,7 @@
     font-weight: bold;
   }
 .card {
-  background-color: white;
+    background-color: white;
     padding: 10px;
     cursor:pointer;
     color:black;
@@ -56,6 +56,8 @@
     border-bottom-left-radius: 5px;
     border: 0;
     outline: none;
+    resize: none;
+    overflow: hidden;
   }
   .left{
     background-color: rgb(255, 255, 255);
@@ -109,7 +111,7 @@
 .icon{
   float: right;
   text-align: center;
-  padding-top: 8px;
+  padding-top: 18px;
   padding-right: 8px;
 
 }

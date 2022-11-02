@@ -27,7 +27,7 @@ const deleteCardEvent = async (e) => {
 
 
 function createCardElement(id, text) {
-    let card = document.createElement('input');
+    let card = document.createElement('textarea');
 	card.className = 'card ';
 	card.setAttribute('draggable', 'true');
 	card.setAttribute('ondragstart', 'dragStart(event)');
