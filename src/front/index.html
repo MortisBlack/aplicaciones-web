@@ -19,13 +19,13 @@
             <div class="board-text">Pomodoro</div>
 
             <div>
-
-                <input type="text" name="title"/>
                 <button id="add_card" class="boton" type="button">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
-
+            <div>
+                <input type="text" name="title" class="create" placeholder="Nueva tarea..." />
+            </div>
         </div>
 
         <div id='boardlists' class="board-lists">
@@ -34,8 +34,14 @@
                     Pendiente
                 </div>
 
-                <!-- testing -->
-                <!-- <input id='card5' class="card" draggable="true" ondragstart="dragStart(event)" value="TRABAJO 6" /> -->
+                <!-- <div class="backgorund-input">
+                    <input id='card5' class="card" draggable="true" ondragstart="dragStart(event)"
+                        value="TRABAJO 6" />
+                    <div class="icon">
+                        <i class="fa-solid fa-trash-can color"></i>
+                    </div>
+                </div> -->
+
 
             </div>
             <div id='list-2' class="board-list" ondrop="dropIt(event)" ondragover="allowDrop(event)">

@@ -15,7 +15,7 @@ function dropIt(ev) {
 	let sourceIdEl = document.getElementById(sourceId);
 	let sourceIdParentEl = sourceIdEl.parentElement;
 	// ev.target.id here is the id of target Object of the drop
-	let targetEl = document.getElementById(ev.target.id)
+	let targetEl = document.getElementById(ev.target.id);
 	let targetParentEl = targetEl.parentElement;
 
 	// Compare List names to see if we are going between lists
