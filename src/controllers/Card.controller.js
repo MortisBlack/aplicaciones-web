@@ -56,7 +56,7 @@ export default class CardController {
             } = req.body;
     
             const { id } = req.params;
-    
+
             const card = new CardBO(
                     id,
                     title,

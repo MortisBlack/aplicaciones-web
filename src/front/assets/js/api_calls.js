@@ -62,6 +62,11 @@ function createCardElement(id, text) {
     // Do something here paul
 }
 
+function autoResize() {
+	console.log('resizing');
+	textInput.style.height = (textInput.scrollHeight) + 'px';
+}
+
 async function createCardAPICall(){
     // Al crear una tarjeta se asigna a la columna 1 por defecto
     const title = document.getElementsByName('title')[0].value;
