@@ -18,6 +18,8 @@ function dropIt(ev) {
 	let targetEl = document.getElementById(ev.target.id);
 	let targetParentEl = targetEl.parentElement;
 
+	let card = sourceIdEl.parentElement;
+
 	// Compare List names to see if we are going between lists
 	// or within the same list
 	if (targetParentEl.id !== sourceIdParentEl.id) {
@@ -29,11 +31,11 @@ function dropIt(ev) {
 			// Card in the list
 			// This is in case you drag and drop a Card on top 
 			// of a Card in a different list
-			targetParentEl.appendChild(sourceIdEl);
+			targetParentEl.appendChild(card);
 
 		} else {
 			// Append to the list
-			targetEl.appendChild(sourceIdEl);
+			targetEl.appendChild(card);
 			const columnId = targetEl.id.split('-')[1]
 			putCard(sourceIdEl.id, columnId).then(()=> console.log('miau'))
 		}
