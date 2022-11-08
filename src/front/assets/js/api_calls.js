@@ -66,17 +66,7 @@ function createCardElement(id, text) {
     // Do something here paul
 }
 
-async function createCardAPICall(){
-    // Al crear una tarjeta se asigna a la columna 1 por defecto
-    const title = document.getElementsByName('title')[0].value;
-    if(title === ''){
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'No se pudó crear la tarea',
-        })
-        return
-    }
+async function createCardAPICall(title){
     const description = '';
     const column = 1;
 
@@ -102,14 +92,61 @@ async function createCardAPICall(){
     }
 };
 
+function isValidCard(title){
+    if (title.length > 100){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'El titulo no puede tener mas de 100 caracteres',
+        })
+        return false
+    }
+
+    if(title === ''){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'El titulo no puede estar vacio',
+        })
+        return false
+    }
+
+    const titles = document.getElementsByClassName('card');
+    for (let i = 0; i < titles.length; i++){
+        if (titles[i].value === title){
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'El titulo ya existe',
+            })
+            return false
+        }
+    }
+
+    return true
+}
+
 async function createCard(text) {
+    // Al crear una tarjeta se asigna a la columna 1 por defecto
+    const title = document.getElementsByName('title')[0].value;
+
+    if (!isValidCard(title)){
+        return
+    }
+
 	// Make api call to create card in database
-	let response = await createCardAPICall();
+	let response = await createCardAPICall(title);
 
 	if(response !== undefined){
         console.log(response)
 		let card = createCardElement(response.result._id, response.result._title);
         startCard.appendChild(card);
+        document.getElementsByName('title')[0].value = '';
+        Swal.fire({
+            icon: 'success',
+            title: 'Tarea creada',
+            text: 'La tarea se creó correctamente',
+        })
 	}
 	else{
 		// Fire sweet alert

@@ -18,8 +18,12 @@ function dropIt(ev) {
 	let targetEl = document.getElementById(ev.target.id);
 	let targetParentEl = targetEl.parentElement;
 
+	let card = sourceIdEl.parentElement;
+
 	// Compare List names to see if we are going between lists
 	// or within the same list
+
+	// # TODO: parece que esto no funciona porque hay que hacer otro parentElement
 	if (targetParentEl.id !== sourceIdParentEl.id) {
 		// If the source and destination have the same 
 		// className (card), then we risk dropping a Card in to a Card
@@ -29,13 +33,43 @@ function dropIt(ev) {
 			// Card in the list
 			// This is in case you drag and drop a Card on top 
 			// of a Card in a different list
-			targetParentEl.appendChild(sourceIdEl);
+			targetParentEl.appendChild(card);
 
 		} else {
-			// Append to the list
-			targetEl.appendChild(sourceIdEl);
-			const columnId = targetEl.id.split('-')[1]
-			putCard(sourceIdEl.id, columnId).then(()=> console.log('miau'))
+			if (targetEl.id !== sourceIdParentEl.parentElement.id && targetEl.id == 'list-3'){
+				Swal.fire({
+					title: 'Estas seguro que quieres terminar la tarea?',
+					showDenyButton: true,
+					confirmButtonText: 'Terminar',
+					denyButtonText: `Cancelar`,
+				}).then((result) => {
+					if (result.isConfirmed){
+						console.log(targetEl.id,sourceIdParentEl.parentElement.id)
+						// Append to the list
+						targetEl.appendChild(card);
+						const columnId = targetEl.id.split('-')[1]
+						putCard(sourceIdEl.id, columnId).then(()=> {
+							Swal.fire({
+								icon: 'success',
+								title: 'Tarea terminada',
+								text: 'La tarea se terminó correctamente',
+							})
+						})
+					}
+				})
+			} else {
+				console.log(targetEl.id,sourceIdParentEl.parentElement.id)
+				// Append to the list
+				targetEl.appendChild(card);
+				const columnId = targetEl.id.split('-')[1]
+				putCard(sourceIdEl.id, columnId).then(()=> {
+					Swal.fire({
+						icon: 'success',
+						title: 'Tarea movida',
+						text: 'La tarea se movió exitosamente',
+					})
+				})
+			}
 		}
 
 	} else {
