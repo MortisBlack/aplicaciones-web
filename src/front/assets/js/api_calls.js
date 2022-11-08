@@ -29,10 +29,10 @@ const deleteCardEvent = async (e) => {
 function createCardElement(id, text) {
     let card = document.createElement('textarea');
 	card.className = 'card ';
-	card.setAttribute('draggable', 'true');
-	card.setAttribute('ondragstart', 'dragStart(event)');
-	card.setAttribute('ondrop', 'dropIt(event)');
-	card.setAttribute('ondragover', 'allowDrop(event)');
+	// card.setAttribute('draggable', 'true');
+	// card.setAttribute('ondragstart', 'dragStart(event)');
+	// card.setAttribute('ondrop', 'dropIt(event)');
+	// card.setAttribute('ondragover', 'allowDrop(event)');
 	card.value = text;
 
     let icon=document.createElement('i');
@@ -52,10 +52,14 @@ function createCardElement(id, text) {
 
     let div = document.createElement('div');
     div.className= 'backgorund-input';
+    div.setAttribute('draggable', 'true');
+	div.setAttribute('ondragstart', 'dragStart(event)');
+	div.setAttribute('ondrop', 'dropIt(event)');
+	div.setAttribute('ondragover', 'allowDrop(event)');
     div.appendChild(card);
     div.appendChild(div_icon);
 	// cardNum++;
-	card.id = id;
+	div.id = id;
     return div
 	
 
