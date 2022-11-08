@@ -34,6 +34,8 @@ function createCardElement(id, text) {
 	// card.setAttribute('ondrop', 'dropIt(event)');
 	// card.setAttribute('ondragover', 'allowDrop(event)');
 	card.value = text;
+    card.setAttribute('data-ogtitle', text);
+    card.addEventListener('change', changeCardTittle)
 
     let icon=document.createElement('i');
     icon.classList.add('fa-solid');
@@ -137,7 +139,6 @@ async function createCard(text) {
 	let response = await createCardAPICall(title);
 
 	if(response !== undefined){
-        console.log(response)
 		let card = createCardElement(response.result._id, response.result._title);
         startCard.appendChild(card);
         document.getElementsByName('title')[0].value = '';
@@ -146,8 +147,7 @@ async function createCard(text) {
             title: 'Tarea creada',
             text: 'La tarea se creó correctamente',
         })
-	}
-	else{
+	}else{
 		// Fire sweet alert
 		Swal.fire({
 			icon: 'error',
@@ -161,15 +161,16 @@ async function createCard(text) {
 
 async function changeCardTittle(e){
 
-    // Save original value
-    let originalValue = e.target.value;
 
     // set timer of 3 secs to execute the function
     const id = e.target.parentElement.id;
     const title = e.target.value;
     const column = e.target.parentElement.parentElement.id.split('-')[1];
 
-    
+    if(!isValidCard(title)){
+        e.target.value = e.target.dataset.ogtitle;
+        return;
+    }    
     
     // Make api call to create card in database
     let response = await changeCardAPICall(id, title, column);
@@ -183,6 +184,9 @@ async function changeCardTittle(e){
         })
     }
 
+    // update ogtittle
+    e.target.dataset.ogtitle = title;
+
 }
 
 
@@ -192,7 +196,6 @@ async function fillCards(columnId){
     const cards = await result.json()
     cards.result.map((value, index) => {
         const card = createCardElement(value._id, value._title)
-        card.addEventListener('change', changeCardTittle)
         columnInput.appendChild(card)
     })
 }
@@ -268,8 +271,6 @@ const changeCardAPICall = async (id, title, column) => {
 
     let result = await response.json();
 
-    console.log(result)
-
     if (response.status == 200) {
         return result;
     }else{
@@ -294,5 +295,4 @@ async function putCard(cardId, columnId){
     
 	const result = await fetch(`${BASE_URL}/cards/${cardId}`, requestOptions)
 	const response = await result.json()
-    console.log(response)
 }
