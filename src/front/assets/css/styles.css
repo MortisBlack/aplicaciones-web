@@ -126,6 +126,10 @@ body {
   margin: auto;
 }
 
+.icon:hover{
+  cursor: pointer;
+}
+
 .color{
   color: rgb(192, 7, 7);
 }

@@ -23,7 +23,7 @@ const deleteCardEvent = async (e) => {
     console.log(targetEl.id)
 };
 
-//input.addEventListener('change', changeCardTittle);
+// document.querySelectorAll(".card").addEventListener('change', changeCardTittle);
 
 
 function createCardElement(id, text) {
@@ -63,7 +63,6 @@ function createCardElement(id, text) {
     return div
 	
 
-    // Do something here paul
 }
 
 async function createCardAPICall(title){
@@ -162,22 +161,28 @@ async function createCard(text) {
 
 async function changeCardTittle(e){
 
-    const id = e.target.id;
+    // Save original value
+    let originalValue = e.target.value;
+
+    // set timer of 3 secs to execute the function
+    const id = e.target.parentElement.id;
     const title = e.target.value;
-    const column = e.target.parentElement.id;
+    const column = e.target.parentElement.parentElement.id.split('-')[1];
+
     
     
     // Make api call to create card in database
-	let response = await changeCardAPICall(id, title, column);
+    let response = await changeCardAPICall(id, title, column);
 
-	if(response === undefined){
-		// Fire sweet alert
-		Swal.fire({
-			icon: 'error',
-			title: 'Error!',
-			text: 'No se pudó crear la tarea',
-		})
-	}
+    if(response === undefined){
+        // Fire sweet alert
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'No se pudó cambiar el titulo de la tarea',
+        })
+    }
+
 }
 
 
@@ -187,6 +192,7 @@ async function fillCards(columnId){
     const cards = await result.json()
     cards.result.map((value, index) => {
         const card = createCardElement(value._id, value._title)
+        card.addEventListener('change', changeCardTittle)
         columnInput.appendChild(card)
     })
 }
@@ -237,7 +243,7 @@ async function deliteCardAPICall (id) {
 };
 
 const changeCardAPICall = async (id, title, column) => {
-    if(id !== undefined){
+    if(id === undefined || id === "" || title === undefined || title === ""){
         Swal.fire({
             icon: 'error',
             title: 'Error!',
@@ -248,7 +254,7 @@ const changeCardAPICall = async (id, title, column) => {
     const description = '';
 
     let response = await fetch(`${BASE_URL}/cards/${id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -261,6 +267,8 @@ const changeCardAPICall = async (id, title, column) => {
     });
 
     let result = await response.json();
+
+    console.log(result)
 
     if (response.status == 200) {
         return result;
