@@ -107,7 +107,7 @@ function isValidCard(title){
         return false
     }
 
-    const titles = document.getElementsByName('title');
+    const titles = document.getElementsByClassName('card');
     for (let i = 0; i < titles.length; i++){
         if (titles[i].value === title){
             Swal.fire({
