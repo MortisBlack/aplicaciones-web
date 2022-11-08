@@ -107,6 +107,18 @@ function isValidCard(title){
         return false
     }
 
+    const titles = document.getElementsByName('title');
+    for (let i = 0; i < titles.length; i++){
+        if (titles[i].value === title){
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'El titulo ya existe',
+            })
+            return false
+        }
+    }
+
     return true
 }
 
@@ -125,6 +137,12 @@ async function createCard(text) {
         console.log(response)
 		let card = createCardElement(response.result._id, response.result._title);
         startCard.appendChild(card);
+        document.getElementsByName('title')[0].value = '';
+        Swal.fire({
+            icon: 'success',
+            title: 'Tarea creada',
+            text: 'La tarea se creó correctamente',
+        })
 	}
 	else{
 		// Fire sweet alert
