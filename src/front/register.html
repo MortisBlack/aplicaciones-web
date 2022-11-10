@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+        <!-- Favicon and title -->
+        <link rel="icon" type="image/x-icon" href="https://ludensproductions.com/img/favicon_blanco.png">
+		<title>Register User</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	</head>
+	
+	<body class="bg-gradient-primary" style="position:absolute;margin-left: auto; margin-right: auto; left: 0; right: 0;">
+        <div class="container" style="position:absolute; left:0; right:0; top: 50vh; transform: translateY(-50%); -ms-transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); -o-transform: translateY(-50%);">
+            <div class="row justify-content-center">
+				<div class="col-sm-12 col-lg-10 col-xl-9 col-xxl-7 bg-white shadow-lg" style="border-radius: 5px;">
+					<div class="p-5">
+						<div class="text-center">
+							<h4 class="text-dark mb-4">Create an Account!</h4>
+						</div>
+						
+						<!-- Start: Register Form -->
+						<form id="form" class="user" method="POST" action="{% url 'register' %}">
+
+							<div class="mb-3">
+								<input class="form-control form-control-user" type="text" id="first_name" name="first_name" placeholder="First Name" required>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<input class="form-control form-control-user" type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+								</div>
+
+								<div class="col-sm-6">
+									<input class="form-control form-control-user" type="text" id="second_last_name" name="second_last_name" placeholder="Second Last Name" required>
+								</div>
+							</div>
+
+							<!-- Start: Email -->
+							<div class="mb-3">
+								<input class="form-control form-control-user" type="email" id="email" name="email" placeholder="Email" required>
+							</div>
+
+							<!-- Start: Password -->
+							<div class="row mb-3">
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<input class="form-control form-control-user" type="password" id="password1" name="password1" placeholder="Password" required>
+								</div>
+
+								<div class="col-sm-6">
+									<input class="form-control form-control-user" type="password" id="password2" name="password2" placeholder="Repeat Password" required>
+								</div>
+							</div>
+
+							<!-- Start: Email Error Message -->
+							<div class="row mb-3">
+								<p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+								<p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+							</div>
+							
+							<button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">
+								Register Account
+							</button>
+
+							<hr>
+						</form>
+						<!-- End: Register Form -->
+
+						<!-- Start: Forgot Password -->
+						<div class="text-center">
+							<a class="small" href="forgot-password.html">
+								Forgot Password?
+							</a>
+						</div>
+
+						<!-- Start: Login -->
+						<div class="text-center">
+							<a class="small" href="index.html">
+								Already have an account? Login!
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+		<!-- Password Validation Script -->
+		<script>
+			let email = document.getElementById("email")
+			let password = document.getElementById("password1")
+			let verifyPassword = document.getElementById("password2")
+			let submitBtn = document.getElementById("submitBtn")
+			let emailErrorMsg = document.getElementById('emailErrorMsg')
+			let passwordErrorMsg = document.getElementById('passwordErrorMsg')
+			const form = document.getElementById('form')
+			const firstName = document.getElementById('first_name')
+			const lastName = document.getElementById('last_name')
+			const secondLastName = document.getElementById('second_last_name')
+
+			function displayErrorMsg(type, msg) {
+				if(type == "email") {
+					emailErrorMsg.style.display = "block"
+					emailErrorMsg.innerHTML = msg
+					submitBtn.disabled = true
+				}
+				else {
+					passwordErrorMsg.style.display = "block"
+					passwordErrorMsg.innerHTML = msg
+					submitBtn.disabled = true
+				}
+			}
+
+			function hideErrorMsg(type) {
+				if(type == "email") {
+					emailErrorMsg.style.display = "none"
+					emailErrorMsg.innerHTML = ""
+					submitBtn.disabled = true
+					if(passwordErrorMsg.innerHTML == "")
+						submitBtn.disabled = false
+				}
+				else {
+					passwordErrorMsg.style.display = "none"
+					passwordErrorMsg.innerHTML = ""
+					if(emailErrorMsg.innerHTML == "")
+						submitBtn.disabled = false
+				}
+			}
+			
+			// Validate password upon change
+			password.addEventListener("change", function() {
+
+				// If password has no value, then it won't be changed and no error will be displayed
+				if(password.value.length == 0 && verifyPassword.value.length == 0) hideErrorMsg("password")
+				
+				// If password has a value, then it will be checked. In this case the passwords don't match
+				else if(password.value !== verifyPassword.value) displayErrorMsg("password", "Passwords do not match")
+				
+				// When the passwords match, we check the length
+				else {
+					// Check if the password has 8 characters or more
+					if(password.value.length >= 8)
+						hideErrorMsg("password")
+					else
+						displayErrorMsg("password", "Password must be at least 8 characters long")
+				}
+			})
+			
+			verifyPassword.addEventListener("change", function() {
+				checkPassword()
+			})
+
+			function checkPassword(){
+				if(password.value !== verifyPassword.value){
+					displayErrorMsg("password", "Passwords do not match")
+					return false
+				}
+				
+				// Check if the password has 8 characters or more
+				if(password.value.length >= 8){
+					hideErrorMsg("password")
+					return true
+				}
+				
+				displayErrorMsg("password", "Password must be at least 8 characters long")
+				return false
+			}
+
+			// Validate email upon change
+			email.addEventListener("change", function() {
+				checkEmail()
+			});
+
+			function checkEmail(){
+				// Check if the email is valid using a regular expression (string@string.string)
+				if(email.value.match(/^[^@]+@[^@]+\.[^@]+$/)){
+					hideErrorMsg("email")
+					return true
+				}
+				else{
+					displayErrorMsg("email", "Invalid email")
+					return false
+				}
+			}
+
+
+			window.onload = (function(){ 
+				document.getElementById("emailErrorMsg").style.display = "none"
+				document.getElementById("passwordErrorMsg").style.display = "none"
+				document.getElementById("submitBtn").disabled = false
+			});
+
+			form.addEventListener("submit", async function(event) {
+				event.preventDefault()
+				
+				if(checkEmail() && checkPassword()){
+					const options = {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							email: email.value,
+							password: password.value,
+							name: firstName.value,
+							first_surname: lastName.value,
+							second_surname: secondLastName.value,
+						})
+					}
+
+					const response = await fetch("http://localhost:3000/users", options)
+					const data = await response.json()
+					if(response.status == 200){ 
+						const result = await Swal.fire({
+							title: 'Success!',
+							text: 'User created successfully',
+							icon: 'success',
+							confirmButtonText: 'Ok'
+						})
+
+						if (result.isConfirmed) {
+							window.location.href = "index.html"
+						}
+					}
+					else{
+						displayErrorMsg("api", data.message)
+					}
+				}
+			})
+		</script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+
+</html>
