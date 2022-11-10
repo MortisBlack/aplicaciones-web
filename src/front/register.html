@@ -60,6 +60,7 @@
 							<div class="row mb-3">
 								<p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
 								<p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+								<p id="apiErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
 							</div>
 							
 							<button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">
@@ -99,6 +100,7 @@
 			let submitBtn = document.getElementById("submitBtn")
 			let emailErrorMsg = document.getElementById('emailErrorMsg')
 			let passwordErrorMsg = document.getElementById('passwordErrorMsg')
+			const apiErrorMsg = document.getElementById('apiErrorMsg')
 			const form = document.getElementById('form')
 			const firstName = document.getElementById('first_name')
 			const lastName = document.getElementById('last_name')
@@ -109,8 +111,10 @@
 					emailErrorMsg.style.display = "block"
 					emailErrorMsg.innerHTML = msg
 					submitBtn.disabled = true
-				}
-				else {
+				} if (type == "api"){
+					apiErrorMsg.style.display = "block"
+					apiErrorMsg.innerHTML = msg
+				} else {
 					passwordErrorMsg.style.display = "block"
 					passwordErrorMsg.innerHTML = msg
 					submitBtn.disabled = true
