@@ -7,7 +7,6 @@ export default class UserController {
     async createUser(req, res, next) {
         try {
             const {
-                username,
                 password,
                 name,
                 first_surname,
@@ -19,8 +18,7 @@ export default class UserController {
             } = req.body;
             
             const user = new UserBO(
-                undefined,
-                username, 
+                undefined, 
                 password,
                 name, 
                 first_surname,

@@ -1,5 +1,6 @@
 import { connection } from "../data/connection.js";
 import {DATE,STRING,BIGINT} from "sequelize";
+import bcrypt from 'bcryptjs';
 
 const User = connection.define('User',{
     id:{
@@ -7,10 +8,11 @@ const User = connection.define('User',{
         autoIncrement: true,
         primaryKey: true
     },
-    username: {
+    email: {
         type: STRING, 
         max:255, 
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: STRING, 
@@ -32,11 +34,6 @@ const User = connection.define('User',{
         max:255, 
         allowNull: true
     },
-    email: {
-        type: STRING, 
-        max:255, 
-        allowNull: false
-    },
     phone: {
         type: STRING, 
         max:255, 
@@ -55,6 +52,22 @@ const User = connection.define('User',{
 },{
     tableName:'user'
 });
+
+// Hooks are automatic methods that run during various phases of the User Model lifecycle
+User.beforeSave(async (user, options) => {
+    if (user.password) {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    }
+});
+
+User.prototype.comparePassword = (passw, cb) => {
+    bcrypt.compare(passw, this.password, (err, isMatch) => {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+};
 
 User.sync()
 .then(()=> console.log('Create User table'))

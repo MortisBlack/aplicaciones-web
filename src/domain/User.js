@@ -1,7 +1,8 @@
+import bcrypt from 'bcryptjs';
+
 export default class User {
-    constructor(id, username, password, name, first_surname, second_surname, email, phone, img_profile, birthdate){
+    constructor(id, password, name, first_surname, second_surname, email, phone, img_profile, birthdate){
         this._id = id;
-        this._username = username;
         this._password = password;
         this._name = name;
         this._first_surname = first_surname;
@@ -14,10 +15,6 @@ export default class User {
 
     get id(){
         return this._id;
-    }
-
-    get username(){
-        return this._username;
     }
 
     get password(){
@@ -57,14 +54,6 @@ export default class User {
 
     set id(id){
         this._id = id;
-    }
-
-    set username(username){
-        if (username.length > 0 && username.length < 255 && username != undefined){
-            this._username = username;
-            return;
-        }
-        throw new Error("Username must be between 1 and 255 characters");
     }
 
     set password(password){
@@ -157,5 +146,14 @@ export default class User {
             birthdate: this._birthdate
         }
     }
+
+    comparePassword(passw, cb) {
+        bcrypt.compare(passw, this._password, (err, isMatch) => {
+            if (err) {
+                return cb(err);
+            }
+            cb(null, isMatch);
+        });
+    };
 
 }
