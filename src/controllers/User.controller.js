@@ -29,6 +29,14 @@ export default class UserController {
                 birthdate
                 );
             
+            let userExists = await userRepository.findOneByEmail(email);
+
+            if(userExists) {
+                return res.status(409).send({
+                    message: "Email already exists"
+                });
+            }
+            
             let result = await userRepository.create(user);
     
             res.status(200).send({
