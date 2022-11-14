@@ -1,0 +1,140 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.body{
+    background-color: rgb(13, 22, 51);
+}
+.board-layout {
+    background-color: rgb(13, 22, 51);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    display: grid;
+    grid-template-rows: max-content auto;
+    grid-gap: 10px;
+    padding: 10px;
+    height:800px;
+  }
+.list-layout {
+    display: grid;
+    grid-gap: 10px;
+   
+  }
+.board-text {
+    font-weight: bold;
+    font-size: 28px;
+    padding: 5px;
+  }
+.board-lists {
+    display: grid;
+    grid-auto-columns: 275px;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+    height: auto;
+    overflow-x: auto;
+  }
+  
+  .board-list {
+    background-color: rgb(235, 236, 240);
+    border-radius: 5px;
+    display: grid;
+    grid-auto-rows: max-content;
+    grid-gap: 10px;
+    /* Chrome use a fixed height */
+    height: max-content;
+    padding: 10px;
+    height: 400px;
+    overflow-y: auto;
+  }
+  
+  .list-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+.card {
+    margin: 0 auto;
+    padding: 7px;
+    background-color: white;
+    cursor:pointer;
+    color:black;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 0;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    width: 85%;
+    line-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-right: 1px solid rgba(228, 228, 228, 0.7);
+}
+
+.left{
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.board-text{
+  padding: 10px;
+  margin-left: 10px;
+  float: left;
+  position: relative;
+}
+
+.boton{
+  color: white;
+  float: right;
+  position: relative;
+  background-color: rgb(39, 74, 114);
+  border: none;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 30px;
+    
+}
+
+.boton:hover{
+  background-color: rgb(39, 74, 114);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.create{
+  float: right;
+  margin-top: 13px;
+  height: 20px;
+  outline: 0 none;
+}
+
+.backgorund-input{
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 1px 4px rgb(9 30 66 / 25%);
+  border-radius: 5px;
+ 
+}
+
+.icon{
+  width: 15%;
+  float: right;
+  text-align: center;
+  margin: auto;
+}
+
+.icon:hover{
+  cursor: pointer;
+}
+
+.color{
+  color: rgb(192, 7, 7);
+}
+
+.swal2-title {
+  font-family: Arial, Helvetica, sans-serif;
+}
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Pomodoro</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
+
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+</head>
+
+<body style="background-color: rgb(13, 22, 51);">
+    <div class="board-layout">
+
+        <div class=" left">
+            <div class="board-text">Pomodoro</div>
+
+            <div>
+                <button id="add_card" class="boton" type="button">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+            <div>
+                <!-- TODO: ayuda diosito -->
+                <input type="text" style="WIDTH: 400px;" name="title" class="create" placeholder="Nueva tarea..." />
+            </div>
+        </div>
+
+        <div id='boardlists' class="board-lists">
+            <div id='list-1' class="board-list" ondrop="dropIt(event)" ondragover="allowDrop(event)">
+                <div class="list-title">
+                    Pendiente
+                </div>
+
+                <!-- <div class="backgorund-input">
+                    <input id='card5' class="card" draggable="true" ondragstart="dragStart(event)"
+                        value="TRABAJO 6" />
+                    <div class="icon">
+                        <i class="fa-solid fa-trash-can color"></i>
+                    </div>
+                </div> -->
+
+
+            </div>
+            <div id='list-2' class="board-list" ondrop="dropIt(event)" ondragover="allowDrop(event)">
+                <div class="list-title">
+                    Progreso
+                </div>
+
+
+            </div>
+            <div id='list-3' class="board-list" ondrop="dropIt(event)" ondragover="allowDrop(event)">
+                <div class="list-title">
+                    Terminada
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src='./assets/js/api_calls.js'></script>
+    <script src='./assets/js/dragdropswap.js'></script>
+    <script src='./assets/js/all.min.js'></script>
+</body>
+
+</html>
