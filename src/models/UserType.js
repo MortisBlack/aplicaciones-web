@@ -16,7 +16,9 @@ const UserType = connection.define('UserType',{
     tableName:'user_type'
 });
 
-UserType.sync()
+UserType.sync({
+    alter:true
+})
 .then(()=> console.log('Create UserType table'))
 .catch((err)=> console.log(err))
 

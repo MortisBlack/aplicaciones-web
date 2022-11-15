@@ -23,7 +23,9 @@ export const ImageCard = connection.define('ImageCard',{
 Card.hasMany(ImageCard, { as: "Images" });
 ImageCard.belongsTo(Card, { as: "Card" });
 
-ImageCard.sync()
+ImageCard.sync({
+    alter:true
+})
   .then(() => console.log("Create ImageCard table"))
   .catch((err) => console.log(err));
 

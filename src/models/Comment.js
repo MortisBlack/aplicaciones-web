@@ -42,7 +42,9 @@ Comment.belongsTo(Card, {
     as: "Card",
 });
 
-Comment.sync({alter:true})
+Comment.sync({
+    alter:true
+})
   .then(() => console.log("Create Comment table"))
   .catch((err) => console.log(err));
 

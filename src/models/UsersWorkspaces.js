@@ -21,7 +21,9 @@ Workspace.belongsToMany(User,{through: UsersWorkspaces});
 User.belongsToMany(UserType, {through: UsersWorkspaces });
 UserType.belongsToMany(User, {through: UsersWorkspaces });
 
-UsersWorkspaces.sync()
+UsersWorkspaces.sync({
+    alter:true
+})
     .then(()=> console.log('Create relation table between Users and Workspaces'))
     .catch((err)=> console.log(err))
 

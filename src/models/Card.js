@@ -40,7 +40,9 @@ Card.belongsTo(Column, {
     as: 'Column',
 });
 
-Card.sync()
+Card.sync({
+    alter:true
+})
 .then(()=> console.log('Create Card table'))
 .catch((err)=> console.log(err))
 

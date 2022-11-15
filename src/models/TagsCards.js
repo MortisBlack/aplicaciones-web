@@ -17,7 +17,9 @@ const TagsCards = connection.define(
 Card.belongsToMany(Tag, {through: TagsCards });
 Tag.belongsToMany(Card,{through: TagsCards});
 
-TagsCards.sync()
+TagsCards.sync({
+    alter:true
+})
     .then(()=> console.log('Create relation table between Cards and Tags'))
     .catch((err)=> console.log(err))
 

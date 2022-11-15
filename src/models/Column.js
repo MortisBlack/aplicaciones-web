@@ -28,7 +28,9 @@ Column.belongsTo(Board, {
     as: "Board",
 });
 
-Column.sync()
+Column.sync({
+    alter:true
+})
     .then(() => console.log("Create Column table"))
     .catch((err) => console.log(err));
 

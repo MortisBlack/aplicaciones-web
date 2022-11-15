@@ -16,7 +16,9 @@ const UsersCards = connection.define('UsersCards', {
 User.belongsToMany(Card, {through: UsersCards });
 Card.belongsToMany(User,{through: UsersCards });
 
-UsersCards.sync()
+UsersCards.sync({
+    alter:true
+})
     .then(()=> console.log('Create relation table between Users and Cards'))
     .catch((err)=> console.log(err))
 

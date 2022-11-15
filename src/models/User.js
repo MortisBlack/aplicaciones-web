@@ -56,7 +56,25 @@ const User = connection.define('User',{
     tableName:'user'
 });
 
-User.sync()
+// Hooks are automatic methods that run during various phases of the User Model lifecycle
+User.beforeSave(async (user, options) => {
+    if (user.password) {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    }
+});
+
+User.prototype.comparePassword = (passw, cb) => {
+    bcrypt.compare(passw, this.password, (err, isMatch) => {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+};
+
+User.sync({
+    alter:true
+})
 .then(()=> console.log('Create User table'))
 .catch((err)=> console.log(err))
 

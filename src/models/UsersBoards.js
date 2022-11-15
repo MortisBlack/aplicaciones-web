@@ -17,7 +17,9 @@ const UsersBoards = connection.define(
 User.belongsToMany(Board, {through: UsersBoards });
 Board.belongsToMany(User,{through: UsersBoards});
 
-UsersBoards.sync()
+UsersBoards.sync({
+    alter:true
+})
     .then(()=> console.log('Create relation table between Users and Boards'))
     .catch((err)=> console.log(err))
 

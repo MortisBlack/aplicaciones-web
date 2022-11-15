@@ -21,7 +21,9 @@ const Tag = connection.define('Tag',{
     tableName:'tag'
 });
 
-Tag.sync()
+Tag.sync({
+    alter:true
+})
 .then(()=> console.log('Create Tag table'))
 .catch((err)=> console.log(err))
 
