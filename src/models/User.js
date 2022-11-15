@@ -1,5 +1,6 @@
 import { connection } from "../data/connection.js";
 import {DATE,STRING,BIGINT} from "sequelize";
+import bcrypt from 'bcryptjs';
 
 const User = connection.define('User',{
     id:{
@@ -7,10 +8,11 @@ const User = connection.define('User',{
         autoIncrement: true,
         primaryKey: true
     },
-    username: {
+    email: {
         type: STRING, 
         max:255, 
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: STRING, 
@@ -31,11 +33,6 @@ const User = connection.define('User',{
         type: STRING, 
         max:255, 
         allowNull: true
-    },
-    email: {
-        type: STRING, 
-        max:255, 
-        allowNull: false
     },
     phone: {
         type: STRING, 
