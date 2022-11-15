@@ -159,7 +159,9 @@ export default class CardRepository {
             result.description, 
             result.deadline_date, 
             column,
-            result.position
+            result.position,
+            result.createdAt,
+            result.updatedAt
         );
     }
 
@@ -185,7 +187,9 @@ export default class CardRepository {
                 element.dataValues.description,
                 element.dataValues.deadline_date,
                 column,
-                element.dataValues.position
+                element.dataValues.position,
+                element.dataValues.createdAt,
+                element.dataValues.updatedAt
             );
         }));
     }
