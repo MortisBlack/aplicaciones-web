@@ -52,7 +52,8 @@ export default class CardController {
                 title,
                 description,
                 deadline_date,
-                column
+                column,
+                position
             } = req.body;
     
             const { id } = req.params;
@@ -66,7 +67,8 @@ export default class CardController {
                         column,
                         undefined,
                         undefined
-                    )
+                    ),
+                    position
                 );
 
             let result = await cardRepository.update(card);
@@ -78,6 +80,10 @@ export default class CardController {
             } else if (result == "column") {
                 res.status(404).send({
                     message: `The column ${id} doesn't exist`
+                });
+            } else if (result == "position") {
+                res.status(404).send({
+                    message: `The position ${position} is out of range`
                 });
             } else {
                 res.status(200).send({

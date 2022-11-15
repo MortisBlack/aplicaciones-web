@@ -24,7 +24,7 @@ export default class CommentController {
                     user,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
                 ),
                 new CardBO(
-                    card,undefined,undefined,undefined,undefined
+                    card,undefined,undefined,undefined,undefined, undefined
                 )
             );
 
@@ -74,7 +74,7 @@ export default class CommentController {
                     user,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined
                 ),
                 new CardBO(
-                    card,undefined,undefined,undefined,undefined
+                    card,undefined,undefined,undefined,undefined, undefined
                 )
             );
 

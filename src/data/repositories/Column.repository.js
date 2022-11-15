@@ -124,14 +124,17 @@ export default class ColumnRepository {
             include:[{
                 model: Card,
                 as: 'cards'
-            }]
+            }],
+            order: [
+                ['cards', 'position', 'ASC']
+            ]
         });
 
         const cards = result.cards;
 
         // convert cards to CardBO
         return cards.map((card) => {
-            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck);
+            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck, card.position);
         });
     }
 }

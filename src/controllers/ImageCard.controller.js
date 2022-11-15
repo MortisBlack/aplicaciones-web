@@ -21,6 +21,7 @@ export default class ImageCardController {
                     undefined,
                     undefined,
                     undefined,
+                    undefined,
                     undefined
                 )
             );
@@ -59,6 +60,7 @@ export default class ImageCardController {
                     image,
                     new CardBO (
                         card,
+                        undefined,
                         undefined,
                         undefined,
                         undefined,

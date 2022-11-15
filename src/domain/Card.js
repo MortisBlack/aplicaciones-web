@@ -1,12 +1,13 @@
 import Column from "./Column.js";
 
 export default class Card {
-    constructor(id, title, description, deadline_date, column){
+    constructor(id, title, description, deadline_date, column, position){
         this._id = id;
         this._title = title;
         this._description = description;
         this._deadline_date = deadline_date;
         this._column = column;
+        this._position = position;
     }
 
     get id(){
@@ -27,6 +28,10 @@ export default class Card {
 
     get column(){
         return this._column;
+    }
+
+    get position(){
+        return this._position;
     }
 
     set title(title){
@@ -72,13 +77,27 @@ export default class Card {
         throw new Error('Column must be a column');
     }
 
+    set position(position){
+        if (position === undefined){
+            return
+        }
+        // Validate position is a number
+        if(typeof position === 'number'){
+            this._position = position;
+            return;
+        }
+        
+        throw new Error('Position must be a number');
+    }
+
     toPersistenceObject(){
         return {
             id: this._id,
             title: this._title,
             description: this._description,
             deadline_date: this._deadline_date,
-            ColumnId: this._column.id
+            ColumnId: this._column.id,
+            position: this._position
         }
     }
 

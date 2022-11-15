@@ -27,6 +27,10 @@ const Card = connection.define('Card',{
     ColumnId:{
         type:BIGINT,
         allowNull:false
+    },
+    position:{
+        type:BIGINT,
+        allowNull:false
     }
 },{
     tableName:'card'

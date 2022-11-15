@@ -2,6 +2,7 @@ import Card from '../../models/Card.js';
 import Column from '../../models/Column.js';
 import CardBO from '../../domain/Card.js';
 import ColumnRepository from './Column.repository.js';
+import {literal, Op} from 'sequelize';
 
 const columnRepository = new ColumnRepository();
 
@@ -13,16 +14,30 @@ export default class CardRepository {
         if(column == undefined) {
             return undefined;
         }
-
+        
         const cardBO = card.toPersistenceObject();
+        cardBO.position = await this.countByColumnId(card.column.id) + 1;
         const result = await Card.create(cardBO);
         return new CardBO(
             result.id, 
             result.title, 
             result.description, 
             result.deadline_date, 
-            column
+            column,
+            result.position
         );
+    }
+
+    async count() {
+        return await Card.count();
+    }
+
+    async countByColumnId(columnId) {
+        return await Card.count({
+            where: {
+                ColumnId: columnId
+            }
+        });
     }
 
     async update(card) {
@@ -45,6 +60,45 @@ export default class CardRepository {
         
         const cardBO = card.toPersistenceObject()
 
+        let max = await this.countByColumnId(card.column.id);
+        
+        if (card.column.id != cardCheck.column.id) {
+           max = max + 1; 
+        }
+
+        if(cardBO.position > max) {
+            return "column";
+        }
+
+        if (card.position > cardCheck.position) {
+            await Card.update(
+                { position: literal('position - 1') },
+                {
+                    where: {
+                        ColumnId: card.column.id,
+                        position: {
+                            [Op.gt]: cardCheck.position,
+                            [Op.lte]: card.position
+                        }
+                    }
+                }
+            );
+
+        } else if (card.position < cardCheck.position) {
+            await Card.update(
+                { position: literal('position + 1') },
+                {
+                    where: {
+                        ColumnId: card.column.id,
+                        position: {
+                            [Op.gte]: card.position,
+                            [Op.lt]: cardCheck.position
+                        }
+                    }
+                }
+            );
+        }
+
         await Card.update(cardBO, {
             where: {
                 id: card.id
@@ -53,6 +107,15 @@ export default class CardRepository {
         });
 
         return this.findOne(card.id);
+    }
+
+    async findByPositionAndColumn(position, columnId) {
+        return await Card.findOne({
+            where: {
+                position: position,
+                ColumnId: columnId
+            }
+        });
     }
 
     async delete(id) {
@@ -95,7 +158,8 @@ export default class CardRepository {
             result.title, 
             result.description, 
             result.deadline_date, 
-            column
+            column,
+            result.position
         );
     }
 
@@ -120,7 +184,8 @@ export default class CardRepository {
                 element.dataValues.title,
                 element.dataValues.description,
                 element.dataValues.deadline_date,
-                column
+                column,
+                element.dataValues.position
             );
         }));
     }
