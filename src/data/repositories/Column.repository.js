@@ -131,7 +131,7 @@ export default class ColumnRepository {
 
         // convert cards to CardBO
         return cards.map((card) => {
-            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck);
+            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck, card.createdAt, card.updatedAt);
         });
     }
 }

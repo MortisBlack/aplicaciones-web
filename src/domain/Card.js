@@ -1,12 +1,14 @@
 import Column from "./Column.js";
 
 export default class Card {
-    constructor(id, title, description, deadline_date, column){
+    constructor(id, title, description, deadline_date, column, createdAt, updatedAt){
         this._id = id;
         this._title = title;
         this._description = description;
         this._deadline_date = deadline_date;
         this._column = column;
+        this._createdAt = createdAt;
+        this._updatedAt = updatedAt;
     }
 
     get id(){
@@ -70,6 +72,14 @@ export default class Card {
         }
 
         throw new Error('Column must be a column');
+    }
+
+    get createdAt(){
+        return this._createdAt;
+    }
+
+    get updatedAt(){
+        return this._updatedAt;
     }
 
     toPersistenceObject(){

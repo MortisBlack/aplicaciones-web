@@ -95,7 +95,9 @@ export default class CardRepository {
             result.title, 
             result.description, 
             result.deadline_date, 
-            column
+            column,
+            result.createdAt,
+            result.updatedAt
         );
     }
 
@@ -120,7 +122,9 @@ export default class CardRepository {
                 element.dataValues.title,
                 element.dataValues.description,
                 element.dataValues.deadline_date,
-                column
+                column,
+                element.dataValues.createdAt,
+                element.dataValues.updatedAt
             );
         }));
     }
