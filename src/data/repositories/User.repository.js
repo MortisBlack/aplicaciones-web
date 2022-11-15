@@ -8,7 +8,6 @@ export default class UserRepository {
         const result = await User.create(userBO);
         return new UserBO(
             result.id,
-            result.username,
             result.password, 
             result.name, 
             result.first_surname,
@@ -72,8 +71,33 @@ export default class UserRepository {
         };
 
         return new UserBO(
-            result.dataValues.id, 
-            result.dataValues.username, 
+            result.dataValues.id,  
+            result.dataValues.password, 
+            result.dataValues.name, 
+            result.dataValues.first_surname, 
+            result.dataValues.second_surname, 
+            result.dataValues.email, 
+            result.dataValues.phone, 
+            result.dataValues.email, 
+            result.dataValues.img_profile, 
+            result.dataValues.birthdate
+        );
+    };
+
+    async findOneByEmail(email) {
+        
+        const result = await User.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if(result == null) {
+            return undefined;
+        };
+
+        return new UserBO(
+            result.dataValues.id,  
             result.dataValues.password, 
             result.dataValues.name, 
             result.dataValues.first_surname, 
