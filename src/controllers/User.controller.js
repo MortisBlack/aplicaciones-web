@@ -17,17 +17,6 @@ export default class UserController {
                 birthdate
             } = req.body;
 
-            // console.log("req.body", req.body)
-
-            // console.log("password", password)
-            // console.log("name", name)
-            // console.log("first_name", first_surname)
-            // console.log("second_surname", second_surname)
-            // console.log("email", email)
-            // console.log("phone", phone)
-            // console.log("img", img_profile)
-            // console.log("birthdate", birthdate)
-
             
             const user = new UserBO(
                 undefined, 
@@ -57,10 +46,14 @@ export default class UserController {
                 result: result
             });
         } catch (err) {
-            res.send({
-                message: err.message
+            // res.send({
+            //     message: err.message
+            // })
+            next({
+                message: err.message, 
+                status: 400,
+                errors: err.errors
             })
-            next(err)
         }
     };
 
