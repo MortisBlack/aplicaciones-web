@@ -135,7 +135,6 @@ export default class User {
 
     toPersistenceObject(){
         return {
-            username: this._username,
             password: this._password,
             name: this._name,
             first_surname: this._first_surname,

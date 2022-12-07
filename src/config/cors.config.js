@@ -1,4 +1,4 @@
-let allowlist = ['http://localhost:5500', 'http://127.0.0.1:5500', '*', 'http://localhost']
+let allowlist = ['http://localhost:5500', 'http://127.0.0.1:5500', '*', 'http://localhost', 'http://localhost:8000']
 let corsOptionsDelegate = function (req, callback) {
     let corsOptions;
     if (allowlist.indexOf(req.header('Origin')) !== -1) {

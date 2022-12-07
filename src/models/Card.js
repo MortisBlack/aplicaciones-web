@@ -30,7 +30,8 @@ const Card = connection.define('Card',{
     },
     position:{
         type:BIGINT,
-        allowNull:false
+        allowNull:false,
+        defaultValue:0
     }
 },{
     tableName:'card'

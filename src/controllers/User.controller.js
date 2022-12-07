@@ -16,6 +16,18 @@ export default class UserController {
                 img_profile,
                 birthdate
             } = req.body;
+
+            // console.log("req.body", req.body)
+
+            // console.log("password", password)
+            // console.log("name", name)
+            // console.log("first_name", first_surname)
+            // console.log("second_surname", second_surname)
+            // console.log("email", email)
+            // console.log("phone", phone)
+            // console.log("img", img_profile)
+            // console.log("birthdate", birthdate)
+
             
             const user = new UserBO(
                 undefined, 
@@ -28,6 +40,7 @@ export default class UserController {
                 img_profile,
                 birthdate
                 );
+
             
             let userExists = await userRepository.findOneByEmail(email);
 
@@ -128,6 +141,7 @@ export default class UserController {
     async getAllUsers(req, res, next){
         try {
             let result = await userRepository.findAll();
+            
 
             if(result) {
                 res.status(200).send({

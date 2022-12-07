@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import corsOptionsDelegate from './src/config/cors.config.js';
 const APP = express();
 const HOSTNAME = "127.0.0.1";
-const PORT = 3000;
+const PORT = 8000;
 APP.use(express.json());
 
 import userRoter from './src/routes/User.routes.js';
@@ -20,7 +20,7 @@ import authRouter from './src/routes/Auth.routes.js';
 
 import errorHandler from './src/middlewares/error_handler.js'
 
-// APP.use(cors(corsOptionsDelegate));
+APP.use(cors(corsOptionsDelegate));
 APP.use(morgan('dev'))
 APP.use(cors());
 

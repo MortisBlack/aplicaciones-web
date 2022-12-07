@@ -5,8 +5,9 @@ export default class UserRepository {
 
     async create(user) {
         const userBO = user.toPersistenceObject();
+        // console.log("userBO", userBO)
         const result = await User.create(userBO);
-        return new UserBO(
+        const newUser = new UserBO(
             result.id,
             result.password, 
             result.name, 
@@ -16,7 +17,9 @@ export default class UserRepository {
             result.phone,
             result.img_profile,
             result.birthdate
-            );
+        );
+        console.log("newUser", newUser)
+        return newUser; 
     }
 
     async update(user) {
@@ -119,9 +122,8 @@ export default class UserRepository {
         };
 
         return result.map((element, index)=> {
-            return new UserBO(
+            const newUser = new UserBO(
                 element.dataValues.id, 
-                element.dataValues.username, 
                 element.dataValues.password,
                 element.dataValues.name,
                 element.dataValues.first_surname,
@@ -130,7 +132,8 @@ export default class UserRepository {
                 element.dataValues.phone,
                 element.dataValues.img_profile,
                 element.dataValues.birthdate
-            )
+            );
+            return newUser;
         });
     }
 }
