@@ -1,6 +1,5 @@
 import Workspace from '../../models/Workspace.js';
 import User from '../../models/User.js';
-import UsersWorkspaces from '../../models/UsersWorkspaces.js';
 import WorkspaceBO from '../../domain/Workspace.js';
 
 export default class WorkspaceRepository {
@@ -62,7 +61,7 @@ export default class WorkspaceRepository {
             return undefined;
         };
 
-        return new WorkspaceBO(result.dataValues.id, result.dataValues.title, result.dataValues.description)
+        return new WorkspaceBO(result.dataValues.id, result.dataValues.title, result.dataValues.description);
     }
 
     async findAll() {        
@@ -80,15 +79,12 @@ export default class WorkspaceRepository {
     async findAllByUserId(userId) {
         const result = await Workspace.findAll({
             
-            include: [{
-                model: UsersWorkspaces,
-                through: { 
-                    attributes: [],
-                    where: {
-                        UserId: userId
-                    },
+            include: {
+                model: User,
+                where: {
+                    id: userId
                 }
-            }]
+            }
         });
 
         if(result == null) {
