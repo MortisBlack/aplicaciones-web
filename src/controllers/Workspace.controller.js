@@ -80,7 +80,8 @@ export default class WorkspaceController{
 
     async getAllWorkspaces(req, res, next){
         try {
-            let result = await workspaceRepository.findAll();
+            const user = req.user;
+            let result = await workspaceRepository.findAllByUserId(user.id);
 
             if(result) {
                 res.status(200).send({
@@ -94,10 +95,10 @@ export default class WorkspaceController{
             }
 
         } catch (error) {
-            res.send({
-                message: err.message
-            })
-            next(err)
+            // res.send({
+            //     message: err.message
+            // })
+            next(error)
         }
     }
 

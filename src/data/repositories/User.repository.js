@@ -107,7 +107,6 @@ export default class UserRepository {
             result.dataValues.second_surname, 
             result.dataValues.email, 
             result.dataValues.phone, 
-            result.dataValues.email, 
             result.dataValues.img_profile, 
             result.dataValues.birthdate
         );

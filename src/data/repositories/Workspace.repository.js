@@ -1,4 +1,6 @@
 import Workspace from '../../models/Workspace.js';
+import User from '../../models/User.js';
+import UsersWorkspaces from '../../models/UsersWorkspaces.js';
 import WorkspaceBO from '../../domain/Workspace.js';
 
 export default class WorkspaceRepository {
@@ -67,6 +69,29 @@ export default class WorkspaceRepository {
         const result = await Workspace.findAll();
 
         if(result == null || result.length == 0) {
+            return undefined;
+        };
+
+        return result.map((element, index)=> {
+            return new WorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description)
+        });
+    }
+
+    async findAllByUserId(userId) {
+        const result = await Workspace.findAll({
+            
+            include: [{
+                model: UsersWorkspaces,
+                through: { 
+                    attributes: [],
+                    where: {
+                        UserId: userId
+                    },
+                }
+            }]
+        });
+
+        if(result == null) {
             return undefined;
         };
 
