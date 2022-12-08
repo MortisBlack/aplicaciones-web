@@ -22,9 +22,6 @@ export default class UserTypeController {
                 result: result
             });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     };
@@ -49,16 +46,8 @@ export default class UserTypeController {
                     message: "User type updated successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user type ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -73,16 +62,8 @@ export default class UserTypeController {
                 res.status(200).send({
                     message: "User type deleted successfully"
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user type ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -96,16 +77,8 @@ export default class UserTypeController {
                     message: "User types fetched successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `There are not user types registered yet`
-                });
-            }
-            
+            }            
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -121,16 +94,8 @@ export default class UserTypeController {
                     message: "User type fetched successfully",
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user type ${id} doesn't exist`
-                });
-            }
-            
+            }            
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }

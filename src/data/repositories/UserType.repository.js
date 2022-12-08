@@ -15,13 +15,17 @@ export default class UserTypeRepository {
     async update(userType) {
 
         if(userType.id === undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         }
 
         const userTypeCheck = await this.findOne(userType.id);
 
         if(userTypeCheck == undefined) {
-            return undefined;
+            const error = new Error(`The user type ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const userTypeBO = userType.toPersistenceObject();
@@ -39,7 +43,9 @@ export default class UserTypeRepository {
         const userTypeCheck = await this.findOne(id);
 
         if(userTypeCheck == undefined) {
-            return undefined;
+            const error = new Error(`The user type ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const result = await UserType.destroy({
@@ -60,7 +66,9 @@ export default class UserTypeRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The user type ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         return new UserTypeBO(
@@ -74,7 +82,9 @@ export default class UserTypeRepository {
         const result = await UserType.findAll();
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not user types registered yet`);
+            error.status = 404;
+            throw error;
         };
 
         return result.map((element, index)=> {
