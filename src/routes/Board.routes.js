@@ -15,4 +15,6 @@ router.get('', passportConfig, boardController.getAllBoards);
 
 router.get('/:id', boardController.findOneBoard);
 
+router.get('/:id/columns', boardController.findAllColumns);
+
 export default router;

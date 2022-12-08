@@ -2,6 +2,8 @@ import Board from '../../models/Board.js';
 import Workspace from '../../models/Workspace.js';
 import BoardBO from '../../domain/Board.js';
 import WorkspaceRepository from './Workspace.repository.js';
+import Column from '../../models/Column.js';
+import ColumnBO from '../../domain/Column.js';
 
 const workspaceRepository = new WorkspaceRepository();
 
@@ -131,5 +133,33 @@ export default class BoardRepository {
             let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId)
             return new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace);
         }));
+    }
+
+    async findAllColumns(id) {
+        const boardCheck = await this.findOne(id);
+
+        if(boardCheck == undefined) {
+            const error = new Error(`The board ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
+        }
+
+        // find board with all cards
+        const result = await Board.findOne({
+            where: {
+                id: id
+            },
+            include:[{
+                model: Column,
+                as: 'columns'
+            }],
+        });
+        
+        const columns = result.columns;
+
+        // convert cards to CardBO
+        return columns.map((column) => {
+            return new ColumnBO(column.id, column.title);
+        });
     }
 }

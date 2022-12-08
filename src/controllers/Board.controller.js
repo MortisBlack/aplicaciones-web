@@ -159,4 +159,22 @@ export default class BoardController {
             next(err)
         }
     }
+
+    async findAllColumns(req, res, next){
+
+        try {
+            const {id} = req.params;
+
+            let result = await boardRepository.findAllColumns(id);
+           
+            if(result) {
+                res.status(200).send({
+                    message: "Columns fetched successfully",
+                    result: result
+                });
+            }
+        } catch (err) {
+            next(err)
+        }
+    }
 }

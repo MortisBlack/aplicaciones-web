@@ -23,7 +23,9 @@ const Column = connection.define("Column",
         tableName: "column"
     });
 
-Board.hasMany(Column, { as: "columns" });
+Board.hasMany(Column, { 
+    as: "columns" 
+});
 Column.belongsTo(Board, { 
     as: "Board",
 });
