@@ -33,15 +33,8 @@ export default class ImageCardController {
                     message: "Image card creataed successfully",
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The card ${card} doesn't exist`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     };
@@ -70,24 +63,11 @@ export default class ImageCardController {
 
             let result = await imageCardRepository.update(imageCard);
     
-            if(result == "card") {
-                res.status(404).send({
-                    message: `The card ${board} doesn't exist`
-                });
-            } else if (result == "imageCard") {
-                res.status(404).send({
-                    message: `The image card ${id} doesn't exist`
-                });
-            } else {
-                res.status(200).send({
-                    message: "Image card updated successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Image card updated successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -102,15 +82,8 @@ export default class ImageCardController {
                 res.status(200).send({
                     message: "Image card deleted successfully"
                 });
-            } else {
-                res.status(404).send({
-                    message: `The image card ${id} doesn't exist`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -124,15 +97,8 @@ export default class ImageCardController {
                     message: "Images cards fetched successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `There are not images cards registered yet`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -143,22 +109,13 @@ export default class ImageCardController {
 
             let result = await imageCardRepository.findOne(id);
 
-
             if(result) {
                 res.status(200).send({
                     message: "Image card fetched successfully",
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The image card ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }

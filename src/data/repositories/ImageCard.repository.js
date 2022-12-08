@@ -11,7 +11,9 @@ export default class ImageCardRepository {
         const card = await cardRepository.findOne(imageCard.card.id);
 
         if(card == undefined) {
-            return undefined;
+            const error = new Error(`The user ${imageCard.card.id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const imageCardBO = imageCard.toPersistenceObject();
@@ -26,19 +28,25 @@ export default class ImageCardRepository {
     async update(imageCard) {
         
         if(imageCard.id == undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         };
 
         const imageCardCheck = await this.findOne(imageCard.id);
         
         if(imageCardCheck == undefined) {
-            return "imageCard";
+            const error = new Error(`The card ${imageCard.card.id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         const cardCheck = await cardCheck.findOne(imageCard.card.id)
         
         if(cardCheck == undefined ) {
-            return "card";
+            const error = new Error(`The image card ${imageCard.card.id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
         
         const imageCardBO = imageCard.toPersistenceObject()
@@ -57,7 +65,9 @@ export default class ImageCardRepository {
         const imageCardCheck = await this.findOne(id);
 
         if(imageCardCheck == undefined) {
-            return undefined;
+            const error = new Error(`The image card ${imageCard.card.id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const result = await ImageCard.destroy({
@@ -83,7 +93,9 @@ export default class ImageCardRepository {
         });
         
         if(result == null) {
-            return undefined;
+            const error = new Error(`The image card ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         let card = await cardRepository.findOne(result.CardId);
@@ -106,7 +118,9 @@ export default class ImageCardRepository {
 
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not images cards registered yet`);
+            error.status = 404;
+            throw error;
         };
 
 
