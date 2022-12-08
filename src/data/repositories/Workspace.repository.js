@@ -17,13 +17,17 @@ export default class WorkspaceRepository {
     async update(workspace) {
 
         if(workspace.id === undefined){
-            throw new Error('id is undefined');
+            const error = new Error('id is undefined');
+            error.status = 404;
+            throw error;
         }
 
         const workspaceCheck = await this.findOne(workspace.id);
 
         if(workspaceCheck == undefined) {
-            return undefined;
+            const error = new Error(`The workspace ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const workspaceBO = workspace.toPersistenceObject()
@@ -39,7 +43,9 @@ export default class WorkspaceRepository {
         const workspaceCheck = await this.findOne(id);
 
         if(workspaceCheck == undefined) {
-            return undefined;
+            const error = new Error(`The workspace ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const result = await Workspace.destroy({
@@ -60,7 +66,9 @@ export default class WorkspaceRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The workspace ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         return new WorkspaceBO(result.dataValues.id, result.dataValues.title, result.dataValues.description);
@@ -70,7 +78,9 @@ export default class WorkspaceRepository {
         const result = await Workspace.findAll();
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not workspaces registered yet`);
+            error.status = 404;
+            throw error;
         };
 
         return result.map((element, index)=> {
@@ -88,9 +98,11 @@ export default class WorkspaceRepository {
                 }
             }
         });
-
-        if(result == null) {
-            return undefined;
+        
+        if(result == null || result.length == 0) {
+            const error = new Error(`There are not workspaces registered yet`);
+            error.status = 404;
+            throw error;
         };
 
         return result.map((element, index)=> {
@@ -102,7 +114,9 @@ export default class WorkspaceRepository {
         const workspaceCheck = await this.findOne(id);
 
         if(workspaceCheck == undefined) {
-            return Error('Workspace not found');
+            const error = new Error(`The workspace ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         // find board with all cards

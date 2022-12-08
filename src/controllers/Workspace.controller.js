@@ -36,9 +36,6 @@ export default class WorkspaceController{
                 result: result
             });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -56,16 +53,8 @@ export default class WorkspaceController{
                     message: "Workspace updated successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -80,15 +69,8 @@ export default class WorkspaceController{
                 res.status(200).send({
                     message: "Workspace deleted successfully"
                 });
-            } else {
-                res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -103,16 +85,8 @@ export default class WorkspaceController{
                     message: "Workspaces fetched successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `There are not workspaces registered yet`
-                });
             }
-
         } catch (error) {
-            res.send({
-                message: err.message
-            })
             next(error)
         }
     }
@@ -128,15 +102,8 @@ export default class WorkspaceController{
                     message: "Workspace fetched successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -153,15 +120,8 @@ export default class WorkspaceController{
                     message: "Boards fetched successfully",
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The workspace ${id} doesn't exist`
-                });
             }
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
