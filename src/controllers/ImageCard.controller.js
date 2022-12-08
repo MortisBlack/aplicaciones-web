@@ -8,7 +8,6 @@ export default class ImageCardController {
     async createImageCard(req, res, next) {
         try {
             const {
-                title,
                 image,
                 card
             } = req.body;
@@ -27,13 +26,11 @@ export default class ImageCardController {
             );
 
             let result = await imageCardRepository.create(imageCard);
-            
-            if(result) {
-                res.status(200).send({
-                    message: "Image card creataed successfully",
-                    result: result
-                });
-            }
+
+            res.status(200).send({
+                message: "Image card creataed successfully",
+                result: result
+            });
         } catch (err) {
             next(err)
         }
@@ -78,11 +75,9 @@ export default class ImageCardController {
 
             let result = await imageCardRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Image card deleted successfully"
-                });
-            }
+            res.status(200).send({
+                message: "Image card deleted successfully"
+            });
         } catch (err) {
             next(err)
         }
@@ -92,12 +87,10 @@ export default class ImageCardController {
         try {
             let result = await imageCardRepository.findAll();
 
-            if(result) {
-                res.status(200).send({
-                    message: "Images cards fetched successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Images cards fetched successfully", 
+                result: result
+            });
         } catch (err) {
             next(err)
         }
@@ -109,12 +102,10 @@ export default class ImageCardController {
 
             let result = await imageCardRepository.findOne(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Image card fetched successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Image card fetched successfully",
+                result: result
+            });
         } catch (err) {
             next(err)
         }

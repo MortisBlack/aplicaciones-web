@@ -30,16 +30,9 @@ export default class UserRepository {
             throw error;
         }
 
-        const userCheck = await this.findOne(user.id);
-
-        if(userCheck == undefined) {
-            const error = new Error(`The user ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(user.id);
 
         const userBO = user.toPersistenceObject();
-
         const result = await User.update(userBO, {
             where: {
                 id: user.id
@@ -50,13 +43,7 @@ export default class UserRepository {
     };
 
     async delete(id) {
-        const userCheck = await this.findOne(id);
-
-        if(userCheck == undefined) {
-            const error = new Error(`The user ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(id);
 
         const result = await User.destroy({
             where: {

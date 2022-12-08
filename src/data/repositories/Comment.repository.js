@@ -13,21 +13,10 @@ export default class CommentRepository {
 
     async create(comment) {
         const card = await cardRepository.findOne(comment.card.id);
-
-        if(card == undefined) {
-            return "card";
-        }
-
         const user = await userRepository.findOne(comment.user.id);
 
-        if(user == undefined) {
-            return "user";
-        }
-
         const commentBO = comment.toPersistenceObject();
-
         const result = await Comment.create(commentBO);
-
         return new CommentBO(
             result.id, 
             result.comment, 
@@ -40,26 +29,14 @@ export default class CommentRepository {
     async update(comment) {
         
         if(comment.id == undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         };
 
-        const commentCheck = await this.findOne(comment.id);
-        
-        if(commentCheck == undefined) {
-            return "comment";
-        };
-
-        const userCheck = await userRepository.findOne(comment.user.id)
-        
-        if(userCheck == undefined ) {
-            return "user";
-        };
-
-        const cardCheck = await cardRepository.findOne(comment.card.id)
-        
-        if(cardCheck == undefined ) {
-            return "card";
-        };
+        await this.findOne(comment.id);
+        await userRepository.findOne(comment.user.id)
+        await cardRepository.findOne(comment.card.id)
         
         const commentBO = comment.toPersistenceObject()
 
@@ -74,11 +51,7 @@ export default class CommentRepository {
     }
 
     async delete(id) {
-        const commentCheck = await this.findOne(id);
-
-        if(commentCheck == undefined) {
-            return undefined;
-        }
+        await this.findOne(id);
 
         const result = await Comment.destroy({
             where: {
@@ -106,7 +79,9 @@ export default class CommentRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The comment ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
         
         let user = await userRepository.findOne(result.UserId);
@@ -135,7 +110,9 @@ export default class CommentRepository {
 
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not comments registered yet`);
+            error.status = 404;
+            throw error;
         };
 
 

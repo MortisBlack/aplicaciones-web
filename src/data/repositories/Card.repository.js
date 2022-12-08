@@ -10,10 +10,6 @@ export default class CardRepository {
 
     async create(card) {
         const column = await columnRepository.findOne(card.column.id);
-
-        if(column == undefined) {
-            return undefined;
-        }
         
         const cardBO = card.toPersistenceObject();
         cardBO.position = await this.countByColumnId(card.column.id) + 1;
@@ -43,20 +39,13 @@ export default class CardRepository {
     async update(card) {
         
         if(card.id == undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         };
 
-        const cardCheck = await this.findOne(card.id);
-        
-        if(cardCheck == undefined) {
-            return "card";
-        };
-
-        const columnCheck = await columnRepository.findOne(card.column.id)
-        
-        if(columnCheck == undefined ) {
-            return "column";
-        };
+        await this.findOne(card.id);
+        await columnRepository.findOne(card.column.id)
         
         const cardBO = card.toPersistenceObject()
 
@@ -119,11 +108,7 @@ export default class CardRepository {
     }
 
     async delete(id) {
-        const cardCheck = await this.findOne(id);
-
-        if(cardCheck == undefined) {
-            return undefined;
-        }
+        await this.findOne(id);
 
         const result = await Card.destroy({
             where: {
@@ -148,7 +133,9 @@ export default class CardRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The card ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
         
         let column = await columnRepository.findOne(result.ColumnId);
@@ -173,11 +160,11 @@ export default class CardRepository {
             }]
         });
 
-
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not cards registered yet`);
+            error.status = 404;
+            throw error;
         };
-
 
         return await Promise.all( result.map(async (element, index)=> {
             let column = await columnRepository.findOne(element.dataValues.ColumnId)

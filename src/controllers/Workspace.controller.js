@@ -48,12 +48,10 @@ export default class WorkspaceController{
             const workspace = new WorkspaceBo(id, title, description);
             let result = await workspaceRepository.update(workspace);
             
-            if(result) {
-                res.status(200).send({
-                    message: "Workspace updated successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Workspace updated successfully", 
+                result: result
+            });
         } catch (err) {
             next(err)
         }
@@ -65,11 +63,9 @@ export default class WorkspaceController{
 
             let result = await workspaceRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Workspace deleted successfully"
-                });
-            }
+            res.status(200).send({
+                message: "Workspace deleted successfully"
+            });
         } catch (err) {
             next(err)
         }
@@ -80,12 +76,10 @@ export default class WorkspaceController{
             const user = req.user;
             let result = await workspaceRepository.findAllByUserId(user.id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Workspaces fetched successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Workspaces fetched successfully", 
+                result: result
+            });
         } catch (error) {
             next(error)
         }
@@ -97,12 +91,10 @@ export default class WorkspaceController{
 
             let result = await workspaceRepository.findOne(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Workspace fetched successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Workspace fetched successfully", 
+                result: result
+            });
         } catch (err) {
             next(err)
         }
@@ -115,12 +107,10 @@ export default class WorkspaceController{
 
             let result = await workspaceRepository.findAllBoards(id);
            
-            if(result) {
-                res.status(200).send({
-                    message: "Boards fetched successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Boards fetched successfully",
+                result: result
+            });
         } catch (err) {
             next(err)
         }

@@ -26,20 +26,11 @@ export default class BoardController {
             
             let result = await boardRepository.create(board);
     
-            if(result) {
-                res.status(200).send({
-                    message: "Board creataed successfully",
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `The workspace ${workspace} doesn't exist`
-                });
-            }
+            res.status(200).send({
+                message: "Board creataed successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     };
@@ -66,25 +57,12 @@ export default class BoardController {
                 );
 
             let result = await boardRepository.update(board);
-    
-            if(result == "workspace") {
-                res.status(404).send({
-                    message: `The workspace ${workspace} doesn't exist`
-                });
-            } else if (result == "board") {
-                res.status(404).send({
-                    message: `The board ${id} doesn't exist`
-                });
-            } else {
-                res.status(200).send({
-                    message: "Board updated successfully",
-                    result: result
-                });
-            }
+
+            res.status(200).send({
+                message: "Board updated successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -95,19 +73,10 @@ export default class BoardController {
 
             let result = await boardRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Board deleted successfully"
-                });
-            } else {
-                res.status(404).send({
-                    message: `The board ${id} doesn't exist`
-                });
-            }
+            res.status(200).send({
+                message: "Board deleted successfully"
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -115,21 +84,12 @@ export default class BoardController {
     async getAllBoards(req, res, next){
         try {
             let result = await boardRepository.findAll();
-
-            if(result) {
-                res.status(200).send({
-                    message: "Boards fetched successfully", 
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `There are not boards registered yet`
-                });
-            }
+            
+            res.status(200).send({
+                message: "Boards fetched successfully", 
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -140,22 +100,11 @@ export default class BoardController {
 
             let result = await boardRepository.findOne(id);
 
-
-            if(result) {
-                res.status(200).send({
-                    message: "Board fetched successfully",
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `The board ${id} doesn't exist`
-                });
-            }
-
+            res.status(200).send({
+                message: "Board fetched successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -167,12 +116,10 @@ export default class BoardController {
 
             let result = await boardRepository.findAllColumns(id);
            
-            if(result) {
-                res.status(200).send({
-                    message: "Columns fetched successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Columns fetched successfully",
+                result: result
+            });
         } catch (err) {
             next(err)
         }

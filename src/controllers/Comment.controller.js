@@ -28,28 +28,13 @@ export default class CommentController {
                 )
             );
 
-            console.log(commentNew);
-
             let result = await commentRepository.create(commentNew);
 
-            if(result == "card") {
-                res.status(404).send({
-                    message: `The card ${card} doesn't exist`
-                });
-            } else if(result == "user") {
-                res.status(404).send({
-                    message: `The user ${user} doesn't exist`
-                });
-            } else {
-                res.status(200).send({
-                    message: "Comment creataed successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Comment creataed successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     };
@@ -79,30 +64,12 @@ export default class CommentController {
             );
 
             let result = await commentRepository.update(commentNew);
-    
-            if(result == "comment") {
-                res.status(404).send({
-                    message: `The comment ${id} doesn't exist`
-                });
-                
-            } else if(result == "user") {
-                res.status(404).send({
-                    message: `The user ${user} doesn't exist`
-                });
-            } else if(result == "card") {
-                res.status(404).send({
-                    message: `The card ${card} doesn't exist`
-                });
-            } else {
-                res.status(200).send({
-                    message: "Comment updated successfully",
-                    result: result
-                });
-            }
+ 
+            res.status(200).send({
+                message: "Comment updated successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -113,19 +80,10 @@ export default class CommentController {
 
             let result = await commentRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Comment deleted successfully"
-                });
-            } else {
-                res.status(404).send({
-                    message: `The comment ${id} doesn't exist`
-                });
-            }
+            res.status(200).send({
+                message: "Comment deleted successfully"
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -134,20 +92,11 @@ export default class CommentController {
         try {
             let result = await commentRepository.findAll();
 
-            if(result) {
-                res.status(200).send({
-                    message: "Comments fetched successfully", 
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `There are not comments registered yet`
-                });
-            }
+            res.status(200).send({
+                message: "Comments fetched successfully", 
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -158,21 +107,11 @@ export default class CommentController {
 
             let result = await commentRepository.findOne(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Card fetched successfully",
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `The comment ${id} doesn't exist`
-                });
-            }
-
+            res.status(200).send({
+                message: "Card fetched successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }

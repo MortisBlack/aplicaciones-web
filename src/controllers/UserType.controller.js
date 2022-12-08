@@ -41,12 +41,10 @@ export default class UserTypeController {
 
             let result = await userTypeRepository.update(userType);
             
-            if(result) {
-                res.status(200).send({
-                    message: "User type updated successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "User type updated successfully", 
+                result: result
+            });
         } catch (err) {
             next(err)
         }   
@@ -58,11 +56,9 @@ export default class UserTypeController {
 
             let result = await userTypeRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "User type deleted successfully"
-                });
-            }
+            res.status(200).send({
+                message: "User type deleted successfully"
+            });
         } catch (err) {
             next(err)
         }
@@ -72,12 +68,10 @@ export default class UserTypeController {
         try {
             let result = await userTypeRepository.findAll();
 
-            if(result) {
-                res.status(200).send({
-                    message: "User types fetched successfully", 
-                    result: result
-                });
-            }            
+            res.status(200).send({
+                message: "User types fetched successfully", 
+                result: result
+            });      
         } catch (err) {
             next(err)
         }
@@ -88,13 +82,10 @@ export default class UserTypeController {
             const {id} = req.params;
 
             let result = await userTypeRepository.findOne(id);
-
-            if(result) {
-                res.status(200).send({
-                    message: "User type fetched successfully",
-                    result: result
-                });
-            }            
+            res.status(200).send({
+                message: "User type fetched successfully",
+                result: result
+            });     
         } catch (err) {
             next(err)
         }

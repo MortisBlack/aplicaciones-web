@@ -10,12 +10,6 @@ export default class ImageCardRepository {
     async create(imageCard) {
         const card = await cardRepository.findOne(imageCard.card.id);
 
-        if(card == undefined) {
-            const error = new Error(`The user ${imageCard.card.id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
-
         const imageCardBO = imageCard.toPersistenceObject();
         const result = await ImageCard.create(imageCardBO);
         return new ImageCardBO(
@@ -33,21 +27,8 @@ export default class ImageCardRepository {
             throw error;
         };
 
-        const imageCardCheck = await this.findOne(imageCard.id);
-        
-        if(imageCardCheck == undefined) {
-            const error = new Error(`The card ${imageCard.card.id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        };
-
-        const cardCheck = await cardCheck.findOne(imageCard.card.id)
-        
-        if(cardCheck == undefined ) {
-            const error = new Error(`The image card ${imageCard.card.id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        };
+        await this.findOne(imageCard.id);
+        await cardCheck.findOne(imageCard.card.id)
         
         const imageCardBO = imageCard.toPersistenceObject()
 
@@ -62,13 +43,7 @@ export default class ImageCardRepository {
     }
 
     async delete(id) {
-        const imageCardCheck = await this.findOne(id);
-
-        if(imageCardCheck == undefined) {
-            const error = new Error(`The image card ${imageCard.card.id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(id);
 
         const result = await ImageCard.destroy({
             where: {

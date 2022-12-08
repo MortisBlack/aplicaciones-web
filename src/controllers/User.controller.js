@@ -46,9 +46,6 @@ export default class UserController {
                 result: result
             });
         } catch (err) {
-            // res.send({
-            //     message: err.message
-            // })
             next({
                 message: err.message, 
                 status: 400,
@@ -88,12 +85,10 @@ export default class UserController {
 
             let result = await userRepository.update(user);
             
-            if(result) {
-                res.status(200).send({
-                    message: "User updated successfully", 
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "User updated successfully", 
+                result: result
+            });
         } catch (err) {
             next(err)
         }   
@@ -105,11 +100,9 @@ export default class UserController {
 
             let result = await userRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "User deleted successfully"
-                });
-            }
+            res.status(200).send({
+                message: "User deleted successfully"
+            });
         } catch (err) {
             next(err)
         }
@@ -119,13 +112,10 @@ export default class UserController {
         try {
             let result = await userRepository.findAll();
             
-
-            if(result) {
-                res.status(200).send({
-                    message: "Users fetched successfully", 
-                    result: result
-                });
-            }            
+            res.status(200).send({
+                message: "Users fetched successfully", 
+                result: result
+            });           
         } catch (err) {
             next(err)
         }
@@ -137,12 +127,10 @@ export default class UserController {
 
             let result = await userRepository.findOne(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "User fetched successfully",
-                    result: result
-                });
-            }            
+            res.status(200).send({
+                message: "User fetched successfully",
+                result: result
+            });        
         } catch (err) {
             next(err)
         }

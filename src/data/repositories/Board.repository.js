@@ -12,33 +12,25 @@ export default class BoardRepository {
 
     async create(board) {
         const workspace = await workspaceRepository.findOne(board.workspace.id);
-
-        if(workspace == undefined) {
-            return undefined;
-        }
-
+        
         const boardBO = board.toPersistenceObject();
         const result = await Board.create(boardBO);
-        return new BoardBO(result.id, result.title, result.description, workspace);
+        return new BoardBO(
+            result.id, 
+            result.title, 
+            result.description, 
+            workspace);
     }
 
     async update(board) {
-        
         if(board.id == undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         };
-
-        const boardCheck = await this.findOne(board.id);
         
-        if(boardCheck == undefined) {
-            return "board";
-        };
-
-        const workspaceCheck = await workspaceRepository.findOne(board.workspace.id)
-        
-        if(workspaceCheck == undefined ) {
-            return "workspace";
-        };
+        await this.findOne(board.id);
+        await workspaceRepository.findOne(board.workspace.id)
         
         const boardBO = board.toPersistenceObject()
 
@@ -54,11 +46,7 @@ export default class BoardRepository {
     }
 
     async delete(id) {
-        const boardCheck = await this.findOne(id);
-
-        if(boardCheck == undefined) {
-            return undefined;
-        }
+        await this.findOne(id);
 
         const result = await Board.destroy({
             where: {
@@ -83,7 +71,9 @@ export default class BoardRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The board ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         let workspace = await workspaceRepository.findOne(result.WorkspaceId);
@@ -101,7 +91,9 @@ export default class BoardRepository {
 
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not boards registered yet`);
+            error.status = 404;
+            throw error;
         };
 
 
@@ -126,7 +118,9 @@ export default class BoardRepository {
         });
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not boards registered yet`);
+            error.status = 404;
+            throw error;
         };
 
         return await Promise.all( result.map(async (element, index)=> {
@@ -136,15 +130,9 @@ export default class BoardRepository {
     }
 
     async findAllColumns(id) {
-        const boardCheck = await this.findOne(id);
+        await this.findOne(id);
 
-        if(boardCheck == undefined) {
-            const error = new Error(`The board ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
-
-        // find board with all cards
+        // find board with all columns
         const result = await Board.findOne({
             where: {
                 id: id
@@ -157,7 +145,7 @@ export default class BoardRepository {
         
         const columns = result.columns;
 
-        // convert cards to CardBO
+        // convert columns to ColumnBO
         return columns.map((column) => {
             return new ColumnBO(column.id, column.title);
         });

@@ -12,32 +12,25 @@ export default class ColumnRepository {
     async create(column) {
         const board = await boardRepository.findOne(column.board.id);
 
-        if(board == undefined) {
-            return undefined;
-        }
-
         const columnBO = column.toPersistenceObject();
         const result = await Column.create(columnBO);
-        return new ColumnBO(result.id, result.title, board);
+        return new ColumnBO(
+            result.id,
+            result.title, 
+            board
+            );
     }
 
     async update(column) {
         
         if(column.id == undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         };
 
-        const columnCheck = await this.findOne(column.id);
-        
-        if(columnCheck == undefined) {
-            return "column";
-        };
-
-        const boardCheck = await boardRepository.findOne(column.board.id)
-        
-        if(boardCheck == undefined ) {
-            return "board";
-        };
+        await this.findOne(column.id);
+        await boardRepository.findOne(column.board.id)
         
         const columnBO = column.toPersistenceObject()
 
@@ -52,11 +45,7 @@ export default class ColumnRepository {
     }
 
     async delete(id) {
-        const columnCheck = await this.findOne(id);
-
-        if(columnCheck == undefined) {
-            return undefined;
-        }
+        await this.findOne(id);
 
         const result = await Column.destroy({
             where: {
@@ -81,7 +70,9 @@ export default class ColumnRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The column ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         let board = await boardRepository.findOne(result.BoardId);
@@ -99,7 +90,9 @@ export default class ColumnRepository {
 
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not columns registered yet`);
+            error.status = 404;
+            throw error;
         };
 
 
@@ -110,11 +103,7 @@ export default class ColumnRepository {
     }
 
     async findAllCards(id) {
-        const columnCheck = await this.findOne(id);
-
-        if(columnCheck == undefined) {
-            return Error('Column not found');
-        }
+        await this.findOne(id);
 
         // find board with all cards
         const result = await Column.findOne({

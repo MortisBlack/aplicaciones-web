@@ -13,7 +13,7 @@ export default class CardController {
                 deadline_date,
                 column
             } = req.body;
-
+            
             const card = new CardBO(
                 undefined,
                 title,
@@ -25,23 +25,13 @@ export default class CardController {
                     undefined
                 )
             );
-
             let result = await cardRepository.create(card);
     
-            if(result) {
-                res.status(200).send({
-                    message: "Card creataed successfully",
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `The column ${column} doesn't exist`
-                });
-            }
+            res.status(200).send({
+                message: "Card creataed successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     };
@@ -73,28 +63,11 @@ export default class CardController {
 
             let result = await cardRepository.update(card);
     
-            if(result == "card") {
-                res.status(404).send({
-                    message: `The card ${card} doesn't exist`
-                });
-            } else if (result == "column") {
-                res.status(404).send({
-                    message: `The column ${id} doesn't exist`
-                });
-            } else if (result == "position") {
-                res.status(404).send({
-                    message: `The position ${position} is out of range`
-                });
-            } else {
-                res.status(200).send({
-                    message: "Card updated successfully",
-                    result: result
-                });
-            }
+            res.status(200).send({
+                message: "Card updated successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -105,19 +78,10 @@ export default class CardController {
 
             let result = await cardRepository.delete(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Card deleted successfully"
-                });
-            } else {
-                res.status(404).send({
-                    message: `The card ${id} doesn't exist`
-                });
-            }
+            res.status(200).send({
+                message: "Card deleted successfully"
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -126,20 +90,11 @@ export default class CardController {
         try {
             let result = await cardRepository.findAll();
 
-            if(result) {
-                res.status(200).send({
-                    message: "Cards fetched successfully", 
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `There are not cards registered yet`
-                });
-            }
+            res.status(200).send({
+                message: "Cards fetched successfully", 
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -150,21 +105,11 @@ export default class CardController {
 
             let result = await cardRepository.findOne(id);
 
-            if(result) {
-                res.status(200).send({
-                    message: "Card fetched successfully",
-                    result: result
-                });
-            } else {
-                res.status(404).send({
-                    message: `The card ${id} doesn't exist`
-                });
-            }
-
+            res.status(200).send({
+                message: "Card fetched successfully",
+                result: result
+            });
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }

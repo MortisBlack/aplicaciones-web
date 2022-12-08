@@ -20,16 +20,9 @@ export default class UserTypeRepository {
             throw error;
         }
 
-        const userTypeCheck = await this.findOne(userType.id);
-
-        if(userTypeCheck == undefined) {
-            const error = new Error(`The user type ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(userType.id);
 
         const userTypeBO = userType.toPersistenceObject();
-
         const result = await UserType.update(userTypeBO, {
             where: {
                 id: userType.id
@@ -40,13 +33,7 @@ export default class UserTypeRepository {
     };
 
     async delete(id) {
-        const userTypeCheck = await this.findOne(id);
-
-        if(userTypeCheck == undefined) {
-            const error = new Error(`The user type ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(id);
 
         const result = await UserType.destroy({
             where: {

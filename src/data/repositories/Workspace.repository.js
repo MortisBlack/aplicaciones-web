@@ -10,8 +10,11 @@ export default class WorkspaceRepository {
     async create(workspace) {
         const workspaceBO = workspace.toPersistenceObject()
         const result = await Workspace.create(workspaceBO);
-
-        return new WorkspaceBO(result.id, result.title, result.description);
+        return new WorkspaceBO(
+            result.id, 
+            result.title, 
+            result.description
+            );
     }
 
     async update(workspace) {
@@ -22,13 +25,7 @@ export default class WorkspaceRepository {
             throw error;
         }
 
-        const workspaceCheck = await this.findOne(workspace.id);
-
-        if(workspaceCheck == undefined) {
-            const error = new Error(`The workspace ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(workspace.id);
 
         const workspaceBO = workspace.toPersistenceObject()
         const result = await Workspace.update(workspaceBO, {
@@ -40,13 +37,7 @@ export default class WorkspaceRepository {
     }
 
     async delete(id) {
-        const workspaceCheck = await this.findOne(id);
-
-        if(workspaceCheck == undefined) {
-            const error = new Error(`The workspace ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(id);
 
         const result = await Workspace.destroy({
             where: {
@@ -111,13 +102,7 @@ export default class WorkspaceRepository {
     }
 
     async findAllBoards(id) {
-        const workspaceCheck = await this.findOne(id);
-
-        if(workspaceCheck == undefined) {
-            const error = new Error(`The workspace ${id} doesn't exist`);
-            error.status = 404;
-            throw error;
-        }
+        await this.findOne(id);
 
         // find board with all cards
         const result = await Workspace.findOne({
