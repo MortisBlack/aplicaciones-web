@@ -2,6 +2,8 @@ import Workspace from '../../models/Workspace.js';
 import User from '../../models/User.js';
 import UsersWorkspaces from '../../models/UsersWorkspaces.js';
 import WorkspaceBO from '../../domain/Workspace.js';
+import Board from '../../models/Board.js';
+import BoardBO from '../../domain/Board.js';
 
 export default class WorkspaceRepository {
 
@@ -97,6 +99,32 @@ export default class WorkspaceRepository {
 
         return result.map((element, index)=> {
             return new WorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description)
+        });
+    }
+
+    async findAllBoards(id) {
+        const workspaceCheck = await this.findOne(id);
+
+        if(workspaceCheck == undefined) {
+            return Error('Workspace not found');
+        }
+
+        // find board with all cards
+        const result = await Workspace.findOne({
+            where: {
+                id: id
+            },
+            include:[{
+                model: Board,
+                as: 'boards'
+            }],
+        });
+        
+        const boards = result.boards;
+
+        // convert cards to CardBO
+        return boards.map((board) => {
+            return new BoardBO(board.id, board.title, board.description);
         });
     }
 }

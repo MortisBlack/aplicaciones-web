@@ -27,7 +27,7 @@ const Board = connection.define('Board',{
 });
 
 Workspace.hasMany(Board, {
-    as: 'Board'
+    as: 'boards'
 });
 Board.belongsTo(Workspace, {
     as: 'Workspace'

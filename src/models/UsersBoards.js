@@ -9,10 +9,25 @@ const UsersBoards = connection.define(
         type: BIGINT,
         autoIncrement: true,
         primaryKey: true
-    }
+        },
+        UserId: {
+            type: BIGINT,
+            references: "User",
+            referencesKey: "id",
+            allowNull: false
+        },
     },{
         tableName:'users_boards'
     });
+
+User.belongsToMany(Board, {
+    through: UsersBoards,
+    foreignKey: 'UserId' 
+});
+Board.belongsToMany(User,{
+    through: UsersBoards,
+    foreignKey: 'WorkspaceId'
+});
 
 User.belongsToMany(Board, {through: UsersBoards });
 Board.belongsToMany(User,{through: UsersBoards});

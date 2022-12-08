@@ -108,4 +108,28 @@ export default class BoardRepository {
             return new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace);
         }));
     }
+
+    async findAllByUserId(userId) {
+        const result = await Board.findAll({
+            
+            include: [{
+                model: UsersBoards,
+                through: { 
+                    attributes: [],
+                    where: {
+                        UserId: userId
+                    },
+                }
+            }]
+        });
+
+        if(result == null || result.length == 0) {
+            return undefined;
+        };
+
+        return await Promise.all( result.map(async (element, index)=> {
+            let workspace = await workspaceRepository.findOne(element.dataValues.WorkspaceId)
+            return new BoardBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, workspace);
+        }));
+    }
 }

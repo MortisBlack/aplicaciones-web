@@ -95,9 +95,9 @@ export default class WorkspaceController{
             }
 
         } catch (error) {
-            // res.send({
-            //     message: err.message
-            // })
+            res.send({
+                message: err.message
+            })
             next(error)
         }
     }
@@ -111,6 +111,31 @@ export default class WorkspaceController{
             if(result) {
                 res.status(200).send({
                     message: "Workspace fetched successfully", 
+                    result: result
+                });
+            } else {
+                res.status(404).send({
+                    message: `The workspace ${id} doesn't exist`
+                });
+            }
+        } catch (err) {
+            res.send({
+                message: err.message
+            })
+            next(err)
+        }
+    }
+
+    async findAllBoards(req, res, next){
+
+        try {
+            const {id} = req.params;
+
+            let result = await workspaceRepository.findAllBoards(id);
+           
+            if(result) {
+                res.status(200).send({
+                    message: "Boards fetched successfully",
                     result: result
                 });
             } else {

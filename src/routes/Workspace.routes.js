@@ -15,4 +15,6 @@ router.get('',passportConfig,  workspaceController.getAllWorkspaces);
 
 router.get('/:id',passportConfig,  workspaceController.findOneWorkspace);
 
+router.get('/:id/boards', workspaceController.findAllBoards);
+
 export default router;
