@@ -25,13 +25,17 @@ export default class UserRepository {
     async update(user) {
 
         if(user.id === undefined){
-            throw new Error('id is undefined');
+            const error = new Error(`id is undefined`);
+            error.status = 404;
+            throw error;
         }
 
         const userCheck = await this.findOne(user.id);
 
         if(userCheck == undefined) {
-            return undefined;
+            const error = new Error(`The user ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const userBO = user.toPersistenceObject();
@@ -49,7 +53,9 @@ export default class UserRepository {
         const userCheck = await this.findOne(id);
 
         if(userCheck == undefined) {
-            return undefined;
+            const error = new Error(`The user ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         }
 
         const result = await User.destroy({
@@ -70,7 +76,9 @@ export default class UserRepository {
         });
 
         if(result == null) {
-            return undefined;
+            const error = new Error(`The user ${id} doesn't exist`);
+            error.status = 404;
+            throw error;
         };
 
         return new UserBO(
@@ -117,7 +125,9 @@ export default class UserRepository {
         const result = await User.findAll();
 
         if(result == null || result.length == 0) {
-            return undefined;
+            const error = new Error(`There are not user registered yet`);
+            error.status = 404;
+            throw error;
         };
 
         return result.map((element, index)=> {

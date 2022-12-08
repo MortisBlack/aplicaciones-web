@@ -93,16 +93,8 @@ export default class UserController {
                     message: "User updated successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }   
     };
@@ -117,16 +109,8 @@ export default class UserController {
                 res.status(200).send({
                     message: "User deleted successfully"
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user ${id} doesn't exist`
-                });
             }
-
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -141,16 +125,8 @@ export default class UserController {
                     message: "Users fetched successfully", 
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `There are not users registered yet`
-                });
-            }
-            
+            }            
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
@@ -166,16 +142,8 @@ export default class UserController {
                     message: "User fetched successfully",
                     result: result
                 });
-            } else {
-                res.status(404).send({
-                    message: `The user ${id} doesn't exist`
-                });
-            }
-            
+            }            
         } catch (err) {
-            res.send({
-                message: err.message
-            })
             next(err)
         }
     }
