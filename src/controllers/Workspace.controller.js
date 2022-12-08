@@ -1,20 +1,35 @@
 import WorkspaceRepository from "../data/repositories/Workspace.repository.js";
+import UserWorkspacesRepository from "../data/repositories/UserWorkspaces.repository.js";
 import WorkspaceBo from "../domain/Workspace.js";
+import UserWorkspaceBo from "../domain/UsersWorkspaces.js";
 
 const workspaceRepository = new WorkspaceRepository();
+const userWorkspacesRepository = new UserWorkspacesRepository();
 
 export default class WorkspaceController{
 
     async createWorkspace(req, res, next){
         try {
+            const user = req.user;
             const {title, description} = req.body;
 
             const workspace = new WorkspaceBo(
                 undefined,
                 title, 
-                description);
+                description
+            );
+            
 
             let result = await workspaceRepository.create(workspace);
+
+            const userWorkspace = new UserWorkspaceBo(
+                undefined,
+                user,
+                undefined,
+                result
+            );
+
+            userWorkspacesRepository.create(userWorkspace);
 
             res.status(200).send({
                 message: "Workspace created successfully", 
@@ -80,7 +95,8 @@ export default class WorkspaceController{
 
     async getAllWorkspaces(req, res, next){
         try {
-            let result = await workspaceRepository.findAll();
+            const user = req.user;
+            let result = await workspaceRepository.findAllByUserId(user.id);
 
             if(result) {
                 res.status(200).send({
@@ -94,10 +110,10 @@ export default class WorkspaceController{
             }
 
         } catch (error) {
-            res.send({
-                message: err.message
-            })
-            next(err)
+            // res.send({
+            //     message: err.message
+            // })
+            next(error)
         }
     }
 

@@ -48,5 +48,14 @@ export default class UserWorkspaces{
 
         throw new Error("Invalid workspace");
     }
-  
+
+    toPersistenceObject(){
+        return {
+            id: this._id,
+            UserId: this._user.id,
+            UserTypeId: undefined,
+            WorkspaceId: this._workspace.id
+        }
+    }
+
 }

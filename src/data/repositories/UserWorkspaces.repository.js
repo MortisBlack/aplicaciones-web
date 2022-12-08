@@ -1,13 +1,13 @@
-import UserWorkspaces from '../../models/UserWorkspaces.js';
-
+import UsersWorkspaces from '../../models/UsersWorkspaces.js';
+import UserWorkspaceBO from '../../domain/UsersWorkspaces.js';
 export default class UserWorkspacesRepository {
 
 
     async create(userWorkspace) {
+        const workspaceBO = userWorkspace.toPersistenceObject();
+        const result = await UsersWorkspaces.create(workspaceBO);
         
-        const result = await UserWorkspaces.create(userWorkspace);
-        await result.reload();
-        return result;
+        return new UserWorkspaceBO(result.id, result.userId, result.role, result.workspaceId);
     }
 
     async update(userWorkspace) {
@@ -16,39 +16,63 @@ export default class UserWorkspacesRepository {
             throw new Error('id is undefined');
         }
 
-        
-        const result = await UserWorkspaces.update(userWorkspace, {
+        const userWorkspaceCheck = await this.findOne(userWorkspace.id);
+
+        if(userWorkspaceCheck == undefined) {
+            return undefined;
+        }
+
+        const userWorkspaceBO = userWorkspace.toPersistenceObject()
+        const result = await userWorkspace.update(userWorkspaceBO, {
             where: {
                 id: userWorkspace.id
             }
         });
-        return result;
+        return this.findOne(userWorkspace.id);
     }
 
     async delete(id) {
         
-        const result = await UserWorkspaces.destroy({
+        const userWorkspaceCheck = await this.findOne(id);
+
+        if(userWorkspaceCheck == undefined) {
+            return undefined;
+        }
+
+        const result = await UsersWorkspaces.destroy({
             where: {
                 id: id
             }
         });
-        return result;
+
+        return "User workspace successfully deleted";
     }
 
     async findOne(id) {
         
-        const result = await UserWorkspaces.findOne({
+        const result = await UsersWorkspaces.findOne({
             where: {
                 id: id
             }
         });
-        return result;
+
+        if(result == null) {
+            return undefined;
+        };
+
+        return new UserWorkspaceBO(result.dataValues.id, result.dataValues.userId, result.dataValues.role, result.dataValues.workspaceId);
     }
 
     async findAll() {
-        
-        const result = await UserWorkspaces.findAll();
-        return result;
+        const result = await UsersWorkspaces.findAll();
+
+        if(result == null || result.length == 0) {
+            return undefined;
+        };
+
+        return result.map((element, index)=> {
+            return new UserWorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description);
+        });
     }
 }
 

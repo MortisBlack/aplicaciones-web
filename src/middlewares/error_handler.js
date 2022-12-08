@@ -8,12 +8,12 @@ const errorHandler = (error, request, response, next) => {
 
     const date = new Date().toISOString();
     
-    fs.appendFile('errors.log', `${status}: ${error.message} at ${date}\n`, function (err) {
+    fs.appendFile('errors.log', `${400}: ${error.message} at ${date}\n`, function (err) {
       if (err) throw err;
     });
     
     // send back an easily understandable error message to the caller
-    response.status(status).send(error.message)
+    response.status(400).send(error.message)
   }
 
   export default errorHandler;

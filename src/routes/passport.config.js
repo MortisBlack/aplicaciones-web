@@ -10,7 +10,7 @@ const opts = {
 
 passport.use('jwt', new Strategy(opts, function(jwt_payload, done) {
     User
-    .findByPk(jwt_payload.id)
+    .findByPk(jwt_payload._id)
     .then((user) => { return done(null, user); })
     .catch((error) => { return done(error, false); });
 }));

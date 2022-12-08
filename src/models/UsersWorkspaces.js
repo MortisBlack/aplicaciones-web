@@ -10,13 +10,31 @@ const UsersWorkspaces = connection.define(
         type: BIGINT,
         autoIncrement: true,
         primaryKey: true
-    }
+        },
+        UserId: {
+            type: BIGINT,
+            references: "User",
+            referencesKey: "id",
+            allowNull: false
+        },
+        WorkspaceId: {
+            type: BIGINT,
+            references: "Workspace",
+            referencesKey: "id",
+            allowNull: false
+        },
     },{
         tableName:'users_workspaces'
     });
 
-User.belongsToMany(Workspace, {through: UsersWorkspaces });
-Workspace.belongsToMany(User,{through: UsersWorkspaces});
+User.belongsToMany(Workspace, {
+    through: UsersWorkspaces,
+    foreignKey: 'UserId' 
+});
+Workspace.belongsToMany(User,{
+    through: UsersWorkspaces,
+    foreignKey: 'WorkspaceId'
+});
 
 User.belongsToMany(UserType, {through: UsersWorkspaces });
 UserType.belongsToMany(User, {through: UsersWorkspaces });
