@@ -131,6 +131,12 @@ export default class WorkspaceRepository {
         
         const boards = result.boards;
 
+        if(boards == null || boards.length == 0) {
+            const error = new Error(`There are not boards registered yet`);
+            error.status = 404;
+            throw error;
+        };
+
         // convert cards to CardBO
         return boards.map((board) => {
             return new BoardBO(board.id, board.title, board.description);

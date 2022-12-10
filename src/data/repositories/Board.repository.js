@@ -145,6 +145,12 @@ export default class BoardRepository {
         
         const columns = result.columns;
 
+        if(columns == null || columns.length == 0) {
+            const error = new Error(`There are not columns registered yet`);
+            error.status = 404;
+            throw error;
+        };
+
         // convert columns to ColumnBO
         return columns.map((column) => {
             return new ColumnBO(column.id, column.title);

@@ -126,6 +126,12 @@ export default class ColumnRepository {
         const cards = result.cards;
         console.log(cards);
 
+        if(cards == null || cards.length == 0) {
+            const error = new Error(`There are not cards registered yet`);
+            error.status = 404;
+            throw error;
+        };
+        
         // convert cards to CardBO
         return cards.map((card) => {
             return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck, card.position, card.createdAt, card.updatedAt);
