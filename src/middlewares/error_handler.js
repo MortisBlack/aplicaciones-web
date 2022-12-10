@@ -8,7 +8,7 @@ const errorHandler = (error, request, response, next) => {
 
     const date = new Date().toISOString();
     
-    fs.appendFile('errors.log', `${status}: ${error.message} at ${date}\n`, function (err) {
+    fs.appendFile(`logs/errors-${date.split('T')[0]}.log`, `${status}: ${error.message} at ${date}\n`, function (err) {
       if (err) throw err;
     });
     
