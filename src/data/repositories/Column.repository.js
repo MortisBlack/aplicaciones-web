@@ -85,6 +85,9 @@ export default class ColumnRepository {
             include:[{
                 model: Board,
                 as: 'Board'
+            },{
+                model: Card,
+                as: 'cards'
             }]
         });
 
@@ -97,7 +100,8 @@ export default class ColumnRepository {
 
 
         return await Promise.all( result.map(async (element, index)=> {
-            let board = await boardRepository.findOne(element.dataValues.BoardId)
+            let board = await boardRepository.findOne(element.dataValues.BoardId);
+            console.log(element.dataValues.cards);
             return new ColumnBO(element.dataValues.id, element.dataValues.title, board);
         }));
     }
@@ -120,6 +124,7 @@ export default class ColumnRepository {
         });
 
         const cards = result.cards;
+        console.log(cards);
 
         // convert cards to CardBO
         return cards.map((card) => {

@@ -11,12 +11,13 @@ export default class WorkspaceController{
     async createWorkspace(req, res, next){
         try {
             const user = req.user;
-            const {title, description} = req.body;
+            const {title, description, owner} = req.body;
+            console.log(req.body);
 
             const workspace = new WorkspaceBo(
                 undefined,
                 title, 
-                description
+                description,
             );
             
 
@@ -26,7 +27,8 @@ export default class WorkspaceController{
                 undefined,
                 user,
                 undefined,
-                result
+                result,
+                owner
             );
 
             userWorkspacesRepository.create(userWorkspace);
@@ -60,8 +62,9 @@ export default class WorkspaceController{
     async deleteWorkspace(req, res, next){
         try {
             const {id} = req.params;
+            const userId = req.user.id;
 
-            let result = await workspaceRepository.delete(id);
+            let result = await workspaceRepository.delete(id, userId);
 
             res.status(200).send({
                 message: "Workspace deleted successfully"

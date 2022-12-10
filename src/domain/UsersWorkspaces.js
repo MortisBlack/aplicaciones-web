@@ -3,11 +3,12 @@ import UserType from "./UserType.js";
 import User from "./User.js";
 
 export default class UserWorkspaces{
-    constructor(id, user, user_type, workspace ){
+    constructor(id, user, user_type, workspace, owner ){
         this._id = id;
         this._user = user;
         this._user_type = user_type;
         this._workspace = workspace;
+        this._owner = owner;
     }
     get id(){
         return this._id;
@@ -21,6 +22,10 @@ export default class UserWorkspaces{
     get workspace(){
         return this._workspace;
     }
+    get owner(){
+        return this._owner;
+    }
+
     set user(user){
         // Validate user is not empty and is a user object
         if (user !== undefined && user instanceof User){
@@ -49,12 +54,21 @@ export default class UserWorkspaces{
         throw new Error("Invalid workspace");
     }
 
+    set owner(owner){
+        // Validate owner is not empty and is a boolean
+        if (owner !== undefined && typeof owner === "boolean"){
+            this._owner = owner;
+            return;
+        }
+    }
+
     toPersistenceObject(){
         return {
             id: this._id,
             UserId: this._user.id,
             UserTypeId: undefined,
-            WorkspaceId: this._workspace.id
+            WorkspaceId: this._workspace.id,
+            owner: this._owner
         }
     }
 

@@ -7,7 +7,7 @@ export default class UserWorkspacesRepository {
         const workspaceBO = userWorkspace.toPersistenceObject();
         const result = await UsersWorkspaces.create(workspaceBO);
         
-        return new UserWorkspaceBO(result.id, result.userId, result.role, result.workspaceId);
+        return new UserWorkspaceBO(result.id, result.userId, result.role, result.workspaceId, result.owner);
     }
 
     async update(userWorkspace) {
@@ -60,7 +60,7 @@ export default class UserWorkspacesRepository {
             return undefined;
         };
 
-        return new UserWorkspaceBO(result.dataValues.id, result.dataValues.userId, result.dataValues.role, result.dataValues.workspaceId);
+        return new UserWorkspaceBO(result.dataValues.id, result.dataValues.userId, result.dataValues.role, result.dataValues.workspaceId, result.dataValues.owner);
     }
 
     async findAll() {
@@ -71,7 +71,7 @@ export default class UserWorkspacesRepository {
         };
 
         return result.map((element, index)=> {
-            return new UserWorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description);
+            return new UserWorkspaceBO(element.dataValues.id, element.dataValues.title, element.dataValues.description, element.dataValues.owner);
         });
     }
 }

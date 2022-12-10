@@ -3,6 +3,7 @@ import User from '../../models/User.js';
 import WorkspaceBO from '../../domain/Workspace.js';
 import Board from '../../models/Board.js';
 import BoardBO from '../../domain/Board.js';
+import UserWorkspaces from '../../domain/UsersWorkspaces.js';
 
 export default class WorkspaceRepository {
 
@@ -36,14 +37,26 @@ export default class WorkspaceRepository {
         return this.findOne(workspace.id);
     }
 
-    async delete(id) {
+    async delete(id, userId) {
         await this.findOne(id);
 
+        // TODO: Fix this query, the where clause is not working
         const result = await Workspace.destroy({
+            include: [
+                {
+                    model: UserWorkspaces,
+                    required:true,
+                    where: {
+                        UserId: id,
+                        owner: true
+                    }
+                }
+            ],
             where: {
                 id: id
-            }
+            },
         });
+        console.log("Result:",result);
 
         return "Workspace successfully deleted";
     }
@@ -52,7 +65,8 @@ export default class WorkspaceRepository {
         
         const result = await Workspace.findOne({
             where: {
-                id: id
+                id: id,
+                
             }
         });
 
