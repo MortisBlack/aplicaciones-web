@@ -7,7 +7,9 @@ const router = Router();
 
 router.post('', passportConfig, workspaceController.createWorkspace);
 
-router.patch('/:id',passportConfig, workspaceController.updateWorkspace);
+router.put('/:id',passportConfig, workspaceController.updateWorkspace);
+
+router.patch('/:id',passportConfig, workspaceController.updateWorkspaceTitle);
 
 router.delete('/:id',passportConfig,  workspaceController.deleteWorkspace);
 

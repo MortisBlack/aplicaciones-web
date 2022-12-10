@@ -103,6 +103,21 @@ export default class WorkspaceController{
         }
     }
 
+    async updateWorkspaceTitle(req, res, next){
+        try {
+            const {title} = req.body;
+            const {id} = req.params;
+            
+            let result = await workspaceRepository.updateTitle(id, title);
+            res.status(200).send({
+                message: "Workspace updated successfully",
+                result: result
+            });
+        } catch (err) {
+            next(err)
+        }
+    }
+
     async findAllBoards(req, res, next){
 
         try {

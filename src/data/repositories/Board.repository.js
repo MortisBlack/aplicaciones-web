@@ -56,6 +56,27 @@ export default class BoardRepository {
         return "Board successfully deleted";
     }
 
+    async updateTitle(id, title) {
+
+        if(id === undefined){
+            const error = new Error('id is undefined');
+            error.status = 404;
+            throw error;
+        }
+
+        const storedBoard = await this.findOne(id);
+
+        storedBoard.title = title;
+
+        const boardBO = storedBoard.toPersistenceObject()
+        const result = await Workspace.update(boardBO, {
+            where: {
+                id: id
+            }
+        });
+        return this.findOne(id);
+    }
+
     async findOne(id) {
 
         const result = await Board.findOne({

@@ -81,6 +81,21 @@ export default class BoardController {
         }
     }
 
+    async updateBoardTitle(req, res, next){
+        try {
+            const {title} = req.body;
+            const {id} = req.params;
+            
+            let result = await boardRepository.updateTitle(id, title);
+            res.status(200).send({
+                message: "Board updated successfully",
+                result: result
+            });
+        } catch (err) {
+            next(err)
+        }
+    }
+
     async getAllBoards(req, res, next){
         try {
             let result = await boardRepository.findAll();
@@ -115,7 +130,6 @@ export default class BoardController {
             const {id} = req.params;
 
             let result = await boardRepository.findAllColumns(id);
-           
             res.status(200).send({
                 message: "Columns fetched successfully",
                 result: result

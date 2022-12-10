@@ -7,7 +7,9 @@ const router = Router();
 
 router.post('', boardController.createBoard);
 
-router.patch('/:id',boardController.updateBoard);
+router.put('/:id',boardController.updateBoard);
+
+router.patch('/:id',boardController.updateBoardTitle);
 
 router.delete('/:id', boardController.deleteBoard);
 

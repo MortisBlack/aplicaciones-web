@@ -37,6 +37,27 @@ export default class WorkspaceRepository {
         return this.findOne(workspace.id);
     }
 
+    async updateTitle(id, title) {
+
+        if(id === undefined){
+            const error = new Error('id is undefined');
+            error.status = 404;
+            throw error;
+        }
+
+        const storedWorkspace = await this.findOne(id);
+
+        storedWorkspace.title = title;
+
+        const workspaceBO = storedWorkspace.toPersistenceObject()
+        const result = await Workspace.update(workspaceBO, {
+            where: {
+                id: id
+            }
+        });
+        return this.findOne(id);
+    }
+
     async delete(id, userId) {
         await this.findOne(id);
 
