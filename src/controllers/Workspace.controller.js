@@ -12,7 +12,6 @@ export default class WorkspaceController{
         try {
             const user = req.user;
             const {title, description, owner} = req.body;
-            console.log(req.body);
 
             const workspace = new WorkspaceBo(
                 undefined,

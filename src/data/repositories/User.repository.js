@@ -18,7 +18,6 @@ export default class UserRepository {
             result.img_profile,
             result.birthdate
         );
-        console.log("newUser", newUser)
         return newUser; 
     }
 

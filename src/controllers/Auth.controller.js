@@ -28,7 +28,7 @@ export default class AuthController {
                     })
                     res.json({
                         success: true,
-                        token: 'JWT ' + token
+                        token: 'Bearer ' + token
                     });
                 } else {
                     res.status(401).send({

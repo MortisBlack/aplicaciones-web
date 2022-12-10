@@ -15,6 +15,5 @@ jest.mock('../src/data/repositories/Workspace.repository.js', () =>
 await test('Find all workspace', async ()=>{
     // Mexican test
     const result = await workspaceRepository.fetchOne.mockResolvedOnce(() => Promise.resolve(true))
-    console.log(result)
     expect(result).toBe(1)
 });

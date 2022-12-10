@@ -41,7 +41,7 @@ export default class BoardRepository {
             include:Workspace
         });
         
-        console.log(board.id);
+
         return this.findOne(board.id);
     }
 
@@ -68,12 +68,14 @@ export default class BoardRepository {
 
         storedBoard.title = title;
 
+
         const boardBO = storedBoard.toPersistenceObject()
-        const result = await Workspace.update(boardBO, {
+        const result = await Board.update(boardBO, {
             where: {
                 id: id
             }
         });
+
         return this.findOne(id);
     }
 

@@ -77,7 +77,6 @@ export default class WorkspaceRepository {
                 id: id
             },
         });
-        console.log("Result:",result);
 
         return "Workspace successfully deleted";
     }
