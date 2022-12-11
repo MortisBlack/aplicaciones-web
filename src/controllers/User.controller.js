@@ -5,6 +5,8 @@ const userRepository = new UserRepository();
 
 export default class UserController { 
     async createUser(req, res, next) {
+        console.log("req.body", req.body)
+        console.log("req.params", req.params)
         try {
             const {
                 password,
@@ -16,7 +18,7 @@ export default class UserController {
                 img_profile,
                 birthdate
             } = req.body;
-
+            console.log(req.body);
             
             const user = new UserBO(
                 undefined, 
@@ -28,9 +30,10 @@ export default class UserController {
                 phone,
                 img_profile,
                 birthdate
-                );
-
+            );
             
+
+            console.log("user", user)
             let userExists = await userRepository.findOneByEmail(email);
 
             if(userExists) {
