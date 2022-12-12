@@ -5,6 +5,7 @@ import ColumnBO from '../../domain/Column.js';
 import CardBO from '../../domain/Card.js';
 import BoardBO from '../../domain/Board.js';
 import BoardRepository from './Board.repository.js';
+import {literal, Op} from 'sequelize';
 
 const boardRepository = new BoardRepository();
 
@@ -41,7 +42,24 @@ export default class ColumnRepository {
             error.status = 404;
             throw error;
         };
-        await this.findOne(column.id);
+        const columnDB = await this.findOne(column.id);
+        
+        if (column.position && column.position != columnDB.position){
+            // update position of all columns in the same board
+            await Column.update(
+                {
+                    position: literal('position - 1')
+                },
+                {
+                    where: {
+                        position: {
+                            [Op.gt]: columnDB.position
+                        },
+                        BoardId: columnDB.board.id
+                    }
+                }
+            ); 
+        }
 
 
         //await boardRepository.findOne(column.board.id)
