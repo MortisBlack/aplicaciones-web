@@ -105,7 +105,7 @@ export default class CardRepository {
                 position: position,
                 ColumnId: columnId
             }
-        });
+        }).toJson();
     }
 
     async delete(id) {
@@ -150,7 +150,7 @@ export default class CardRepository {
             result.position,
             result.createdAt,
             result.updatedAt
-        );
+        ).toJson();
     }
 
     async findAll() {  
@@ -178,7 +178,7 @@ export default class CardRepository {
                 element.dataValues.position,
                 element.dataValues.createdAt,
                 element.dataValues.updatedAt
-            );
+            ).toJson();
         }));
     }
 }

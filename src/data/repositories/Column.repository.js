@@ -18,6 +18,7 @@ export default class ColumnRepository {
         return new ColumnBO(
             result.id,
             result.title, 
+            undefined,
             board
             );
     }
@@ -29,10 +30,11 @@ export default class ColumnRepository {
             error.status = 404;
             throw error;
         };
-
         await this.findOne(column.id);
+
+
         await boardRepository.findOne(column.board.id)
-        
+
         const columnBO = column.toPersistenceObject()
 
         await Column.update(columnBO, {
@@ -75,10 +77,9 @@ export default class ColumnRepository {
             error.status = 404;
             throw error;
         };
-
         let board = await boardRepository.findOne(result.BoardId);
 
-        return new ColumnBO(result.id, result.title, board);
+        return new ColumnBO(result.id, result.title, result.position, board).toJson();
     }
 
     async findAll() {  
@@ -102,7 +103,7 @@ export default class ColumnRepository {
 
         return await Promise.all( result.map(async (element, index)=> {
             let board = await boardRepository.findOne(element.dataValues.BoardId);
-            return new ColumnBO(element.dataValues.id, element.dataValues.title, board);
+            return new ColumnBO(element.dataValues.id, element.dataValues.title, element.dataValues.title, board);
         }));
     }
 
@@ -133,7 +134,7 @@ export default class ColumnRepository {
         
         // convert cards to CardBO
         return cards.map((card) => {
-            return new CardBO(card.id, card.title, card.description, card.deadline_date, new BoardBO(id), card.position, card.createdAt, card.updatedAt);
+            return new CardBO(card.id, card.title, card.description, card.deadline_date, new BoardBO(id), card.position, card.createdAt, card.updatedAt).toJson();
         });
     }
 }

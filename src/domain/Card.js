@@ -111,4 +111,15 @@ export default class Card {
         }
     }
 
+    toJson(){
+        return {
+            id: this._id,
+            title: this._title,
+            description: this._description,
+            deadline_date: this._deadline_date,
+            column: this._column.id,
+            position: this._position,
+        }
+    }
+
 }

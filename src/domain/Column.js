@@ -1,10 +1,11 @@
 import Board from "./Board.js";
 
 export default class Column {
-    constructor(id, title, board){
+    constructor(id, title, position, board){
         this._id = id;
         this._title = title;
         this._board = board;
+        this._position = position;
     }
 
 
@@ -18,6 +19,10 @@ export default class Column {
         return this._board;
     }
 
+    get position(){
+        return this._position;
+    }
+
     set title(title){
         if (typeof title === "string" && title.length > 0 && title.length <= 255){
             this._title = title;
@@ -25,6 +30,13 @@ export default class Column {
         }
 
         throw new Error("Invalid title");
+    }
+
+    set position(position){
+        if (typeof position === "number" && position >= 0){
+            this._position = position;
+            return;
+        }
     }
 
     set board(board){
@@ -41,7 +53,18 @@ export default class Column {
         return {
             id: this.id,
             title: this.title,
+            position: this.position,
             BoardId: this.board.id
+        }
+    }
+
+    toJson(){
+        return {
+            id: this.id,
+            title: this.title,
+            position: this.position,
+            board: this.board
+
         }
     }
 }

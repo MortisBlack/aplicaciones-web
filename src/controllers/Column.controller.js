@@ -12,6 +12,7 @@ export default class ColumnController {
                 board
             } = req.body;
 
+
             const column = new ColumnBO(
                 undefined,
                 title,
@@ -40,19 +41,19 @@ export default class ColumnController {
                 title,
                 board
             } = req.body;
-    
             const {id} = req.params;
+
     
             const column = new ColumnBO(
                     id,
                     title,
+                    undefined,
                     new BoardBO (
                         board,
                         undefined,
                         undefined
                     )
                 );
-
             let result = await columnRepository.update(column);
     
             res.status(200).send({
@@ -111,7 +112,6 @@ export default class ColumnController {
             const {id} = req.params;
 
             let result = await columnRepository.findAllCards(id);
-
             res.status(200).send({
                 message: "Cards fetched successfully",
                 result: result

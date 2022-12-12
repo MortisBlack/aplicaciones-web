@@ -176,7 +176,7 @@ export default class BoardRepository {
 
         // convert columns to ColumnBO
         return columns.map((column) => {
-            return new ColumnBO(column.id, column.title);
+            return new ColumnBO(column.id, column.title, column.position, new BoardBO(column.BoardId)).toJson();
         });
     }
 }
