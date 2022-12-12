@@ -22,7 +22,7 @@ export default class CardRepository {
             result.deadline_date, 
             column,
             result.position
-        );
+        ).toJson();
     }
 
     async count() {
