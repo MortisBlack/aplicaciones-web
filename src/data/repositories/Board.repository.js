@@ -164,17 +164,15 @@ export default class BoardRepository {
             include:[{
                 model: Column,
                 as: 'columns',
-                order: [
-                    ['position', 'DESC']
-                ],
                 include: [{
                     model: Card,
-                    as: 'cards',
-                    order: [
-                        ['position', 'DESC']
-                    ]
+                    as: 'cards'
                 }]
             }],
+            order: [
+                ['columns', 'position', 'ASC'],
+                ['columns', 'cards', 'position', 'ASC']
+            ],
         });
         
         const columns = result.columns;
