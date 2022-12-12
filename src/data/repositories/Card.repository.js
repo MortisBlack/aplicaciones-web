@@ -1,6 +1,7 @@
 import Card from '../../models/Card.js';
 import Column from '../../models/Column.js';
 import CardBO from '../../domain/Card.js';
+import ColumnBO from '../../domain/Column.js';
 import ColumnRepository from './Column.repository.js';
 import {literal, Op} from 'sequelize';
 
@@ -167,13 +168,13 @@ export default class CardRepository {
         };
 
         return await Promise.all( result.map(async (element, index)=> {
-            let column = await columnRepository.findOne(element.dataValues.ColumnId)
+            // let column = await columnRepository.findOne(element.dataValues.ColumnId);
             return new CardBO(
                 element.dataValues.id,
                 element.dataValues.title,
                 element.dataValues.description,
                 element.dataValues.deadline_date,
-                column,
+                new ColumnBO(element.dataValues.ColumnId),
                 element.dataValues.position,
                 element.dataValues.createdAt,
                 element.dataValues.updatedAt

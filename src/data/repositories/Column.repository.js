@@ -3,6 +3,7 @@ import Board from '../../models/Board.js';
 import Card from '../../models/Card.js';
 import ColumnBO from '../../domain/Column.js';
 import CardBO from '../../domain/Card.js';
+import BoardBO from '../../domain/Board.js';
 import BoardRepository from './Board.repository.js';
 
 const boardRepository = new BoardRepository();
@@ -132,7 +133,7 @@ export default class ColumnRepository {
         
         // convert cards to CardBO
         return cards.map((card) => {
-            return new CardBO(card.id, card.title, card.description, card.deadline_date, columnCheck, card.position, card.createdAt, card.updatedAt);
+            return new CardBO(card.id, card.title, card.description, card.deadline_date, new BoardBO(id), card.position, card.createdAt, card.updatedAt);
         });
     }
 }
