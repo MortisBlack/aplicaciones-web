@@ -44,7 +44,7 @@ export default class ColumnRepository {
         await this.findOne(column.id);
 
 
-        await boardRepository.findOne(column.board.id)
+        //await boardRepository.findOne(column.board.id)
 
         const columnBO = column.toPersistenceObject()
 

@@ -40,7 +40,8 @@ export default class ColumnController {
         try {
             const {
                 title,
-                board
+                board,
+                position
             } = req.body;
             const {id} = req.params;
 
@@ -48,7 +49,7 @@ export default class ColumnController {
             const column = new ColumnBO(
                     id,
                     title,
-                    undefined,
+                    position,
                     new BoardBO (
                         board,
                         undefined,
