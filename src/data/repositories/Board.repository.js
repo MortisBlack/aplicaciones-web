@@ -1,4 +1,5 @@
 import Board from '../../models/Board.js';
+import Card from '../../models/Card.js';
 import Workspace from '../../models/Workspace.js';
 import BoardBO from '../../domain/Board.js';
 import WorkspaceRepository from './Workspace.repository.js';
@@ -165,7 +166,14 @@ export default class BoardRepository {
                 as: 'columns',
                 order: [
                     ['position', 'DESC']
-                ]
+                ],
+                include: [{
+                    model: Card,
+                    as: 'cards',
+                    order: [
+                        ['position', 'DESC']
+                    ]
+                }]
             }],
         });
         
@@ -179,7 +187,9 @@ export default class BoardRepository {
 
         // convert columns to ColumnBO
         return columns.map((column) => {
-            return new ColumnBO(column.id, column.title, column.position, new BoardBO(column.BoardId)).toJson();
+            let newColumn = new ColumnBO(column.id, column.title, column.position, new BoardBO(column.BoardId)).toJson();
+            newColumn.cards = column.cards;
+            return newColumn;
         });
     }
 }
