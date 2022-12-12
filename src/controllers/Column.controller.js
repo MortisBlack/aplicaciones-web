@@ -16,6 +16,7 @@ export default class ColumnController {
             const column = new ColumnBO(
                 undefined,
                 title,
+                undefined,
                 new BoardBO (
                     board,
                     undefined,
@@ -27,7 +28,7 @@ export default class ColumnController {
             let result = await columnRepository.create(column);
 
             res.status(200).send({
-                message: "Column creataed successfully",
+                message: "Column created successfully",
                 result: result
             });
         } catch (err) {

@@ -11,16 +11,31 @@ const boardRepository = new BoardRepository();
 export default class ColumnRepository {
 
     async create(column) {
+        const lastPosition = await this.getLastBoardPosition(column.board.id);
         const board = await boardRepository.findOne(column.board.id);
 
         const columnBO = column.toPersistenceObject();
+        columnBO.position = lastPosition.dataValues.position + 1;
         const result = await Column.create(columnBO);
         return new ColumnBO(
             result.id,
             result.title, 
-            undefined,
+            result.position,
             board
-            );
+            ).toJson();
+    }
+
+    async getLastBoardPosition(boardId) {
+        const result = await Column.findOne({
+            where: {
+                BoardId: boardId,
+            },
+            order: [
+                ['position', 'DESC']
+            ],
+            attributes: ['position']
+        });
+        return result;
     }
 
     async update(column) {

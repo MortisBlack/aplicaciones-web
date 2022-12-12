@@ -162,7 +162,10 @@ export default class BoardRepository {
             },
             include:[{
                 model: Column,
-                as: 'columns'
+                as: 'columns',
+                order: [
+                    ['position', 'DESC']
+                ]
             }],
         });
         
