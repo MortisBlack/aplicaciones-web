@@ -1,5 +1,5 @@
 import { connection } from "../data/connection.js";
-import { STRING, BIGINT } from "sequelize";
+import { STRING, BIGINT, INTEGER } from "sequelize";
 import Board from "./Board.js";
 
 const Column = connection.define("Column",
@@ -13,6 +13,11 @@ const Column = connection.define("Column",
             type: STRING,
             max: 255,
             allowNull: false,
+        },
+        position:{
+            type: INTEGER,
+            allowNull: false,
+            defaultValue: 0
         },
         BoardId: {
             type: BIGINT,
