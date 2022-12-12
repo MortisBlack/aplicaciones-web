@@ -1,11 +1,13 @@
 import UserRepository from "../data/repositories/User.repository.js";
 import UserBO from '../domain/User.js';
+import fs from 'fs'
 
 const userRepository = new UserRepository();
 
 export default class UserController { 
     async createUser(req, res, next) {
-        console.log("req.body", req.body)
+        console.log("req", req)
+        console.log("req.body", JSON.stringify(req.body))
         console.log("req.params", req.params)
         try {
             const {
@@ -15,7 +17,6 @@ export default class UserController {
                 second_surname,
                 email,
                 phone,
-                img_profile,
                 birthdate
             } = req.body;
             console.log(req.body);
@@ -28,7 +29,7 @@ export default class UserController {
                 second_surname,
                 email,
                 phone,
-                img_profile,
+                undefined,
                 birthdate
             );
             
@@ -40,6 +41,11 @@ export default class UserController {
                 return res.status(409).send({
                     message: "Email already exists"
                 });
+            }
+
+            if(req.file) {
+                console.log("req.file", req.filename)
+                user.img_profile = req.file.filename;
             }
             
             let result = await userRepository.create(user);

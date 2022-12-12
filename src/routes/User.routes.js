@@ -1,11 +1,15 @@
 import { Router } from "express";
 import UserController from "../controllers/User.controller.js"
 import passportConfig from './passport.config.js';
+import multer from 'multer';
+
+var upload = multer({ dest: 'upload/'});
+var type = upload.single('img_profile');
 
 const userController = new UserController();
 const router = Router();
 
-router.post('', passportConfig, userController.createUser);
+router.post('', type, userController.createUser);
 
 router.patch('/:id', passportConfig, userController.updateUser);
 

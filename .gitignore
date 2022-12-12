@@ -144,3 +144,5 @@ dist
 
 # Docker files
 /dockerfiles/
+
+upload/**
