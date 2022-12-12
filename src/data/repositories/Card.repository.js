@@ -45,7 +45,7 @@ export default class CardRepository {
             throw error;
         };
 
-        await this.findOne(card.id);
+        const cardCheck = await this.findOne(card.id);
         await columnRepository.findOne(card.column.id)
         
         const cardBO = card.toPersistenceObject()
