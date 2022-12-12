@@ -1,17 +1,18 @@
 import { Router } from "express";
 import ImageCardController from "../controllers/ImageCard.controller.js"
+import passportConfig from './passport.config.js';
 
 const imageCardController = new ImageCardController();
 const router = Router();
 
-router.post('', imageCardController.createImageCard);
+router.post('', passportConfig, imageCardController.createImageCard);
 
-router.patch('/:id',imageCardController.updateImageCard);
+router.patch('/:id', passportConfig, imageCardController.updateImageCard);
 
-router.delete('/:id', imageCardController.deleteImageCard);
+router.delete('/:id', passportConfig, imageCardController.deleteImageCard);
 
-router.get('', imageCardController.getAllImagesCards);
+router.get('', passportConfig, imageCardController.getAllImagesCards);
 
-router.get('/:id', imageCardController.findOneImageCard);
+router.get('/:id', passportConfig, imageCardController.findOneImageCard);
 
 export default router;

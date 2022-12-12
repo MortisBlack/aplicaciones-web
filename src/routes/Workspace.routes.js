@@ -7,16 +7,16 @@ const router = Router();
 
 router.post('', passportConfig, workspaceController.createWorkspace);
 
-router.put('/:id',passportConfig, workspaceController.updateWorkspace);
+router.put('/:id', passportConfig, workspaceController.updateWorkspace);
 
-router.patch('/:id',passportConfig, workspaceController.updateWorkspaceTitle);
+router.patch('/:id', passportConfig, workspaceController.updateWorkspaceTitle);
 
-router.delete('/:id',passportConfig,  workspaceController.deleteWorkspace);
+router.delete('/:id', passportConfig, workspaceController.deleteWorkspace);
 
-router.get('',passportConfig,  workspaceController.getAllWorkspaces);
+router.get('', passportConfig, workspaceController.getAllWorkspaces);
 
-router.get('/:id',passportConfig,  workspaceController.findOneWorkspace);
+router.get('/:id', passportConfig, workspaceController.findOneWorkspace);
 
-router.get('/:id/boards', workspaceController.findAllBoards);
+router.get('/:id/boards', passportConfig, workspaceController.findAllBoards);
 
 export default router;

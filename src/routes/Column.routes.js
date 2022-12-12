@@ -1,19 +1,20 @@
 import { Router } from "express";
 import ColumnController from "../controllers/Column.controller.js"
+import passportConfig from './passport.config.js';
 
 const columnController = new ColumnController();
 const router = Router();
 
-router.post('', columnController.createColumn);
+router.post('', passportConfig, columnController.createColumn);
 
-router.patch('/:id',columnController.updateColumn);
+router.patch('/:id', passportConfig, columnController.updateColumn);
 
-router.delete('/:id', columnController.deleteColumn);
+router.delete('/:id', passportConfig, columnController.deleteColumn);
 
-router.get('', columnController.getAllColumns);
+router.get('', passportConfig, columnController.getAllColumns);
 
-router.get('/:id', columnController.findOneColumn);
+router.get('/:id', passportConfig, columnController.findOneColumn);
 
-router.get('/:id/cards', columnController.findAllCards);
+router.get('/:id/cards', passportConfig, columnController.findAllCards);
 
 export default router;

@@ -5,18 +5,18 @@ import passportConfig from './passport.config.js';
 const boardController = new BoardController();
 const router = Router();
 
-router.post('', boardController.createBoard);
+router.post('', passportConfig, boardController.createBoard);
 
-router.put('/:id',boardController.updateBoard);
+router.put('/:id', passportConfig, boardController.updateBoard);
 
-router.patch('/:id',boardController.updateBoardTitle);
+router.patch('/:id', passportConfig, boardController.updateBoardTitle);
 
-router.delete('/:id', boardController.deleteBoard);
+router.delete('/:id', passportConfig, boardController.deleteBoard);
 
 router.get('', passportConfig, boardController.getAllBoards);
 
-router.get('/:id', boardController.findOneBoard);
+router.get('/:id', passportConfig, boardController.findOneBoard);
 
-router.get('/:id/columns', boardController.findAllColumns);
+router.get('/:id/columns', passportConfig, boardController.findAllColumns);
 
 export default router;
